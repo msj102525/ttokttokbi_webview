@@ -1,0 +1,180 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {font-family: 'Jeju Gothic', sans-serif;}
+
+.main{
+	position: relative;
+}
+
+.main img{
+    width: 100%;
+    height: 100%;
+    }
+
+
+.main >img{
+    z-index: -1;
+}
+
+  
+
+.photo {
+    width: 55%;
+    height: 31%;
+    position: absolute;
+    top: 5%;
+    left: 23%;
+    border-radius: 150px;
+}
+/*추가*/
+.photo img {
+    position: absolute;
+    z-index: -10;
+    background: url('/images/name2.png') no-repeat center center;
+    background-size: contain;
+}
+
+.name{
+    width: 65%;
+    position: absolute;
+    left: 17%;
+    top: 37%;
+}
+
+.position{
+    width: 65%;
+    position: absolute;
+    left: 17%;
+    top: 44%;
+}
+
+.territory01 {
+    width: 65%;
+    height: 7%;
+    position: absolute;
+    left: 28%;
+    top: 52%;
+}
+
+.territory02 {
+    width: 65%;
+    position: absolute;
+    left: 28%;
+    top: 61.5%;
+}
+
+
+.territory03 {
+    width: 65%;
+    position: absolute;
+    left: 28%;
+    top: 69.5%;
+}
+
+.territory04 {
+    width: 65%;
+    position: absolute;
+    left: 28%;
+    top: 77.5%;
+}
+
+.input-text{
+    width:100%;
+    padding:3px;
+    border-radius :5px;
+    height: 30px;
+    background-color:transparent;
+    font-weight: bold;
+    border: 1px #000 dotted;
+}
+
+
+
+textarea {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: 100;
+    line-height: 110%;
+    border: 1px #000 dotted;
+    resize:none;
+    font-family: 'Jeju Gothic', sans-serif;
+}
+
+.territory01 textarea{
+    font-size: 11px;
+    color: #000;
+    line-height: 120%;
+    box-sizing:border-box
+}
+
+.name input{
+    font-size: 20px;
+    color: #000;
+    text-align: center;
+    box-sizing:border-box
+}
+.position input{
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+    box-sizing:border-box
+}
+
+.territory02 input{
+    font-size: 14px;
+    color: #000;
+    ime-mode:disabled;
+    box-sizing:border-box
+}
+
+.territory03 input{
+    font-size: 14px;
+    color: #000;
+    box-sizing:border-box
+}
+
+.territory04 input{
+    font-size: 14px;
+    color: #000;
+    box-sizing:border-box
+}
+
+.tablelist {
+    float: left;
+    width: 50%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background-color: #428bca;
+    color: #fff;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+
+
+/*글자 컬러 변경*/
+.territory01 textarea:-ms-input-placeholder { color: #000; }
+.territory01 textarea::-webkit-input-placeholder { color: #000; } 
+.territory01 textarea::-moz-placeholder { color: #000; } 
+.territory01 textarea::-moz-placeholder { color: #000; }
+
+.territory02  input:-ms-input-placeholder { color: #000; } 
+.territory02  input::-webkit-input-placeholder { color: #000; } 
+.territory02  input::-moz-placeholder { color: #000; } 
+.territory02  input::-moz-placeholder { color: #000; } 
+
+.territory03  input:-ms-input-placeholder { color: #000; } 
+.territory03  input::-webkit-input-placeholder { color: #000; } 
+.territory03  input::-moz-placeholder { color: #000; } 
+.territory03  input::-moz-placeholder { color: #000; } 
+
+.territory04  input:-ms-input-placeholder { color: #000; } 
+.territory04  input::-webkit-input-placeholder { color: #000; } 
+.territory04  input::-moz-placeholder { color: #000; } 
+.territory04  input::-moz-placeholder { color: #000; } 

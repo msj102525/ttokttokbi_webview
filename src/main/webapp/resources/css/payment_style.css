@@ -1,0 +1,117 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+ 
+ body{font-family: 'Noto Sans KR', sans-serif;}
+
+.wrap{
+	padding: 25px;
+}
+.box1{
+	position: relative;
+}
+ .btn_wrap{
+ 	text-align: right;
+    margin-top: 20px;
+ }
+.btn{
+	width: 105px;
+	height: 30px;
+	font-size: 14px;
+	color: #066bb0;
+	border-radius: 5px;
+	border: 2px solid #066bb0;
+	display: inline-block;
+    text-align: center;
+    line-height: 29px;
+}
+.btn.on{
+	color: #ffffff;
+	background: #066bb0;
+}
+
+.title_first{overflow: hidden;
+     /*margin-top: 40px;*/
+    margin-bottom: 10px;
+}
+
+.title_first p{
+	font-size: 18px;
+	font-weight: bold;}
+
+.title {overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.title p{font-size: 16px;}
+
+.title .left_title{float:left; }
+.title .right_tilte{float: right;}
+.title .right_tilte img{
+	vertical-align: middle;
+    margin-top: -3px;
+}
+
+.btn_wrap img {width: 105px;}
+
+.box2{
+	margin-top: 20px;
+	background-color: #f6f6f6;
+    padding: 22px;
+    border-radius: 10px;
+}
+
+.box2 p{
+	font-size: 14px;
+	line-height: 25px;}
+
+.box3{
+	margin-top: 35px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+
+.btn_white_wrap{
+	text-align: center;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+/*20180320*/
+.btn_white{
+	width: 195px;
+	height: 30px;
+	font-size: 14px;
+	color: #000000;
+	border-radius: 5px;
+	border: 2px solid #c1cacf;
+	display: inline-block;
+    text-align: center;
+    line-height: 29px;
+    float: left; 
+}
+
+.btn_white.on{
+	color: #ffffff;
+	background: #c1cacf;
+}
+
+.btn_white1{
+	width: 105px;
+	height: 30px;
+	font-size: 14px;
+	color: #000000;
+	border-radius: 5px;
+	border: 2px solid #c1cacf;
+	display: inline-block;
+    text-align: center;
+    line-height: 29px;
+    float: left; 
+}
+
+.btn_white1.on{
+	color: #ffffff;
+	background: #c1cacf;
+}
+

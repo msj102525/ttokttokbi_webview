@@ -1,0 +1,154 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {font-family: 'Jeju Gothic', sans-serif;}
+
+* {margin:0;padding:0;}
+dd img,img {vertical-align:top;}
+img,fieldset,abbr,iframe{border:0 none;}
+input,select,textarea,button {vertical-align:middle;}
+a {font-size:12px;color:#333;text-decoration:none;}
+a:hover {color:#2b4f91;}
+li {list-style:none;}
+address,caption,em{font-weight:normal;font-style:normal;}
+#edmWrap {margin:0 auto;}
+
+
+.main{
+	position: relative;
+}
+
+.main img{
+    width: 100%;
+    height: 100%;
+	}
+
+
+.main >img{
+    z-index: -1;
+}
+
+
+.photo {
+    width: 87.3%;
+    height: 31%;
+    position: absolute;
+    top: 1.9%;
+    left: 4.5%;
+    background: url('/images/photo22.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+
+
+.photo1 {
+    width: 43.8%;
+    height: 38%;
+    position: absolute;
+    top: 56.4%;
+    left: 4.4%;
+    background: url('/images/photo24.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.photo2 {
+    width: 41.7%;
+    height: 24.5%;
+    position: absolute;
+    top: 45.1%;
+    left: 50.2%;
+    background: url('/images/photo23.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.photo3 {
+    width: 41.5%;
+    height: 22.5%;
+    position: absolute;
+    top: 71.9%;
+    left: 50.3%;
+    background: url('/images/photo25.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.territory01 {
+    width: 87.3%;
+    position: absolute;
+    left: 4.5%;
+	top: 37%;
+}
+
+
+.territory01 input{
+    font-size: 20px;
+    color: #000;
+    text-align: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.territory02 {
+    width: 40%;
+    position: absolute;
+    left: 6%;
+    top: 46%;
+}
+
+
+.territory02 textarea{
+    font-size: 10px;
+    color: #f94e22;
+    text-align: center;
+    box-sizing: border-box;
+    height: 100%;
+    resize:none;
+    font-weight: 100;
+}
+
+textarea {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: 100;
+    line-height: 110%;
+    border: 1px #ddd dotted;
+    -ms-overflow-style:none;
+    font-family: 'Jeju Gothic', sans-serif;
+    resize:none;
+    padding: 0 0 5px 0;
+}
+
+
+.input-text{
+    width:100%;
+    padding:5px;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: bold;
+    border: 1px #ddd dotted;
+}
+
+.tablelist {
+    float: left;
+    width: 50%;
+    height: 35px;
+    text-align: center;
+    line-height: 50px;
+    background-color: #428bca;
+    color: #fff;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+/*글자 컬러 변경*/
+.territory01 input:-ms-input-placeholder { color: #000; }
+.territory01 input::-webkit-input-placeholder { color: #000; } 
+.territory01 input::-moz-placeholder { color: #000; } 
+.territory01 input::-moz-placeholder { color: #000; }
+
+.territory02 textarea:-ms-input-placeholder { color: #f94e22;}
+.territory02 textarea::-webkit-input-placeholder { color:#f94e22; } 
+.territory02 textarea::-moz-placeholder { color:#f94e22; } 
+.territory02 textarea::-moz-placeholder { color: #f94e22; }

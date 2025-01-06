@@ -1,0 +1,246 @@
+/*----------------------------------------------
+Author : www.webthemez.com
+License: Commons Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
+------------------------------------------------*/
+
+/*----------------------------------------------
+    COMMON  STYLES    
+------------------------------------------------*/
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+dd img, img {
+	vertical-align: top;
+}
+
+img, fieldset, abbr, iframe {
+	border: 0 none;
+}
+
+body, h1, h2, h3, h4, h5, h6, input, textarea, select, option, button,
+	table {
+	font-family: '돋움', dotum, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+input, select, textarea, button {
+	vertical-align: middle;
+}
+
+a {
+	font-size: 12px;
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #2b4f91;
+}
+
+li {
+	list-style: none;
+}
+
+address, caption, em {
+	font-weight: normal;
+	font-style: normal;
+}
+
+#edmWrap {
+	margin: 0 auto;
+}
+
+.main {
+	position: relative;
+}
+
+.main img {
+	width: 100%;
+	height: 100%;
+}
+
+.main>img {
+	z-index: -1;
+}
+
+.photo {
+	width: 82%;
+	height: 48%;
+	position: absolute;
+	top: 20%;
+	left: 9%;
+	border-radius: 150px;
+}
+
+.photo img {
+	position: relative;
+	z-index: -10;
+	background: url('/images/map.png') no-repeat center center;
+	background-size: contain;
+}
+/*추가*/
+.position {
+	width: 65%;
+	height: 7%;
+	position: absolute;
+	left: 17%;
+	top: 45%;
+}
+
+.territory01 {
+	width: 36%;
+	height: 7%;
+	position: absolute;
+	left: 6%;
+	top: 10%;
+}
+
+.territory02 {
+	width: 68%;
+	height: 7%;
+	position: absolute;
+	left: 28%;
+	top: 70%;
+}
+
+.territory03 {
+	width: 90%;
+	height: 10%;
+	position: absolute;
+	left: 6%;
+	top: 78%;
+}
+
+.input-text {
+	width: 100%;
+	padding: 5px;
+	border-radius: 5px;
+	height: 35px;
+	background-color: transparent;
+	font-weight: bold;
+	border: 1px #000 dotted;
+}
+
+textarea {
+	width: 100%;
+	height: 190%;
+	border-radius: 5px;
+	background-color: transparent;
+	font-weight: 100;
+	line-height: 150%;
+	border: 1px #000 dotted;
+	overflow: hidden;
+	resize: none;
+	padding-right: 2%;
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.territory01 input {
+	font-size: 20px;
+	color: #fff;
+	line-height: 120%;
+	text-align: center;
+	border: 1px #fff dotted;
+	box-sizing: border-box
+}
+
+.territory02 input {
+	font-size: 18px;
+	color: #000;
+	text-align: right;
+	box-sizing: border-box
+}
+
+.territory03 textarea {
+	font-size: 12px;
+	color: #000;
+	text-align: right;
+	box-sizing: border-box;
+	padding: 5px;
+}
+
+.tablelist {
+	float: left;
+	width: 50%;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	background-color: #428bca;
+	color: #fff;
+	font-weight: bold;
+	margin-top: -10px;
+}
+
+/*글자 컬러 변경*/
+.territory01 textarea:-ms-input-placeholder {
+	color: #fff;
+}
+
+.territory01 textarea::-webkit-input-placeholder {
+	color: #fff;
+}
+
+.territory01 textarea::-moz-placeholder {
+	color: #fff;
+}
+
+.territory01 textarea::-moz-placeholder {
+	color: #fff;
+}
+
+.territory02  input:-ms-input-placeholder {
+	color: #000;
+}
+
+.territory02  input::-webkit-input-placeholder {
+	color: #000;
+}
+
+.territory02  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory02  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory03  input:-ms-input-placeholder {
+	color: #000;
+}
+
+.territory03  input::-webkit-input-placeholder {
+	color: #000;
+}
+
+.territory03  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory03  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory04  input:-ms-input-placeholder {
+	color: #000;
+}
+
+.territory04  input::-webkit-input-placeholder {
+	color: #000;
+}
+
+.territory04  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory04  input::-moz-placeholder {
+	color: #000;
+}

@@ -1,0 +1,201 @@
+/*----------------------------------------------
+Author : www.webthemez.com
+License: Commons Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
+------------------------------------------------*/
+
+
+/*----------------------------------------------
+    COMMON  STYLES    
+------------------------------------------------*/
+
+* {margin:0;padding:0;}
+dd img,img {vertical-align:top;}
+img,fieldset,abbr,iframe{border:0 none;}
+body,h1,h2,h3,h4,h5,h6,input,textarea,select,option,button,table {font-family:'돋움',dotum,Helvetica,sans-serif;font-size:12px;; }
+input,select,textarea,button {vertical-align:middle;}
+a {font-size:12px;color:#333;text-decoration:none;}
+a:hover {color:#2b4f91;}
+li {list-style:none;}
+address,caption,em{font-weight:normal;font-style:normal;}
+#edmWrap {margin:0 auto;}
+
+
+.main{
+	position: relative;
+}
+
+.main img{
+	z-index: 10;
+    width: 100%;
+    height: 100%;
+	}
+
+
+ /*음식점템플릿*/   
+
+.photo {
+    width: 100%;
+    height: 37%;
+    position: absolute;
+    top: 0px;
+    background: url('/images/food1.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.territory01 {
+    width: 25%;
+    height: 10%;
+    position: absolute;
+    right: 7%;
+    top: 32%;
+}
+
+.territory02 {
+    width: 57%;
+    height: 8%;
+    position: absolute;
+    left: 3%;
+    top: 41%;
+}
+
+
+.territory03 {
+    width: 66%;
+    height: 13%;
+    position: absolute;
+    left: 3%;
+    top: 50%;
+}
+
+.territory04 {
+    width: 48%;
+    height: 10%;
+    position: absolute;
+    right: 13%;
+    top: 75%;
+}
+
+.photo_con{
+    width: 30%;
+    height: 12%;
+    position: absolute;
+    left: 3%;
+    top: 74%;
+    background: url('/images/food2.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.territory05 {
+    width: 23%;
+    height: 8%;
+    position: absolute;
+    left: 3%;
+    top: 91%;
+}
+
+.territory06 {
+    width: 55%;
+    height: 8%;
+    position: absolute;
+    right:13%;
+    top: 91%;
+}
+
+
+.input-text{
+    width:100%;
+    padding:5px;
+    border-radius :5px;
+    height: 30px;
+    background-color:transparent;
+    font-weight: bold;
+    border: 1px #fff dotted;
+}
+
+
+.territory02 input{
+    font-size: 2em;
+    color: #f3ea07
+}
+
+.territory05 input{
+    font-size: 1em;
+     color: #fff;
+}
+
+.territory06 input{
+    font-size: 2em;
+    color: #f3ea07
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: bold;
+    line-height: 110%;
+    border: 1px #fff dotted;
+    resize:none
+}
+
+.territory01 textarea{
+    font-size: 2em;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    top: 29%;
+    width: 80%;
+    left: 8%;
+}
+
+.territory03 textarea{
+    font-size: 1.5em;
+    color: #fff;
+}
+
+.territory04 textarea{
+    font-size: 1.5em;
+    line-height: 100%;
+    font-weight:none;
+    border: 1px #000 dotted;
+    color: #000;
+}
+
+
+
+
+
+/*글자 컬러 변경*/
+.territory01 textarea:-ms-input-placeholder { color: #fff; }
+.territory01 textarea::-webkit-input-placeholder { color: #fff; } 
+.territory01 textarea::-moz-placeholder { color: #fff; } 
+.territory01 textarea::-moz-placeholder { color: #fff; }
+
+.territory02  input:-ms-input-placeholder { color: #f3ea07; } 
+.territory02  input::-webkit-input-placeholder { color: #f3ea07; } 
+.territory02  input::-moz-placeholder { color: #f3ea07; } 
+.territory02  input::-moz-placeholder { color: #f3ea07; } 
+
+.territory03 textarea:-ms-input-placeholder { color: #fff; }
+.territory03 textarea::-webkit-input-placeholder { color: #fff; } 
+.territory03 textarea::-moz-placeholder { color: #fff; } 
+.territory03 textarea::-moz-placeholder { color: #fff; }
+
+.territory04 textarea:-ms-input-placeholder { color: #000; }
+.territory04 textarea::-webkit-input-placeholder { color: #000; } 
+.territory04 textarea::-moz-placeholder { color: #000; } 
+.territory04 textarea::-moz-placeholder { color: #000; }
+
+.territory05  input:-ms-input-placeholder { color: #fff; } 
+.territory05  input::-webkit-input-placeholder { color: #fff; } 
+.territory05  input::-moz-placeholder { color: #fff; } 
+.territory05  input::-moz-placeholder { color: #fff; } 
+
+.territory06  input:-ms-input-placeholder { color: #f3ea07; } 
+.territory06  input::-webkit-input-placeholder { color: #f3ea07; } 
+.territory06  input::-moz-placeholder { color: #f3ea07; } 
+.territory06  input::-moz-placeholder { color: #f3ea07; } 

@@ -1,0 +1,231 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+ 
+ body{font-family: 'Noto Sans KR', sans-serif;}
+
+.wrap{
+    padding: 25px;
+    /*padding: 30px 25px;*/
+}
+.box1{
+	position: relative;
+    padding-bottom: 15px;
+}
+ /*20180320*/
+ .btn_wrap{
+ 	text-align: center;
+    margin-top: 20px;
+ }
+/*20200131*/
+.btn_wrap2{
+    text-align: center;
+    margin: 10px 0;
+ }
+
+
+ /*20180320*/
+.btn {
+    width: 80%;
+    height: 40px;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #066bb0;
+    display: inline-block;
+    text-align: center;
+    line-height: 37px;
+    background-color: #066bb0;
+}
+
+.btn1{
+    width: 50px;
+    height: 30px;
+    font-size: 14px;
+    color: #066bb0;
+    border-radius: 5px;
+    border: 2px solid #066bb0;
+    display: inline-block;
+    text-align: center;
+    line-height: 29px;
+}
+.btn1.on{
+    color: #ffffff;
+    background: #066bb0;
+}
+
+.btn2 {
+    width: 80%;
+    height: 40px;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #066bb0;
+    display: inline-block;
+    text-align: center;
+    line-height: 37px;
+    background-color: #066bb0;
+}
+
+.btn.on{
+	color: #ffffff;
+	background: #066bb0;
+}
+.btn7{
+    width: 50px;
+    height: 30px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+    background: #3796d6;
+    border: 2px solid #3796d6;
+    display: inline-block;
+    text-align: center;
+    line-height: 29px;
+}
+
+.btn7.on{
+    color: #ffffff;
+    background: #066bb0;
+}
+
+.btn8{
+    width: 80%;
+    height: 30px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+    border: 2px solid #3796d6;
+    background:  #3796d6;
+    display: inline-block;
+    text-align: center;
+    line-height: 29px;
+}
+
+.btn8.on{
+    color: #ffffff;
+    background: #3796d6;
+}
+
+
+
+.title_first {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+
+.title_first p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.title {overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.title .left_title{float:left; font-size: 18px;}
+.title .right_tilte{float: right; color:#066bb0; }
+
+.btn_wrap img {width: 105px;}
+
+.box2 p{
+	color:red;
+	font-size: 14px;
+	line-height: 25px;}
+
+ .tap
+ {float: left;}
+
+ .tap img{width: 100%;float: left;}   
+
+.box_pay{
+    border: 1px solid #ccc;
+    background-color: #f6f6f6;
+}
+
+.box_pay p{
+    font-size: 14px;
+    clear: both;
+    padding: 15px;
+    line-height: 18px;
+
+}
+
+.box_pay .right_tilte{
+    float: right;
+    margin-top: 15px;
+}
+
+.box_pay .pay_div2{
+    float: left;
+}
+
+.box_pay .pay_div2 p{
+    display: inline-block;
+}
+
+.box_pay .pay_div2 p.price{
+    font-size: 22px;
+    font-weight: 500;
+    padding-right: 5px;
+    padding-top: 22px;
+    padding-bottom: 0;
+}
+
+.pdr15{
+    padding-right: 15px;
+}
+
+.i_use img{
+    float: right;
+}
+
+
+.section {
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+  height: auto;
+  max-height: 600px;
+}
+
+.section.collapsed {
+  max-height: 0;
+}
+.container {
+}
+.container .section {
+    margin-top: 10px;
+    word-break: keep-all;
+    line-height: 18px;
+    letter-spacing: -1px;
+}
+
+.container .section p{
+    float: left;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+button {
+    float: right;
+  cursor: pointer;
+  border:none;
+  background: #fff;
+}
+
+.box5 {
+    background-color: #066bb0;
+    padding: 3px 15px;
+}
+
+.box5 .title{
+    color: #fff;
+    padding-top: 5px;
+}
+
+.box5 .title p{
+    font-size: 18px;
+    padding: 0;
+}
+

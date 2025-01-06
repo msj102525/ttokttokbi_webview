@@ -1,0 +1,213 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.main {
+	position: relative;
+}
+
+.main img {
+	width: 100%;
+	height: 100%;
+}
+
+.main>img {
+	z-index: -1;
+}
+
+/*음식점템플릿*/
+.map {
+	width: 90%;
+	height: 36%;
+	position: absolute;
+	top: 3%;
+	left: 5%;
+}
+
+.territory01 {
+	width: 92%;
+	position: absolute;
+	left: 4%;
+	height: 8%;
+	top: 6%;
+}
+
+.photo {
+	width: 39%;
+	height: 29.7%;
+	position: absolute;
+	left: 3%;
+	top: 18%;
+	background: url('/images/photo06.jpg') no-repeat center center;
+	background-size: contain;
+}
+
+.photo_con {
+	width: 52%;
+	height: 29.7%;
+	position: absolute;
+	right: 3%;
+	top: 18%;
+	background: url('/images/photo07.jpg') no-repeat center center;
+	background-size: contain;
+}
+
+.territory02 {
+	width: 92%;
+	height: 15%;
+	position: absolute;
+	top: 52%;
+	left: 4%;
+}
+
+.territory03 {
+	width: 92%;
+	height: 10%;
+	position: absolute;
+	top: 70%;
+	left: 4%;
+}
+
+.territory04 {
+	width: 92%;
+	height: 5%;
+	position: absolute;
+	left: 4%;
+	top: 83%;
+}
+
+.input-text {
+	width: 100%;
+	border-radius: 5px;
+	height: 100%;
+	background-color: transparent;
+	font-weight: bold;
+	border: 1px #000 dotted;
+}
+
+textarea {
+	width: 100%;
+	height: 100%;
+	display: block;
+	margin: 0 auto;
+	border-radius: 5px;
+	background-color: transparent;
+	font-weight: 100;
+	line-height: 110%;
+	border: 1px #000 dotted;
+	font-family: 'Jeju Gothic', sans-serif;
+	resize: none
+}
+
+.territory01 input {
+	font-size: 28px;
+	text-align: center;
+	color: #000;
+	border: 1px #000 dotted;
+	height: initial;
+	box-sizing: border-box
+}
+
+.territory02 textarea {
+	font-size: 28px;
+	color: red;
+	text-align: center;
+	display: inline-block;
+	line-height: 130%;
+	box-sizing: border-box
+}
+
+.territory03 textarea {
+	font-size: 16px;
+	color: #000;
+	text-align: center;
+	line-height: 130%;
+	box-sizing: border-box
+}
+
+.territory04 input {
+	font-size: 12px;
+	text-align: center;
+	color: #000;
+	box-sizing: border-box
+}
+
+.tablelist {
+	float: left;
+	width: 50%;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	background-color: #428bca;
+	color: #fff;
+	font-weight: bold;
+	margin-top: -10px;
+}
+
+/*글자 컬러 변경*/
+.territory01  input:-ms-input-placeholder {
+	color: #000;
+}
+
+.territory01  input::-webkit-input-placeholder {
+	color: #000;
+}
+
+.territory01  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory01  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory02  textarea:-ms-input-placeholder {
+	color: red;
+}
+
+.territory02  textarea::-webkit-input-placeholder {
+	color: red;
+}
+
+.territory02  textarea::-moz-placeholder {
+	color: red;
+}
+
+.territory02  textarea::-moz-placeholder {
+	color: red;
+}
+
+.territory03  textarea:-ms-input-placeholder {
+	color: #000;
+}
+
+.territory03  textarea::-webkit-input-placeholder {
+	color: #000;
+}
+
+.territory03  textarea::-moz-placeholder {
+	color: #000;
+}
+
+.territory03  textarea::-moz-placeholder {
+	color: #000;
+}
+
+.territory04  input:-ms-input-placeholder {
+	color: #000;
+}
+
+.territory04  input::-webkit-input-placeholder {
+	color: #000;
+}
+
+.territory04  input::-moz-placeholder {
+	color: #000;
+}
+
+.territory04  input::-moz-placeholder {
+	color: #000;
+}

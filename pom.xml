@@ -1,0 +1,494 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.jyes.www</groupId>
+	<artifactId>bizcontents</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<profiles>
+		<!-- 개발서버배포 -->
+		<profile>
+			<id>jyes_dev_bizcontents</id>
+			<properties>
+				<tomcat.server>http://27.102.203.151:48080/manager/text</tomcat.server>
+				<tomcat.user>bizcontents</tomcat.user>
+				<tomcat.passwd>bizcontents!@34</tomcat.passwd>
+				<server.path>/</server.path>
+			</properties>
+		</profile>
+		<!-- 상용서버배포 -->
+		<profile>
+			<id>jyes_dep_bizcontents_01</id>
+			<properties>
+				<tomcat.server>http://210.122.7.130:48080/manager/text</tomcat.server>
+				<tomcat.user>bizcontents</tomcat.user>
+				<tomcat.passwd>bizcontents!@34</tomcat.passwd>
+				<server.path>/</server.path>
+			</properties>
+		</profile>
+		<!-- 상용서버배포 -->
+		<profile>
+			<id>jyes_dep_bizcontents_02</id>
+			<properties>
+				<tomcat.server>http://210.122.7.149:48080/manager/text</tomcat.server>
+				<tomcat.user>bizcontents</tomcat.user>
+				<tomcat.passwd>bizcontents!@34</tomcat.passwd>
+				<server.path>/</server.path>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<war.name>ROOT</war.name>
+		<java-version>1.8</java-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
+		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.codehaus.jackson.version>1.9.3</org.codehaus.jackson.version>
+		<org.mybatis.version>3.2.2</org.mybatis.version>
+		<org.mybatis.spring.version>1.2.0</org.mybatis.spring.version>
+		<jackson.databind-version>2.2.3</jackson.databind-version>
+		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<m2eclipse.wtp.contextRoot>/</m2eclipse.wtp.contextRoot>
+		<webapp.lib>${basedir}/src/main/webapp/WEB-INF/lib</webapp.lib>
+	</properties>
+
+	<repositories>
+
+		<repository>
+			<id>springbyexample.org</id>
+			<name>Spring by Example</name>
+			<url>http://www.springbyexample.org/maven/repo</url>
+		</repository>
+
+		<repository>
+			<id>org.clojars.smallrivers</id>
+			<name>simplecaptcha</name>
+			<url>http://clojars.org/repo</url>
+		</repository>
+
+		<repository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+	</repositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>webapp.lib</groupId>			<!-- Doesn't matter -->
+			<artifactId>commons-httpclient</artifactId>			<!-- Doesn't matter -->
+			<version>3.0</version>			<!-- Doesn't matter -->
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/commons-httpclient-3.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>webapp.lib</groupId>			<!-- Doesn't matter -->
+			<artifactId>ExecureCrypto</artifactId>			<!-- Doesn't matter -->
+			<version>1.0</version>			<!-- Doesn't matter -->
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/ExecureCrypto_v1.0_jdk14.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>webapp.lib</groupId>			<!-- Doesn't matter -->
+			<artifactId>INIpay</artifactId>			<!-- Doesn't matter -->
+			<version>50</version>			<!-- Doesn't matter -->
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/INIpay50.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>webapp.lib</groupId>			<!-- Doesn't matter -->
+			<artifactId>INIpayJAVA</artifactId>			<!-- Doesn't matter -->
+			<version>0</version>			<!-- Doesn't matter -->
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/INIpayJAVA.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>webapp.lib</groupId>			<!-- Doesn't matter -->
+			<artifactId>INIpaySample</artifactId>			<!-- Doesn't matter -->
+			<version>1.3</version>			<!-- Doesn't matter -->
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/INIpaySample_v1.3.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>webapp.lib</groupId>			<!-- Doesn't matter -->
+			<artifactId>xalan</artifactId>			<!-- Doesn't matter -->
+			<version>2.4.1</version>			<!-- Doesn't matter -->
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/xalan-2.4.1.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>webapp.lib</groupId>			<!-- Doesn't matter -->
+			<artifactId>xercesImpl</artifactId>			<!-- Doesn't matter -->
+			<version>0</version>			<!-- Doesn't matter -->
+			<scope>system</scope>
+			<systemPath>${webapp.lib}/xercesImpl.jar</systemPath>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<!-- <scope>runtime</scope> -->
+		</dependency>
+
+		<!-- log4j mybatis query log -->
+		<dependency>
+			<groupId>org.lazyluke</groupId>
+			<artifactId>log4jdbc-remix</artifactId>
+			<version>0.2.7</version>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.31</version>
+		</dependency>
+
+		<!-- spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- commons-dbcp -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${org.mybatis.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${org.mybatis.spring.version}</version>
+		</dependency>
+
+		<!-- Jackson(AtomFeedHttpMessageConverter) -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.databind-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
+		</dependency>
+
+		<!-- xml(AtomFeedHttpMessageConverter) -->
+		<dependency>
+			<groupId>net.java.dev.rome</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- fileupload CommonsMultipartResolver -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-urlshortener</artifactId>
+			<version>v1-rev48-1.22.0</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+
+		<!-- mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- Firebase Admin SDK  -->
+		<!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+		<!-- google in-app -->
+		<!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http -->
+		<dependency>
+			<groupId>com.google.auth</groupId>
+			<artifactId>google-auth-library-oauth2-http</artifactId>
+			<version>1.18.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.33.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.http-client</groupId>
+			<artifactId>google-http-client</artifactId>
+			<version>1.43.2</version>
+		</dependency>
+		<!-- Thanks for using https://jar-download.com -->
+		<!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-androidpublisher -->
+		<!-- https://github.com/googleapis/google-api-java-client-services/tree/main/clients/google-api-services-androidpublisher/v3 -->
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-androidpublisher</artifactId>
+			<version>v3-rev20230612-2.0.0</version>
+		</dependency>
+
+		<!-- 추가 -->
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+
+		<finalName>${war.name}</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<warSourceDirectory>src/main/webapp</warSourceDirectory>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
+
+			<!-- tomcat deploy plugin -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8081</port>
+					<path>/</path>
+					<warFile>target/${war.name}.war</warFile>
+					<url>${tomcat.server}</url>
+					<username>${tomcat.user}</username>
+					<password>${tomcat.passwd}</password>
+					<uriEncoding>UTF-8</uriEncoding>
+					<systemProperties>
+						<JAVA_OPTS>-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dfile.encoding=UTF-8</JAVA_OPTS>
+					</systemProperties>
+					<contextReloadable>true</contextReloadable>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+	<name>bizcontents</name>
+</project>

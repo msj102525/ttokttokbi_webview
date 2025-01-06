@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+        ">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Activates @Scheduled and @Async annotations for scheduling -->
+	<task:annotation-driven />	
+ 
+    <!-- annotation config & scan -->
+    <context:annotation-config />
+ 
+    <context:component-scan base-package="com.jyes.www">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.context.annotation.Configuration" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+    </context:component-scan>
+	
+    <!--
+        JSR-303 support will be detected on classpath and enabled automatically
+    -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.FormHttpMessageConverter">
+                <property name="charset">
+                    <bean class="java.nio.charset.Charset" factory-method="forName">
+                        <constructor-arg value="UTF-8"/>
+                    </bean>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.feed.AtomFeedHttpMessageConverter">
+                <property name="supportedMediaTypes" value="application/atom+xml" />
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                <property name="supportedMediaTypes" value="application/json" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+    <mvc:resources mapping="/images/**" location="/resources/images/" />
+    <mvc:resources mapping="/img/**" location="/resources/img/" />
+	<mvc:resources mapping="/js/**" location="/resources/js/" />
+	<mvc:resources mapping="/css/**" location="/resources/css/" />
+	<mvc:resources mapping="/fonts/**" location="/resources/fonts/" />
+	<!-- <mvc:resources mapping="/download/**" location="/resources/download/" /> -->
+	
+	<!-- <mvc:resources mapping="/admin/images/**" location="/resources/OpenPaaS_admin/images/" />
+	<mvc:resources mapping="/admin/js/**" location="/resources/OpenPaaS_admin/js/" />
+	<mvc:resources mapping="/admin/css/**" location="/resources/OpenPaaS_admin/css/" />
+	<mvc:resources mapping="/robots.txt" location="/resources/txt/" /> -->
+	
+	<mvc:interceptors>
+		<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+            <property name="cacheSeconds" value="0"/>
+            <property name="useExpiresHeader" value="true"/>
+            <property name="useCacheControlHeader" value="true"/>
+            <property name="useCacheControlNoStore" value="true"/>
+        </bean>
+        <mvc:interceptor>
+			<mvc:mapping path="/"/>
+        	<bean class="com.jyes.www.interceptor.CheckInterceptor" />
+        </mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- classpath 로딩시 locale parameter 가 정상적으로 동작하지 않음. <mvc:annotation-driven> 과 같은 파일내에서 사용 -->
+    <!-- <mvc:interceptors>
+    
+        <bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+            <property name="cacheSeconds" value="0"/>
+            <property name="useExpiresHeader" value="true"/>
+            <property name="useCacheControlHeader" value="true"/>
+            <property name="useCacheControlNoStore" value="true"/>
+        </bean>
+        
+        <mvc:interceptor>
+			<mvc:mapping path="/"/>
+			<mvc:mapping path="/privacyPolicy"/>
+			<mvc:mapping path="/F_clause"/>
+        	<mvc:mapping path="/introduce"/>
+        	<mvc:mapping path="/introduce/*"/>
+        	<mvc:mapping path="/introduce/**"/>
+        	<mvc:mapping path="/start"/>
+        	<mvc:mapping path="/start/*"/>
+        	<mvc:mapping path="/start/**"/>
+        	<mvc:mapping path="/community"/>
+        	<mvc:mapping path="/community/*"/>
+        	<mvc:mapping path="/community/**"/>
+        	<bean class="kr.cloudsc.openpaas.interceptor.UserAgentCheckInterceptor" />
+        </mvc:interceptor>
+        
+        <mvc:interceptor>
+        	<mvc:mapping path="/myapp/**"/>
+        	<mvc:mapping path="/myapp/*"/>
+        	<mvc:mapping path="/myapp"/>
+        	<mvc:mapping path="/apis/**"/>
+        	<mvc:mapping path="/apis/*"/>
+        	<mvc:mapping path="/apis"/>
+        	<bean class="kr.cloudsc.openpaas.interceptor.LoginCheckInterceptor" />
+        </mvc:interceptor>
+        
+        <mvc:interceptor>
+        	<mvc:mapping path="/admin"/>
+        	<mvc:mapping path="/admin/*"/>
+        	<mvc:mapping path="/admin/qna/**"/>
+        	<mvc:mapping path="/admin/member/**"/>
+        	<mvc:mapping path="/admin/notice/**"/>
+            <mvc:mapping path="/admin/resources/**"/>        	         	        	
+            <mvc:mapping path="/admin/api/**"/>
+        	<bean class="kr.cloudsc.openpaas.interceptor.AdminCheckInterceptor" />
+        </mvc:interceptor>
+        
+    </mvc:interceptors> -->
+    
+    <!-- 에러 페이지 설정입니다
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">error</prop>
+			</props>
+		</property>
+	</bean>   
+     -->
+
+	<!-- 뷰 이름과 동일한 이름을 갖는 빈 책체를 View 객체로 사용 출처: http://snoopy81.tistory.com/325 [영혼과영혼의양식] -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"> 
+		<property name="order" value="0"/> 
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+ 	<!-- <bean id="download" class="kr.cloudsc.openpaas.sample.util.DownloadView"></bean> -->
+ 	
+    <!-- view name tanslator http://egloos.zum.com/happy2ni/v/2838042 -->
+    <bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
+    
+    <!-- Dynamic tiles Define  -->
+    <!-- <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+    	<property name="definitions">
+    		<list>
+    			<value>/WEB-INF/tiles2-defs/templates.xml</value>
+    		</list>
+    	</property>    
+    </bean> -->
+    
+    <!-- <bean id="tilesViewResolver" class="org.springbyexample.web.servlet.view.tiles2.TilesUrlBasedViewResolver">
+    	<property name="viewClass" value="org.springbyexample.web.servlet.view.tiles2.DynamicTilesView" />
+    	<property name="prefix" value="/WEB-INF/views/jsp/" />
+    	<property name="suffix" value=".jsp" />
+    	<property name="tilesDefinitionName" value="default" />
+    	<property name="tilesBodyAttributeName" value="content" />
+    	<property name="tilesDefinitionDelimiter" value="." />
+    	<property name="contentType" value="text/html; charset=UTF-8" />
+    	<property name="order" value="1"  />
+    </bean> -->
+    
+    <!-- view resolver -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+                <entry key="xml"  value="application/xml" />
+                <entry key="do"   value="text/html" />
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/WEB-INF/views/jsp/" />
+                    <property name="suffix" value=".jsp" />
+                    <property name="order"  value="2"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean> -->
+	
+</beans>

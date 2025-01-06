@@ -1,0 +1,279 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {font-family: 'Jeju Gothic', sans-serif;}
+
+* {margin:0;padding:0;}
+dd img,img {vertical-align:top;}
+img,fieldset,abbr,iframe{border:0 none;}
+input,select,textarea,button {vertical-align:middle;}
+a {font-size:12px;color:#333;text-decoration:none;}
+a:hover {color:#2b4f91;}
+li {list-style:none;}
+address,caption,em{font-weight:normal;font-style:normal;}
+#edmWrap {margin:0 auto;}
+
+
+.main{
+	position: relative;
+}
+
+.main img{
+    width: 100%;
+    height: 100%;
+    }
+
+
+.main >img{
+    z-index: -1;
+}
+
+.photo {
+    width: 100%;
+    height: 41%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: url('/images/photo26.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+
+.territory01 {
+    width: 35%;
+    position: absolute;
+    left: 5%;
+    top: 42.5%;
+}
+
+
+.territory01 input{
+    font-size: 30px;
+    color: #000;
+    text-align: center;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.territory02 {
+    width: 50%;
+    position: absolute;
+    left: 48%;
+    top: 45%;
+}
+
+
+.territory02 input{
+    font-size: 22px;
+    color: #000;
+    text-align: center;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.territory03 {
+    width: 70%;
+    position: absolute;
+    left: 20%;
+    top: 54.5%;
+}
+
+.territory03 textarea{
+    font-size: 11px;
+    color: #fff;
+    line-height: 120%;
+    box-sizing:border-box
+}
+.territory04 {
+    width: 55%;
+    position: absolute;
+    left: 20%;
+    top: 67.5%;
+}
+
+.territory04 input{
+    font-size: 13px;
+    color: #fff;
+    text-align:left;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.territory05 {
+    width: 55%;
+    position: absolute;
+    left: 20%;
+    top: 79.5%;
+}
+
+.territory05 input{
+    font-size: 13px;
+    color: #fff;
+    text-align:left;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.territory06 {
+    width: 55%;
+    position: absolute;
+    left: 20%;
+    top: 91.5%;
+}
+
+.territory06 input{
+    font-size: 13px;
+    color: #fff;
+    text-align:left;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.icon1{
+        width: 9%;
+    position: absolute;
+    left: 3%;
+    top: 55%;
+}
+.icon1 input{
+    font-size: 15px;
+    color: #fff;
+    text-align:left;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.icon2{
+    width: 10%;
+    position: absolute;
+    left: 3%;
+    top: 67%;
+}
+.icon2 input{
+    font-size: 15px;
+    color: #fff;
+    text-align:left;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.icon3{
+    width: 10%;
+    position: absolute;
+    left: 3%;
+    top: 79%;
+}
+.icon3 input{
+    font-size: 15px;
+    color: #fff;
+    text-align:left;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.icon4{
+    width: 10%;
+    position: absolute;
+    left: 3%;
+    top: 91%;
+}
+.icon4 input{
+    font-size: 15px;
+    color: #fff;
+    text-align:left;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.input-text{
+    width:100%;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: bold;
+    border: 1px #ddd dotted;
+    height: 100%;
+    padding: 3px;
+}
+
+textarea {
+    width: 100%;
+    height: 110%;
+    display: block;
+    margin: 0 auto;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: 100;
+    line-height: 110%;
+    border: 1px #ddd dotted;
+    -ms-overflow-style:none;
+    resize:none;
+    padding: 3px 0 5px 0;
+    font-family: 'Jeju Gothic', sans-serif;
+}
+
+
+.tablelist {
+    float: left;
+    width: 50%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background-color: #428bca;
+    color: #fff;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+
+
+
+/*글자 컬러 변경*/
+.territory01 input:-ms-input-placeholder { color: #000; }
+.territory01 input::-webkit-input-placeholder { color: #000; } 
+.territory01 input::-moz-placeholder { color: #000; } 
+.territory01 input::-moz-placeholder { color: #000; }
+
+.territory02 input:-ms-input-placeholder { color: #1475bc; }
+.territory02 input::-webkit-input-placeholder { color: #1475bc; } 
+.territory02 input::-moz-placeholder { color: #1475bc; } 
+.territory02 input::-moz-placeholder { color: #1475bc; }
+
+.territory03 input:-ms-input-placeholder { color: #fff; }
+.territory03 input::-webkit-input-placeholder { color: #fff; } 
+.territory03 input::-moz-placeholder { color: #fff; } 
+.territory03 input::-moz-placeholder { color: #fff; }
+
+.territory04 input:-ms-input-placeholder { color: #fff; }
+.territory04 input::-webkit-input-placeholder { color: #fff; } 
+.territory04 input::-moz-placeholder { color: #fff; } 
+.territory04 input::-moz-placeholder { color: #fff; }
+
+.territory05 input:-ms-input-placeholder { color: #fff; }
+.territory05 input::-webkit-input-placeholder { color: #fff; } 
+.territory05 input::-moz-placeholder { color: #fff; } 
+.territory05 input::-moz-placeholder { color: #fff; }
+
+.territory06 input:-ms-input-placeholder { color: #fff; }
+.territory06 input::-webkit-input-placeholder { color: #fff; } 
+.territory06 input::-moz-placeholder { color: #fff; } 
+.territory06 input::-moz-placeholder { color: #fff; }
+
+.icon1  input:-ms-input-placeholder { color: #fff; }
+.icon1  input::-webkit-input-placeholder { color: #fff; } 
+.icon1  input::-moz-placeholder { color: #fff; } 
+.icon1  input::-moz-placeholder { color: #fff; }
+
+.icon2  input:-ms-input-placeholder { color: #fff; }
+.icon2  input::-webkit-input-placeholder { color: #fff; } 
+.icon2  input::-moz-placeholder { color: #fff; } 
+.icon2  input::-moz-placeholder { color: #fff; }
+
+.icon3  input:-ms-input-placeholder { color: #fff; }
+.icon3  input::-webkit-input-placeholder { color: #fff; } 
+.icon3  input::-moz-placeholder { color: #fff; } 
+.icon3  input::-moz-placeholder { color: #fff; }
+
+.icon4  input:-ms-input-placeholder { color: #fff; }
+.icon4  input::-webkit-input-placeholder { color: #fff; } 
+.icon4  input::-moz-placeholder { color: #fff; } 
+.icon4  input::-moz-placeholder { color: #fff; }

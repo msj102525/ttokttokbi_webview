@@ -1,0 +1,214 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {font-family: 'Jeju Gothic', sans-serif;}
+
+
+.main{
+	position: relative;
+}
+
+.main img{
+    width: 100%;
+    height: 100%;
+    }
+
+
+.main >img{
+    z-index: -1;
+}
+
+
+ /*음식점템플릿*/   
+
+.photo {
+    width: 100%;
+    height: 35%;
+    position: absolute;
+    top: 0px;
+    background: url('/images/photo01.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.photo img{
+    width: 100%;
+    height: 100%;
+    }
+
+.territory01 {
+    width: 26%;
+    height: 10%;
+    position: absolute;
+    right: 7%;
+    top: 32%;
+    background: url('/images/title.png') no-repeat center center;
+    background-size: contain;
+}
+
+
+.territory02 {
+    width: 57%;
+    position: absolute;
+    left: 3%;
+    top: 40%;
+}
+
+.territory01 img{
+   width: 100%;
+    height: 150%;
+}
+
+
+.territory03 {
+    width: 75%;
+    height: 11%;
+    position: absolute;
+    left: 3%;
+    top: 51%;
+}
+
+.territory04 {
+    width: 48%;
+    height: 10%;
+    position: absolute;
+    right: 13%;
+    top: 68%;
+}
+
+.photo_con{
+    width: 32%;
+    height: 12%;
+    position: absolute;
+    left: 3%;
+    top: 67%;
+    background: url('/images/photo02.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.territory05 {
+    width: 23%;
+    position: absolute;
+    left: 4%;
+    top: 85%;
+    height: 3%
+}
+
+.territory06 {
+    width: 55%;
+    position: absolute;
+    right:8%;
+    top: 85%;
+    height: 2%
+}
+
+
+.input-text{
+    width:100%;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: bold;
+    border: 1px #fff dotted;
+    height: 100%;
+    padding: 2%;
+}
+
+
+.territory02 input{
+    font-size: 20px;
+    color: #f3ea07
+}
+
+.territory05 input{
+    font-size: 12px;
+     color: #fff;
+     width: 111%;
+}
+
+.territory06 input{
+    font-size: 12px;
+    color: #f3ea07;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius :5px;
+    background-color:transparent;
+    font-weight: 100;
+    line-height: 145%;
+    border: 1px #fff dotted;
+    resize:none;
+    font-family: 'Jeju Gothic', sans-serif;
+    font-weight: 100;
+}
+
+.territory01 textarea{
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    top: 29%;
+    width: 80%;
+    left: 8%;
+}
+
+.territory03 textarea{
+    font-size: 10px;
+    color: #fff;
+}
+
+.territory04 textarea{
+    font-size: 10px;
+    line-height: 130%;
+    font-weight:none;
+    border: 1px #000 dotted;
+    color: #000;
+}
+
+.tablelist {
+    float: left;
+    width: 50%;
+    height: 30px;
+    text-align: center;
+    line-height: 50px;
+    background-color: #428bca;
+    color: #fff;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+
+
+
+/*글자 컬러 변경*/
+.territory01 textarea:-ms-input-placeholder { color: #fff; }
+.territory01 textarea::-webkit-input-placeholder { color: #fff; } 
+.territory01 textarea::-moz-placeholder { color: #fff; } 
+.territory01 textarea::-moz-placeholder { color: #fff; }
+
+.territory02  input:-ms-input-placeholder { color: #f3ea07; } 
+.territory02  input::-webkit-input-placeholder { color: #f3ea07; } 
+.territory02  input::-moz-placeholder { color: #f3ea07; } 
+.territory02  input::-moz-placeholder { color: #f3ea07; } 
+
+.territory03 textarea:-ms-input-placeholder { color: #fff; }
+.territory03 textarea::-webkit-input-placeholder { color: #fff; } 
+.territory03 textarea::-moz-placeholder { color: #fff; } 
+.territory03 textarea::-moz-placeholder { color: #fff; }
+
+.territory04 textarea:-ms-input-placeholder { color: #000; }
+.territory04 textarea::-webkit-input-placeholder { color: #000; } 
+.territory04 textarea::-moz-placeholder { color: #000; } 
+.territory04 textarea::-moz-placeholder { color: #000; }
+
+.territory05  input:-ms-input-placeholder { color: #fff; } 
+.territory05  input::-webkit-input-placeholder { color: #fff; } 
+.territory05  input::-moz-placeholder { color: #fff; } 
+.territory05  input::-moz-placeholder { color: #fff; } 
+
+.territory06  input:-ms-input-placeholder { color: #f3ea07; } 
+.territory06  input::-webkit-input-placeholder { color: #f3ea07; } 
+.territory06  input::-moz-placeholder { color: #f3ea07; } 
+.territory06  input::-moz-placeholder { color: #f3ea07; } 

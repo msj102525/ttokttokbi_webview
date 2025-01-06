@@ -1,0 +1,31 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+ 
+ body{font-family: 'Noto Sans KR', sans-serif;}
+
+ul, ol {
+    list-style: none;
+}
+
+/*qanda*/
+
+.wrap{
+    padding: 20px 0;
+    text-align: center;
+    margin: 0 15px;
+}
+
+table{
+    text-align: center;
+    width: 100%;
+}
+th{
+    padding: 10px;
+    background-color: #ddd;
+}
+
+tr td{
+    padding: 10px;
+    border:1px solid #ddd;
+}

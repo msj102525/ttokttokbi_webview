@@ -1,0 +1,165 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+ 
+ body{font-family: 'Noto Sans KR', sans-serif;}
+ /*20180320*/
+.wrap {
+    padding: 0 29px;
+}
+
+.box1{
+	position: relative;
+}
+ .btn_wrap{
+ 	text-align: center;
+    margin-top: 20px;
+ }
+.btn {
+    width: 80%;
+    height: 40px;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #838383;
+    display: inline-block;
+    text-align: center;
+    line-height: 37px;
+    background-color: #838383;
+}
+.btn.on{
+	color: #ffffff;
+	background: #838383;
+}
+
+.title_first{overflow: hidden;
+     margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.title_first p{
+	font-size: 16px;
+	font-weight: bold;
+	color: #000;
+    padding-left: 20px;}
+
+.title {overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.title p{font-size: 16px;}
+
+.title .left_title{float:left; }
+.title .right_tilte{float: right;}
+.title .right_tilte img{
+	vertical-align: middle;
+    margin-top: -3px;
+}
+
+.btn_wrap img {width: 105px;}
+
+ /*20180320*/
+.box2 {
+    margin-top: 20px;
+    background-color: #f6f6f6;
+    padding: 22px;
+    border-radius: 10px;
+}
+.box2 p{
+	font-size: 14px;
+	line-height: 25px;}
+
+.box2 p span{
+	text-decoration: line-through;
+	color:red;
+	}
+
+.box3{
+	margin-top: 35px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.btn_white_wrap{
+	text-align: center;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.btn_white{
+	width: 105px;
+	height: 30px;
+	font-size: 14px;
+	color: #000000;
+	border-radius: 5px;
+	border: 2px solid #c1cacf;
+	display: inline-block;
+    text-align: center;
+    line-height: 29px;
+    float: left; 
+}
+
+.btn_white.on{
+	color: #ffffff;
+	background: #c1cacf;
+}
+
+.btn_white1{
+	width: 105px;
+	height: 30px;
+	font-size: 14px;
+	color: #000000;
+	border-radius: 5px;
+	border: 2px solid #c1cacf;
+	display: inline-block;
+    text-align: center;
+    line-height: 29px;
+    float: left; 
+}
+
+.btn_white1.on{
+	color: #ffffff;
+	background: #c1cacf;
+}
+
+.box4{
+	margin-top: 25px;
+}
+
+.box4 p{
+	color:red;
+	font-size: 14px;
+	line-height: 25px;
+	padding: 0 20px;
+}
+
+ /*20180320*/
+.box5 {
+    margin-top: 20px;
+    padding: 20px 0px 0px 0px;
+}
+
+.box6{
+	margin-top: 20px;
+    padding: 10px 22px 22px 22px;
+}
+
+
+.box6 p{
+	text-decoration: underline;
+	color: #ccc;
+}
+
+/*20180320*/
+.box2 input{
+	width: 100%;
+	margin-top: 10px;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.box2 .right_tilte{
+	color: #066bb0;
+	font-size: 17px;
+}
+

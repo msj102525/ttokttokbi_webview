@@ -1,0 +1,56 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+ 
+ body{font-family: 'Noto Sans KR', sans-serif;}
+
+.wrap{
+	padding: 0 29px;
+}
+.box1{
+	position: relative;
+}
+
+ .btn_wrap{
+ 	text-align: center;
+    margin-top: 20px;
+ }
+
+.btn {
+    width: 80%;
+    height: 40px;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #858585;
+    display: inline-block;
+    text-align: center;
+    line-height: 37px;
+    background-color: #858585;
+}
+
+.btn.on{
+	color: #ffffff;
+	background: #656565;
+}
+
+.title {overflow: hidden;
+     margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.title p{font-size: 16px;}
+
+.title .left_title{float:left; }
+.title .right_tilte{float: right; color:#066bb0; }
+
+.btn_wrap img {width: 105px;}
+
+.box2{
+	margin-top: 40px;
+}
+
+.box2 p{
+	color:red;
+	font-size: 14px;
+	line-height: 25px;}

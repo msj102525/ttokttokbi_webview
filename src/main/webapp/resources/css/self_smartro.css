@@ -1,0 +1,115 @@
+@charset "utf-8"; /* NHN Web Standard 2Team MJA 111025 */  
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+ 
+ body{font-family: 'Noto Sans KR', sans-serif;}
+
+.wrap{
+	padding: 30px 25px;
+}
+.box1{
+	position: relative;
+	margin-top: 27px;
+}
+
+.box1 p{
+	font-size: 15px;
+}
+
+.box2 p{
+	font-size: 13px;
+}
+
+ .btn_wrap{
+ 	text-align: center;
+    margin-top: 20px;
+ }
+
+.btn {
+    width: 80%;
+    height: 40px;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #858585;
+    display: inline-block;
+    text-align: center;
+    line-height: 37px;
+    background-color: #858585;
+}
+
+.btn.on{
+	color: #ffffff;
+	background: #656565;
+}
+
+.title {overflow: hidden;
+     margin-top:13px;
+    margin-bottom: 13px;
+}
+
+
+
+.title .left_title{float:left; }
+.title .right_tilte{float: right;}
+
+.btn_wrap img {width: 105px;}
+
+.box3{
+	margin-top: 13px;
+}
+
+.box3 p{
+	color:red;
+	font-size: 13px;
+}
+
+
+/*스마트로 추가*/
+
+.red {
+    border: 1px solid #ec5753;
+    background-color: #ec5753;
+}
+
+/*20190328*/
+.title_first p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    padding-left: 20px;
+}
+
+.box2 {
+    margin-top: 20px;
+    background-color: #f6f6f6;
+    padding: 22px;
+    border-radius: 10px;
+}
+
+.box2 p {
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.box4 {
+    margin-top: 25px;
+}
+
+.box4 p {
+    color: red;
+    font-size: 14px;
+    line-height: 25px;
+    padding: 0 20px;
+}
+
+.box2 .right_tilte {
+    color: red;
+    font-size: 20px;
+}
+
+.box3 {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    text-align: center;
+}

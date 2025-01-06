@@ -1,0 +1,60 @@
+# Eclipse
+.metadata/
+.settings/
+.classpath
+.project
+.springBeans
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code
+.vscode/
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Logs
+logs/
+*.log
+src/main/resources/logs/
+
+# Test
+src/test/*
+
+# Compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# Configuration files (preserve specific ones)
+!mybatis-config.xml
+!src/main/resources/mapper/*
+!etc/*
+
+# Version Control
+.svn/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Google Cloud Service Account Credentials
+src/main/resources/com/jyes/www/google/billing/api-*.json

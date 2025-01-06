@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyes.www.mapper.TemplateMapper">
+
+	<!-- <resultMap id="userMap" type="kr.cloudsc.openpaas.sample.vo.UserVo">
+        <result property="email"    column="EMAIL" />
+        <result property="public_nm" column="PUBLIC_NM"/>
+        <result property="mobile_num" column="MOBILE_NUM"/>
+        <result property="passwd" column="PASSWD"/>
+        <result property="update_dt" column="UPDATE_DT"/>
+        <result property="insert_dt" column="INSERT_DT"/>
+        <result property="status" column="STATUS"/>
+        <result property="charge_nm" column="CHARGE_NM"/>
+        <result property="re_contents" column="RE_CONTENTS"/>
+        <result property="file_path" column="FILE_PATH"/>
+        <result property="file_nm" column="FILE_NM"/>
+        <result property="user_seq" column="USER_SEQ"/>
+        <result property="gear_cnt" column="gear_cnt"/>
+        <result property="gear_kind" column="gear_kind"/>
+    </resultMap> -->
+    
+    <!-- resultType="com.jyes.www.vo.sample.SampleVo" -->
+    <!-- parameterType="com.jyes.www.vo.sample.SampleVo" -->
+	<!-- <select id="selectOne" resultMap="userMap" parameterType="String">
+		SELECT PUBLIC_NM FROM TB_USER WHERE EMAIL=#{email}
+	</select> -->
+    
+	<!-- <select id="selectOne" resultType="String">
+		select now()
+	</select>
+    
+	<insert id="insertData" parameterType="com.jyes.www.vo.sample.SampleVo">
+		insert into tb_template (user_name, user_age, insert_date) values (#{user_name}, #{user_age}, now())
+	</insert>
+    
+	<select id="selectDataList" resultType="com.jyes.www.vo.sample.SampleVo">
+		select * from tb_template;
+	</select> -->
+	
+	<select id="selectContents" parameterType="com.jyes.www.vo.TemplateVo" resultType="com.jyes.www.vo.TemplateVo">
+		select * from t_smart_contents_tb 
+		where TEMPLATE_SEQ = #{template_seq} and TEMPLATE_TYPE_CODE = #{template_type_code} and ACCESS_SEQ = (
+		SELECT SEQ FROM T_SMART_ACCESS_TB 
+		WHERE ID = #{id} 
+		<choose>
+	    <when test="affiliates_code==''">
+		AND AFFILIATES_CODE IS NULL
+	    </when>
+	    <otherwise>
+		AND AFFILIATES_CODE = #{affiliates_code}
+	    </otherwise>
+	    </choose>
+	    )
+	</select>
+	
+	<update id="updateContents" parameterType="com.jyes.www.vo.TemplateVo">
+		update
+		t_smart_contents_tb SET
+		IMAGE_URL = #{image_url}
+		,TEXT = #{text}
+		,SYNTHESIS_IMAGE_URL = #{synthesis_image_url}
+		,DATE = now()
+		,IMAGE_URL_b = #{image_url_b}
+		,IMAGE_URL_c = #{image_url_c}
+		,IMAGE_URL_d = #{image_url_d}
+		,IMAGE_URL_e = #{image_url_e}
+		,TEXT_b = #{text_b}
+		,TEXT_c = #{text_c}
+		,TEXT_d = #{text_d}
+		,TEXT_e = #{text_e}
+		,TEXT_f = #{text_f}
+		,TEXT_g = #{text_g}
+		,TEXT_h = #{text_h}
+		,TEXT_i = #{text_i}
+		,TEXT_j = #{text_j}
+		WHERE TEMPLATE_SEQ = #{template_seq} and TEMPLATE_TYPE_CODE = #{template_type_code} and ACCESS_SEQ = (
+		SELECT SEQ FROM T_SMART_ACCESS_TB 
+		WHERE ID = #{id} 
+		<choose>
+	    <when test="affiliates_code==''">
+		AND AFFILIATES_CODE IS NULL
+	    </when>
+	    <otherwise>
+		AND AFFILIATES_CODE = #{affiliates_code}
+	    </otherwise>
+	    </choose>
+	    )
+	</update>
+	
+	<insert id="insertContents" parameterType="com.jyes.www.vo.TemplateVo">
+	insert into t_smart_contents_tb (
+	IMAGE_URL
+	,TEXT
+	,SYNTHESIS_IMAGE_URL
+	,IS_CHECK
+	,URL
+	,DATE
+	,ACCESS_SEQ
+	,TEMPLATE_SEQ
+	,TEMPLATE_TYPE_CODE
+	,IMAGE_URL_b
+	,IMAGE_URL_c
+	,IMAGE_URL_d
+	,IMAGE_URL_e
+	,TEXT_b
+	,TEXT_c
+	,TEXT_d
+	,TEXT_e
+	,TEXT_f
+	,TEXT_g
+	,TEXT_h
+	,TEXT_i
+	,TEXT_j
+	) VALUES (
+	#{image_url}
+	,#{text}
+	,#{synthesis_image_url}
+	,'N'
+	,#{url}
+	,now()
+	,(
+	SELECT SEQ FROM T_SMART_ACCESS_TB
+	WHERE ID = #{id}
+	<choose>
+		<when test="affiliates_code==''">
+			AND AFFILIATES_CODE IS NULL
+		</when>
+		<otherwise>
+			AND AFFILIATES_CODE = #{affiliates_code}
+		</otherwise>
+	</choose>
+	)
+	,#{template_seq}
+	,#{template_type_code}
+	,#{image_url_b}
+	,#{image_url_c}
+	,#{image_url_d}
+	,#{image_url_e}
+	,#{text_b}
+	,#{text_c}
+	,#{text_d}
+	,#{text_e}
+	,#{text_f}
+	,#{text_g}
+	,#{text_h}
+	,#{text_i}
+	,#{text_j}
+	)
+</insert>
+	
+</mapper>
