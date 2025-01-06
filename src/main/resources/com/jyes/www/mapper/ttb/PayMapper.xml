@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyes.www.mapper.PayMapper">
+
+	<select id="selectUserInfo" parameterType="com.jyes.www.vo.AccessVo" resultType="com.jyes.www.vo.AccessVo">
+		SELECT * 
+		FROM T_SMART_ACCESS_TB 
+		where 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code}
+	</select>
+    
+    <select id="selectPay" parameterType="com.jyes.www.vo.PayCustomVo" resultType="String">
+		SELECT SEQ 
+		FROM T_SMART_PAY_TB 
+		WHERE BIZ_SEQ = (SELECT BIZ_SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code})
+    </select>
+    
+    <select id="selectPayTypeWhereCode" parameterType="com.jyes.www.vo.PayTypeVo" resultType="com.jyes.www.vo.PayTypeVo">
+        select * from T_SMART_PAY_TYPE_TB
+        where CODE = #{code}
+    </select>
+
+    <select id="selectPayTypeIsTicketUseDayAndIsMakeCount" parameterType="com.jyes.www.vo.PayCustomVo" resultType="com.jyes.www.vo.PayCustomVo">
+        SELECT 
+        IFNULL((
+		SELECT USE_DAY FROM T_SMART_PAY_TYPE_TB
+		WHERE CODE = #{pay_type_code}),0) 
+		AS "USE_DAY", 
+		IFNULL((
+		SELECT MAKE_COUNT FROM T_SMART_MAKE_PRODUCTION_COUNT_INFO_TB
+		WHERE PAY_TYPE_CODE = #{pay_type_code}),0) 
+		AS "MAKE_COUNT";
+    </select>
+    
+    <insert id="insertPay" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO T_SMART_PAY_TB(COMPANY, NUM, AVAILABLE_Y, AVAILABLE_M, CVC, DATE, BIZ_SEQ)
+		VALUES(#{company}, '0000-0000-0000-0000', '00', '00', '000', now(), 
+		(SELECT BIZ_SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}))
+    </insert>
+    
+    <insert id="insertPaySuccess" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO T_SMART_PAY_SUCCESS_TB(COMPANY, NUM, AVAILABLE_Y, AVAILABLE_M, CVC, PAYMENT, P_TID, P_AUTH_DT, SUCCESS, DATE, PAY_SEQ, PAY_TYPE_CODE, P_OID)
+		VALUES(#{company}, '0000-0000-0000-0000', '00', '00', '000', #{p_type}, #{p_tid}, #{p_auth_dt}, 'Y', now(), #{pay_seq}, #{pay_type_code}, #{o_id})
+    </insert>
+    
+    <insert id="insertUserTicketsInfo" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO T_SMART_USER_TICKETS_INFO_TB(START_DATE, EXPIRATION_DATE
+		<if test='is_pay_wl == "Y"'>
+		, START_DATE_WL
+		, EXPIRATION_DATE_WL
+		</if>
+		, DATE, ACCESS_SEQ, PAY_SUCCESS_SEQ, PAY_TYPE_CODE, PAY_BILL_SEQ) 
+		VALUES (
+		(SELECT IFNULL((
+		SELECT DATE_ADD(MAX(EXPIRATION_DATE), INTERVAL 1 SECOND) AS "EXPIRATION_DATE" 
+		FROM (SELECT A.* FROM T_SMART_USER_TICKETS_INFO_TB A
+	    LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B
+	    ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ
+	    AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'')
+	    WHERE B.SEQ IS NULL) A
+		WHERE 1=1 
+		AND ACCESS_SEQ = (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}) 
+		AND EXPIRATION_DATE > now()), now()) AS START_DATE)
+		, DATE_ADD((SELECT IFNULL((
+		SELECT DATE_ADD(MAX(EXPIRATION_DATE), INTERVAL 1 SECOND) AS "EXPIRATION_DATE" 
+		FROM (SELECT A.* FROM T_SMART_USER_TICKETS_INFO_TB A
+	    LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B
+	    ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ
+	    AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'')
+	    WHERE B.SEQ IS NULL) A 
+		WHERE 1=1 
+		AND ACCESS_SEQ = (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}) 
+		AND EXPIRATION_DATE > now()), now()) AS START_DATE), INTERVAL +(SELECT USE_DAY FROM T_SMART_PAY_TYPE_TB WHERE CODE = #{pay_type_code}) DAY)
+		<if test='is_pay_wl == "Y"'>
+		,
+		(SELECT IFNULL((
+		SELECT DATE_ADD(MAX(IF(IFNULL(IS_PAY_WL, 'N')='Y',EXPIRATION_DATE_WL,EXPIRATION_DATE)), INTERVAL 1 SECOND) AS "EXPIRATION_DATE"  
+		FROM (
+		SELECT A.*, C.is_pay_wl FROM T_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ 
+		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
+		LEFT JOIN T_SMART_PAY_TYPE_TB C 
+		ON A.PAY_TYPE_CODE = C.CODE 
+		WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND C.SEQ IS NOT NULL
+		) A 
+		WHERE 1=1 
+		AND ACCESS_SEQ = (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}) 
+		AND IFNULL(is_pay_wl, 'N') = 'Y' 
+		AND EXPIRATION_DATE > NOW()), NOW()) AS START_DATE)
+		, 
+		(SELECT DATE_ADD(
+		(SELECT IFNULL((
+		SELECT DATE_ADD(MAX(IF(IFNULL(IS_PAY_WL, 'N')='Y',EXPIRATION_DATE_WL,EXPIRATION_DATE)), INTERVAL 1 SECOND) AS "EXPIRATION_DATE"  
+		FROM (
+		SELECT A.*, C.is_pay_wl FROM T_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ 
+		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
+		LEFT JOIN T_SMART_PAY_TYPE_TB C 
+		ON A.PAY_TYPE_CODE = C.CODE 
+		WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND C.SEQ IS NOT NULL
+		) A 
+		WHERE 1=1 
+		AND ACCESS_SEQ = (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}) 
+		AND IFNULL(is_pay_wl, 'N') = 'Y' 
+		AND EXPIRATION_DATE > NOW()), NOW()) AS START_DATE), 
+		INTERVAL +(SELECT USE_DAY FROM T_SMART_PAY_TYPE_TB WHERE CODE = #{pay_type_code}) DAY))
+		</if>
+		,
+		now(), (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}), #{pay_success_seq}, #{pay_type_code}, #{pay_bill_seq})
+    </insert>
+    
+    <insert id="insertMakeProductionRequest" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO T_SMART_MAKE_PRODUCTION_REQUEST_TB(DATE,ACCESS_SEQ,PAY_SUCCESS_SEQ, PAY_BILL_SEQ)
+		VALUES(now(), (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}), #{pay_success_seq}, #{pay_bill_seq})
+    </insert>
+    
+    <insert id="insertPayBill" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO T_SMART_PAY_BILL_TB(URL, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, BATCH_DATE, AUTH_DT, DATE, PAY_SUCCESS_SEQ, OID, G_AUTH_DT) 
+		VALUES (#{url}, #{price}, #{currency}, #{goodname}, #{buyername}, #{buyertel}, #{buyeremail}, #{cardquota}, #{billkey}, #{p_tid}, 
+		<choose>
+		<when test='batch_date != null and batch_date != ""'>
+		#{batch_date}
+		</when>
+		<otherwise>
+		ADDDATE(
+		(
+		SELECT IFNULL(MAX(IF(IS_PAY_WL='N', EXPIRATION_DATE, EXPIRATION_DATE_WL)),NOW()) FROM (
+		SELECT A.*, IFNULL(#{is_pay_wl}, 'N') AS "IS_PAY_WL" FROM T_SMART_USER_TICKETS_INFO_TB A LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ 
+		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
+		LEFT JOIN T_SMART_PAY_TYPE_TB C 
+		ON A.PAY_TYPE_CODE = C.CODE 
+		WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND A.EXPIRATION_DATE &gt; NOW() 
+		) A 
+		WHERE ACCESS_SEQ = (SELECT SEQ FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code})
+		)
+		, INTERVAL (SELECT USE_DAY-1 FROM T_SMART_PAY_TYPE_TB WHERE CODE = (SELECT PAY_TYPE_CODE FROM T_SMART_PAY_SUCCESS_TB WHERE SEQ = #{pay_success_seq})) DAY)
+		</otherwise>
+		</choose>
+		, #{p_auth_dt}, now(), #{pay_success_seq}, #{o_id}, #{g_auth_dt})
+    </insert>
+    
+    <select id="selectPayNameCompany" parameterType="com.jyes.www.vo.PayNameCompanyVo" resultType="com.jyes.www.vo.PayNameCompanyVo">
+		SELECT IF(IFNULL(A.NAME, B.COMPANY)='', B.COMPANY, IFNULL(A.NAME, B.COMPANY)) AS NAME 
+		FROM (SELECT * FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}) A
+		LEFT JOIN T_SMART_BIZ_TB B
+		ON A.BIZ_SEQ = B.SEQ
+    </select>
+    
+    <select id="selectPayBillBatchList" resultType="com.jyes.www.vo.PayCustomVo">
+		SELECT SEQ, ACCESS_SEQ, PAY_TYPE_CODE, ID,AFFILIATES_CODE, URL, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, PAY_SUCCESS_SEQ, IS_BATCH_YN, P_TYPE, P_TID FROM (
+		SELECT D.ID, D.AFFILIATES_CODE, D.SEQ AS "ACCESS_SEQ", C.CODE AS "PAY_TYPE_CODE",  A.*, A.BATCH_YN AS "IS_BATCH_YN", DATE_FORMAT(BATCH_DATE,"%Y-%m-%d") AS "CRON_DATE", E.PAYMENT AS "P_TYPE", A.TID AS "P_TID" FROM 
+		(
+		SELECT * FROM 
+		T_SMART_PAY_BILL_TB 
+		WHERE PAY_SUCCESS_SEQ IS NOT NULL
+		) A
+		INNER JOIN
+		(
+		SELECT * 
+		FROM (SELECT A.* FROM T_SMART_USER_TICKETS_INFO_TB A
+	    LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B
+	    ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ
+	    AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'')
+	    WHERE B.SEQ IS NULL) A
+		WHERE PAY_TYPE_CODE IN ('P0009','P0012','P0032','P0033','P0045','P0046')
+		AND PAY_SUCCESS_SEQ IS NOT NULL
+		) B
+		ON A.SEQ = B.PAY_BILL_SEQ
+		LEFT JOIN
+		T_SMART_PAY_TYPE_TB C
+		ON B.PAY_TYPE_CODE = C.CODE
+		LEFT JOIN 
+		T_SMART_ACCESS_TB D
+		ON D.SEQ = B.ACCESS_SEQ
+		LEFT JOIN 
+		T_SMART_PAY_SUCCESS_TB E
+		ON E.SEQ = A.PAY_SUCCESS_SEQ
+		) A
+		WHERE 1=1  
+		AND IS_BATCH_YN IS NULL
+		AND CRON_DATE &lt;= DATE_FORMAT(NOW(),"%Y-%m-%d")
+    </select>
+    
+    <insert id="insertPayBillBatch" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO T_SMART_PAY_BILL_TB(URL, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, BATCH_DATE, AUTH_DT, DATE, PAY_SUCCESS_SEQ, OID, G_AUTH_DT) 
+		VALUES (#{url}, #{price}, #{currency}, #{goodname}, #{buyername}, #{buyertel}, #{buyeremail}, #{cardquota}, #{billkey}, #{p_tid}, 
+		<choose>
+		<when test='batch_date != null and batch_date != ""'>
+		#{batch_date} 
+		</when>
+		<otherwise>
+		ADDDATE(
+		(
+		SELECT IFNULL(MAX(IF(IS_PAY_WL='N', EXPIRATION_DATE, EXPIRATION_DATE_WL)),NOW()) FROM (
+		SELECT A.*, IFNULL(#{is_pay_wl}, 'N') AS "IS_PAY_WL" FROM T_SMART_USER_TICKETS_INFO_TB A LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ 
+		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
+		LEFT JOIN T_SMART_PAY_TYPE_TB C 
+		ON A.PAY_TYPE_CODE = C.CODE 
+		WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND A.EXPIRATION_DATE &gt; NOW() 
+		) A 
+		WHERE ACCESS_SEQ = (SELECT SEQ FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code})
+		)
+		, INTERVAL (SELECT USE_DAY-1 FROM T_SMART_PAY_TYPE_TB WHERE CODE = (SELECT PAY_TYPE_CODE FROM T_SMART_PAY_SUCCESS_TB WHERE SEQ = #{pay_success_seq})) DAY)
+		</otherwise>
+		</choose>
+		,#{p_auth_dt}, now(), #{pay_success_seq}, #{o_id}, #{g_auth_dt})
+    </insert>
+    
+    <update id="updatePayBillBatchYn" parameterType="string">
+        UPDATE T_SMART_PAY_BILL_TB SET 
+        BATCH_YN = 'Y' 
+        WHERE SEQ = #{seq}
+    </update>
+    
+    <select id="selectUserUsePayCode" parameterType="com.jyes.www.vo.PayCustomVo" resultType="com.jyes.www.vo.UserUsePayVo">
+	    SELECT 
+		GROUP_CONCAT(TICKETS_CODE SEPARATOR ',') AS USE_PAY_CODES, 
+		IF(SUM(IF(IS_PAY_RP='Y',IF(IFNULL(BATCH_YN,'')='',1,0),0))>0,'Y','N') AS IS_PAY_RP 
+		FROM (
+		SELECT B.TICKETS_CODE, B.IS_PAY_RP, B.DATE, B.BATCH_YN 
+		FROM (
+		SELECT * FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code}
+		) A
+		LEFT JOIN (
+		SELECT A.*,C.CODE AS "TICKETS_CODE", C.IS_PAY_RP, D.BATCH_YN 
+		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ 
+		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
+		LEFT JOIN T_SMART_PAY_TYPE_TB C 
+		ON A.PAY_TYPE_CODE = C.CODE 
+		LEFT JOIN T_SMART_PAY_BILL_TB D 
+		ON A.PAY_BILL_SEQ = D.SEQ 
+		WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND C.NAME IS NOT NULL 
+		AND A.EXPIRATION_DATE >= NOW()
+		) B
+		ON A.SEQ = B.ACCESS_SEQ
+		) A
+    </select>
+    
+    <insert id="insertPayBillFail" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO T_SMART_PAY_BILL_FAIL_INFO_TB(ACCESS_SEQ, PAY_SUCCESS_SEQ, PAY_BILL_SEQ, ERROR_CODE, ERROR_MSG, DATE) 
+		VALUES (#{access_seq}, #{pay_success_seq}, #{pay_bill_seq}, #{error_code}, #{error_msg}, NOW())
+    </insert>
+    
+    <update id="updatePayBillBatch" parameterType="com.jyes.www.vo.PayCustomVo" >
+        UPDATE T_SMART_PAY_BILL_TB SET 
+        BATCH_YN = #{batch_yn} 
+        WHERE SEQ = #{pay_bill_seq}
+    </update>
+    
+    <select id="selectAccess" parameterType="com.jyes.www.vo.AccessVo" resultType="com.jyes.www.vo.AccessVo">
+		SELECT * FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code}
+    </select>
+    
+    <select id="selectOid" parameterType="com.jyes.www.vo.CreateOidVo" resultType="long">
+		SELECT OID FROM T_SMART_CREATE_OID_TB 
+		WHERE 1=1 
+		AND SEQ = #{seq}
+    </select>
+    
+    <insert id="insertCreateOid" parameterType="com.jyes.www.vo.CreateOidVo" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO T_SMART_CREATE_OID_TB(OID,DATE)
+		VALUES((SELECT IFNULL((SELECT OID+1 FROM (
+		SELECT * FROM T_SMART_CREATE_OID_TB A ORDER BY OID + 0 DESC LIMIT 1
+		) A),1)),NOW());
+    </insert>
+    
+    <insert id="insertStorePurchaseInfo" parameterType="com.jyes.www.vo.StorePurchaseInfoVo">
+    	INSERT INTO T_SMART_STORE_PURCHASE_INFO_TB(O_ID, P_CODE, P_NAME, P_PRICE, P_COUNT, PAYMENT, STORE_TYPE, SIM, GOOGLEADID, IS_SEND, DATE, ACCESS_SEQ)
+		VALUES(#{o_id}, #{p_code}, #{p_name}, #{p_price}, #{p_count}, #{payment}, #{store_type}, #{sim}, #{googleadid}, 'N', NOW(), (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}))
+    </insert>
+    
+    <update id="updateStorePurchaseInfo" parameterType="com.jyes.www.vo.StorePurchaseInfoVo">
+		UPDATE T_SMART_STORE_PURCHASE_INFO_TB SET 
+		IS_SEND = #{is_send}, 
+		S_DATE = NOW() 
+		WHERE 1=1 
+		AND O_ID = #{o_id}
+    </update>
+    
+    <insert id="insertStoreCancelInfo" parameterType="com.jyes.www.vo.StoreCancelInfoVo">
+    	INSERT INTO T_SMART_STORE_CANCEL_INFO_TB(O_ID, P_CODE, P_NAME, P_PRICE, P_COUNT, PAYMENT, STORE_TYPE, SIM, GOOGLEADID, IS_SEND, DATE, ACCESS_SEQ)
+		VALUES(#{o_id}, #{p_code}, #{p_name}, #{p_price}, #{p_count}, #{payment}, #{store_type}, #{sim}, #{googleadid}, 'N', NOW(), (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}))
+    </insert>
+    
+    <update id="updateStoreCancelInfo" parameterType="com.jyes.www.vo.StoreCancelInfoVo">
+		UPDATE T_SMART_STORE_CANCEL_INFO_TB SET 
+		IS_SEND = #{is_send}, 
+		S_DATE = NOW() 
+		WHERE 1=1 
+		AND O_ID = #{o_id}
+    </update>
+    
+    <insert id="insertSmartroPurchaseInfo" parameterType="com.jyes.www.vo.SmartroPurchaseInfoVo">
+    	INSERT INTO T_SMART_SMARTRO_PURCHASE_INFO_TB(HP_NO, ID_SEQ, O_ID, P_CODE, P_NAME, P_PRICE, P_COUNT, PAYMENT, APRV_GBN, IS_SEND, DATE, ACCESS_SEQ)
+		VALUES(#{hp_no}, #{id_seq}, #{o_id}, #{p_code}, #{p_name}, #{p_price}, #{p_count}, #{payment}, #{aprv_gbn},'N', NOW(), (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}))
+    </insert>
+    
+    <update id="updateSmartroPurchaseInfo" parameterType="com.jyes.www.vo.SmartroPurchaseInfoVo">
+		UPDATE T_SMART_SMARTRO_PURCHASE_INFO_TB SET 
+		IS_SEND = #{is_send}, 
+		S_DATE = NOW() 
+		WHERE 1=1 
+		AND O_ID = #{o_id}
+    </update>
+    
+    <insert id="insertSmartroCancelInfo" parameterType="com.jyes.www.vo.SmartroCancelInfoVo">
+    	INSERT INTO T_SMART_SMARTRO_CANCEL_INFO_TB(HP_NO, ID_SEQ, O_ID, P_CODE, P_NAME, P_PRICE, P_COUNT, PAYMENT, APRV_GBN, IS_SEND, DATE, ACCESS_SEQ)
+		VALUES(#{hp_no}, #{id_seq}, #{o_id}, #{p_code}, #{p_name}, #{p_price}, #{p_count}, #{payment}, #{aprv_gbn}, 'N', NOW(), (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}))
+    </insert>
+    
+    <update id="updateSmartroCancelInfo" parameterType="com.jyes.www.vo.SmartroCancelInfoVo">
+		UPDATE T_SMART_SMARTRO_CANCEL_INFO_TB SET 
+		IS_SEND = #{is_send}, 
+		S_DATE = NOW() 
+		WHERE 1=1 
+		AND O_ID = #{o_id}
+    </update>
+    
+    <insert id="insertPayExeLog" parameterType="com.jyes.www.vo.PayExeLogVo">
+    	INSERT INTO T_SMART_PAY_EXE_LOG_TB(URL, COMPANY, PAYMENT, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, AUTH_DT, OID, MSG, SUCCESS, ACCESS_SEQ, PAY_TYPE_CODE, PAY_SUCCESS_SEQ, PAY_BILL_SEQ, DATE)
+		VALUES(#{url}, #{company}, #{payment}, #{price}, #{currency}, #{goodname}, #{buyername}, #{buyertel}, #{buyeremail}, #{cardquota}, #{billkey}, #{tid}, #{auth_dt}, #{oid}, #{msg}, #{success}, (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}), #{pay_type_code}, #{pay_success_seq}, #{pay_bill_seq}, now());
+    </insert>
+    
+    <insert id="insertPayCancelExeLog" parameterType="com.jyes.www.vo.PayCancelExeLogVo">
+    	INSERT INTO T_SMART_PAY_CANCEL_EXE_LOG_TB(URL, COMPANY, PAYMENT, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, AUTH_DT, OID, MSG, SUCCESS, ACCESS_SEQ, PAY_TYPE_CODE, PAY_SUCCESS_SEQ, PAY_BILL_SEQ, DATE)
+		VALUES(#{url}, #{company}, #{payment}, #{price}, #{currency}, #{goodname}, #{buyername}, #{buyertel}, #{buyeremail}, #{cardquota}, #{billkey}, #{tid}, #{auth_dt}, #{oid}, #{msg}, #{success}, (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}), #{pay_type_code}, #{pay_success_seq}, #{pay_bill_seq}, now());
+    </insert>
+    
+    <select id="selectPayCancelUserInfo" parameterType="com.jyes.www.vo.PayCancelUserInfoVo" resultType="com.jyes.www.vo.PayCancelUserInfoVo">
+    	SELECT * FROM (
+    	<if test='id == "" or id == null'>
+		SELECT B.URL, IFNULL(E.NAME, G.COMPANY) AS "COMPANY", A.PAYMENT, IFNULL(B.PRICE,F.PRICE) AS "PRICE", B.CURRENCY, IFNULL(B.GOODNAME, F.NAME) AS "GOODNAME", B.BUYERNAME 
+		, B.BUYERTEL, B.BUYEREMAIL, B.CARDQUOTA, B.BILLKEY, IFNULL(B.TID, A.P_TID) AS "TID", IFNULL(B.AUTH_DT, A.P_AUTH_DT) AS "AUTH_DT", IFNULL(B.OID, A.P_OID) AS "OID" 
+		, E.SEQ AS "ACCESS_SEQ", A.PAY_TYPE_CODE, A.SEQ AS "PAY_SUCCESS_SEQ", B.SEQ AS "PAY_BILL_SEQ", E.ID, E.AFFILIATES_CODE
+		</if>
+		<if test='id != null and id != ""'>
+		SELECT E.SEQ AS "ACCESS_SEQ", E.ID, E.AFFILIATES_CODE 
+		</if> 
+		FROM T_SMART_PAY_SUCCESS_TB A 
+		LEFT JOIN T_SMART_PAY_BILL_TB B 
+		ON IFNULL(A.SEQ,'') = IFNULL(B.PAY_SUCCESS_SEQ,'') 
+		LEFT JOIN T_SMART_PAY_TB C 
+		ON C.SEQ = A.PAY_SEQ 
+		LEFT JOIN T_SMART_BIZ_TB D 
+		ON D.SEQ = C.BIZ_SEQ 
+		LEFT JOIN T_SMART_ACCESS_TB E 
+		ON D.SEQ = E.BIZ_SEQ 
+		LEFT JOIN T_SMART_PAY_TYPE_TB F 
+		ON A.PAY_TYPE_CODE = F.CODE 
+		LEFT JOIN T_SMART_BIZ_TB G 
+		ON E.BIZ_SEQ = G.SEQ 
+		) A 
+		WHERE 1=1 
+		<if test='id == "" or id == null'>
+		AND IFNULL(TID,'') != '' 
+		AND IFNULL(OID,'') != '' 
+		AND (
+		IFNULL(TID,'') = #{tid} 
+		OR 
+		IFNULL(OID,'') = #{oid}
+		)
+		</if>
+		<if test='id != null and id != ""'>
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code} 
+		GROUP BY ACCESS_SEQ
+		</if>
+    </select>
+    
+    <select id="selectAccessTestIdCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM T_SMART_ACCESS_TEST_ID_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+	</select>
+	
+	<insert id="insertUserRefund" parameterType="com.jyes.www.vo.TbUserRefund">
+	    INSERT INTO T_SMART_USER_REFUND_REQUEST_TB(COMMENT, CODE, BANK_NUM, BANK_NAME, IS_REFUND_SUCCESS, DATE, USER_USER_REFUND_TYPE_CODE, USER_ID, ACCESS_SEQ, PAY_SUCCESS_SEQ, PAY_BILL_SEQ, RS_PRICE, RS_USER_ID, RS_DATE) 
+	    VALUES (#{comment}, #{code}, #{bank_num}, #{bank_name}, #{is_refund_success}, now(), #{user_user_refund_type_code}, #{user_id}, #{access_seq}, #{pay_success_seq}, #{pay_bill_seq}, #{rs_price}, #{rs_user_id}, #{rs_date})
+	</insert>
+	
+	<select id="getUserTicketsDateCheck" parameterType="com.jyes.www.vo.TbUserTicketsDateCheck" resultType="com.jyes.www.vo.TbUserTicketsDateCheck">
+	    SELECT (SELECT now()) AS "DATE", B.START_DATE, B.EXPIRATION_DATE, B.START_DATE_WL, B.EXPIRATION_DATE_WL, C.USE_DAY
+	    FROM (
+		SELECT * FROM T_SMART_PAY_SUCCESS_TB
+		) A
+		LEFT JOIN (
+		SELECT * FROM T_SMART_USER_TICKETS_INFO_TB
+		) B
+		ON A.SEQ = B.PAY_SUCCESS_SEQ
+		LEFT JOIN (
+		SELECT * FROM T_SMART_PAY_TYPE_TB
+		) C
+		ON B.PAY_TYPE_CODE = C.CODE
+		WHERE 1=1
+		AND B.PAY_SUCCESS_SEQ = #{pay_success_seq}
+		<if test='pay_bill_seq != null and pay_bill_seq != "" '>
+		AND B.PAY_BILL_SEQ = #{pay_bill_seq}
+		</if>
+	</select>
+	
+	<update id="updateUserTicketsDate" parameterType="com.jyes.www.vo.TbUserTicketsDate">
+	    <choose>
+	    <when test="time != null and time != ''">
+	    UPDATE T_SMART_USER_TICKETS_INFO_TB SET 
+	    <choose>
+	    <when test='is_pay_wl=="Y"'>
+		START_DATE_WL = DATE_ADD(DATE_FORMAT(START_DATE_WL, "%Y-%m-%d %H:%i:%s"), INTERVAL -#{time} SECOND), 
+		EXPIRATION_DATE_WL = DATE_ADD(DATE_FORMAT(EXPIRATION_DATE_WL, "%Y-%m-%d %H:%i:%s"), INTERVAL -#{time} SECOND) 
+	    </when>
+	    <otherwise>
+		START_DATE = DATE_ADD(DATE_FORMAT(START_DATE, "%Y-%m-%d %H:%i:%s"), INTERVAL -#{time} SECOND), 
+		EXPIRATION_DATE = DATE_ADD(DATE_FORMAT(EXPIRATION_DATE, "%Y-%m-%d %H:%i:%s"), INTERVAL -#{time} SECOND) 
+	    </otherwise>
+	    </choose>
+		WHERE 1=1 
+		AND SEQ IN (SELECT SEQ FROM (SELECT A.SEQ FROM T_SMART_USER_TICKETS_INFO_TB A
+	    LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B
+	    ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ
+	    AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'')
+	    WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND A.ACCESS_SEQ = #{access_seq} 
+		AND A.START_DATE > #{start_date}) AS A)
+	    </when>
+	    <otherwise>
+	    UPDATE T_SMART_USER_TICKETS_INFO_TB SET 
+	    <choose>
+	    <when test='is_pay_wl=="Y"'>
+		START_DATE_WL = DATE_ADD(DATE_ADD(START_DATE_WL, INTERVAL -1 SECOND), INTERVAL -${use_day} DAY),
+		EXPIRATION_DATE_WL = DATE_ADD(DATE_ADD(EXPIRATION_DATE_WL, INTERVAL -1 SECOND), INTERVAL -${use_day} DAY)
+	    </when>
+	    <otherwise>
+		START_DATE = DATE_ADD(DATE_ADD(START_DATE, INTERVAL -1 SECOND), INTERVAL -${use_day} DAY),
+		EXPIRATION_DATE = DATE_ADD(DATE_ADD(EXPIRATION_DATE, INTERVAL -1 SECOND), INTERVAL -${use_day} DAY)
+	    </otherwise>
+	    </choose>
+		WHERE 1=1 
+		AND SEQ IN (SELECT SEQ FROM (SELECT A.SEQ FROM T_SMART_USER_TICKETS_INFO_TB A
+	    LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B
+	    ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ
+	    AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'')
+	    WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND A.ACCESS_SEQ = #{access_seq} 
+		<choose>
+		<when test='is_pay_wl=="Y"'>
+		AND A.START_DATE_WL > #{start_date}) AS A)
+		</when>
+	    <otherwise>
+		AND A.START_DATE > #{start_date}) AS A)
+	    </otherwise>
+	    </choose>
+	    </otherwise>
+		</choose>
+	</update>
+	
+	<update id="updateUserTicketsEndDate" parameterType="com.jyes.www.vo.TbUserRefund">
+	    UPDATE T_SMART_USER_TICKETS_INFO_TB SET 
+	    <choose>
+	    <when test='is_pay_wl=="Y"'>
+	    END_DATE_WL = DATE_ADD(DATE_FORMAT(EXPIRATION_DATE_WL, "%Y-%m-%d %H:%i:%s"), INTERVAL -#{time} SECOND) 
+	    </when>
+	    <otherwise>
+	    END_DATE = DATE_ADD(DATE_FORMAT(EXPIRATION_DATE, "%Y-%m-%d %H:%i:%s"), INTERVAL -#{time} SECOND) 
+	    </otherwise>
+	    </choose>
+	    WHERE 1=1 
+	    AND PAY_SUCCESS_SEQ = #{pay_success_seq} 
+		<if test='pay_bill_seq != null and pay_bill_seq != "" '>
+	    AND PAY_BILL_SEQ = #{pay_bill_seq}
+		</if>
+	</update>
+	
+	<select id="selectPayBillBatchDate" parameterType="com.jyes.www.vo.TbUserTicketsDate" resultType="com.jyes.www.vo.TbPayBillVo">
+		SELECT B.SEQ, E.BATCH_DATE 
+		FROM (
+		SELECT * FROM T_SMART_PAY_SUCCESS_TB 
+		WHERE 1=1 
+		AND PAY_SEQ IN (
+		SELECT SEQ 
+		FROM T_SMART_PAY_TB 
+		WHERE 1=1 
+		AND BIZ_SEQ = (
+		SELECT BIZ_SEQ 
+		FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND SEQ = #{access_seq}
+		)
+		)
+		) A 
+		LEFT JOIN T_SMART_PAY_BILL_TB B 
+		ON A.SEQ = B.PAY_SUCCESS_SEQ 
+		LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB C 
+		ON B.SEQ = C.PAY_BILL_SEQ 
+		LEFT JOIN T_SMART_USER_TICKETS_INFO_TB D 
+		ON B.SEQ = D.PAY_BILL_SEQ 
+		LEFT JOIN (
+		SELECT A.ACCESS_SEQ, DATE_ADD(IFNULL(MAX(EXPIRATION_DATE_WL),MAX(EXPIRATION_DATE)), INTERVAL -1 DAY) AS "BATCH_DATE" 
+		FROM (
+		SELECT A.* 
+		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		ON A.ACCESS_SEQ = B.ACCESS_SEQ 
+		AND IFNULL(A.PAY_SUCCESS_SEQ,'') = IFNULL(B.PAY_SUCCESS_SEQ,'') 
+		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
+		WHERE 1=1 
+		AND B.SEQ IS NULL 
+		AND A.ACCESS_SEQ = #{access_seq}
+		) A
+		) E 
+		ON D.ACCESS_SEQ = E.ACCESS_SEQ 
+		WHERE 1=1 
+		AND B.SEQ IS NOT NULL 
+		AND IFNULL(B.BATCH_YN,'') = '' 
+		AND C.SEQ IS NULL
+	</select>
+	
+	<update id="updatePayBillBatchDate" parameterType="com.jyes.www.vo.TbPayBillVo">
+		UPDATE T_SMART_PAY_BILL_TB SET 
+		BATCH_DATE = #{batch_date} 
+		WHERE 1=1 
+		AND SEQ = #{seq}
+	</update>
+	
+	<select id="selectGoogleBillPayCheckList" resultType="com.jyes.www.vo.PayCustomVo">
+		SELECT SEQ, PAY_SUCCESS_SEQ, ACCESS_SEQ, ID, AFFILIATES_CODE, PAY_TYPE_CODE, URL, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, IS_BATCH_YN, P_TYPE, P_TID, P_AUTH_DT, O_ID, EXPIRATION_DATE 
+		FROM (
+		SELECT D.ID, D.AFFILIATES_CODE, D.SEQ AS "ACCESS_SEQ", C.CODE AS "PAY_TYPE_CODE",  A.*, A.BATCH_YN AS "IS_BATCH_YN", E.PAYMENT AS "P_TYPE", A.TID AS "P_TID", A.AUTH_DT AS "P_AUTH_DT", 
+		(
+		SELECT OID FROM T_SMART_PAY_BILL_TB 
+		WHERE SEQ = (
+		SELECT MAX(SEQ) 
+		FROM T_SMART_PAY_BILL_TB 
+		WHERE 1=1 
+		AND PAY_SUCCESS_SEQ = A.PAY_SUCCESS_SEQ
+		AND IFNULL(OID,'') != '')
+		) AS "O_ID", EXPIRATION_DATE 
+		FROM T_SMART_PAY_BILL_TB A
+		LEFT JOIN T_SMART_USER_TICKETS_INFO_TB B
+		ON A.SEQ = B.PAY_BILL_SEQ
+		LEFT JOIN T_SMART_PAY_TYPE_TB C
+		ON B.PAY_TYPE_CODE = C.CODE
+		LEFT JOIN T_SMART_ACCESS_TB D
+		ON B.ACCESS_SEQ = D.SEQ
+		LEFT JOIN `T_SMART_PAY_SUCCESS_TB` E
+		ON A.PAY_SUCCESS_SEQ = E.SEQ
+		WHERE 1=1
+		AND E.PAYMENT = 'G-PAY'
+		AND IFNULL(A.OID,'') = ''
+		AND IFNULL(A.BATCH_YN,'') = ''
+		AND A.G_AUTH_DT &lt; NOW()
+		) A
+	</select>
+    
+    <update id="updateGoogleBillPayBillBatch" parameterType="com.jyes.www.vo.PayCustomVo" >
+        UPDATE T_SMART_PAY_BILL_TB SET 
+        OID = #{p_tid}, 
+        G_AUTH_DT = NOW(),  
+        BATCH_DATE = #{batch_date} 
+        WHERE 1=1 
+        AND SEQ = #{pay_bill_seq}
+    </update>
+    
+    <select id="selectStatsDayCuponUserCheck" parameterType="com.jyes.www.vo.PayCustomVo" resultType="String">
+    	<!-- #쿠폰 사용자의 첫번째 유료 결제시 마지막 사용한 쿠폰 번호 가져오기 -->
+		SELECT LAST_COUPON_NUM FROM (
+		<!-- #첫 유료결제 여부 -->
+		SELECT IF((
+		SELECT COUNT(1) 
+		FROM (
+		SELECT A.* FROM T_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN T_SMART_PAY_TYPE_TB B 
+		ON A.PAY_TYPE_CODE = B.CODE 
+		WHERE B.IS_PAY_TICKETS = 'Y'
+		) A 
+		LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ 
+		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
+		WHERE B.SEQ IS NULL 
+		AND A.ACCESS_SEQ = (
+		SELECT SEQ 
+		FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code}
+		)
+		)=1,'Y','N') AS IS_FIRST_PAY
+		, (
+		<!--#쿠폰 이용권 -->
+		SELECT (SELECT COUPON_NUM FROM `T_SMART_COUPON_TB` WHERE PAY_TYPE_CODE = A.PAY_TYPE_CODE LIMIT 1) AS COUPON_NUM FROM T_SMART_USER_TICKETS_INFO_TB A 
+		WHERE SEQ = (
+		SELECT MAX(A.SEQ) 
+		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN T_SMART_PAY_TYPE_TB B 
+		ON A.PAY_TYPE_CODE = B.CODE 
+		LEFT JOIN (SELECT * FROM T_SMART_COUPON_TB GROUP BY COUPON_NUM) C 
+		ON A.PAY_TYPE_CODE = C.PAY_TYPE_CODE 
+		WHERE B.IS_PAY_TICKETS = 'N' 
+		AND C.SEQ IS NOT NULL 
+		AND A.ACCESS_SEQ = (
+		SELECT SEQ 
+		FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code}
+		))
+		) AS LAST_COUPON_NUM 
+		) A
+		WHERE IS_FIRST_PAY = 'Y'
+    </select>
+    
+    <insert id="insertStatsDayCupon" parameterType="com.jyes.www.vo.PayCustomVo">
+	    INSERT INTO T_SMART_STATS_DAY_CUPON_TB(AFFILIATES_CODE, STORE_TYPE, COUPON_NUM, PAY_TYPE_CODE, REG_DATE)
+		VALUES(#{affiliates_code}, #{store_type}, #{coupon_num}, #{pay_type_code}, NOW())
+	</insert>
+    
+</mapper>

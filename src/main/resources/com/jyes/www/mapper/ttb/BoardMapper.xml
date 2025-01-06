@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyes.www.mapper.BoardMapper">
+
+	<select id="getBoardFaqCategoryList" resultType="com.jyes.www.vo.BoardCategoryVo">
+		SELECT * FROM T_SMART_FAQ_BOARD_CATEGORY_INFO_TB ORDER BY RANK ASC
+	</select>
+	
+	<select id="getBoardFaqCategoryContentsList" parameterType="string" resultType="com.jyes.www.vo.BoardFaqVo">
+		SELECT * FROM T_SMART_FAQ_BOARD_TB 
+		WHERE 1=1 
+		AND FAQ_BOARD_CATEGORY_CODE = #{code} 
+		AND IS_OPEN = 'Y'
+	</select>
+	
+	<insert id="insertBoardQna" parameterType="com.jyes.www.vo.BoardCustomQnaVo">
+		INSERT INTO T_SMART_QNA_BOARD_TB(EMAIL, TEXT, ACCESS_SEQ, DATE) 
+		VALUES(#{email}, #{text}, (SELECT SEQ FROM T_SMART_ACCESS_TB 
+		WHERE 1=1 
+		AND ID = #{id} 
+		AND AFFILIATES_CODE = #{affiliates_code}), now())
+	</insert>
+	
+</mapper>
