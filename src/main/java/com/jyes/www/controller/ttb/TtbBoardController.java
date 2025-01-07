@@ -1,4 +1,4 @@
-package com.jyes.www.controller;
+package com.jyes.www.controller.ttb;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,25 +21,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jyes.www.service.impl.IBoardService;
+import com.jyes.www.service.ttb.board.IBoardService;
 import com.jyes.www.util.LogUtils;
 import com.jyes.www.util.StringUtil;
-import com.jyes.www.vo.BoardCategoryVo;
-import com.jyes.www.vo.BoardCustomQnaVo;
-import com.jyes.www.vo.BoardFaqVo;
+import com.jyes.www.vo.ttb.BoardCategoryVo;
+import com.jyes.www.vo.ttb.BoardCustomQnaVo;
+import com.jyes.www.vo.ttb.BoardFaqVo;
 
-@Controller(value = "boardController")
-public class BoardController {
+@Controller(value = "ttbBoardController")
+public class TtbBoardController {
 
-	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
+	private static final Logger log = LoggerFactory.getLogger(TtbBoardController.class);
 
-	@Resource(name = "boardService")
+	@Resource(name = "ttbBoardService")
 	private IBoardService boardService;
 
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@RequestMapping(value = "/board/call", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/ttb/board/call", method = { RequestMethod.GET, RequestMethod.POST })
 	public String call(HttpServletRequest request, HttpServletResponse response, Model model) {
 		StringBuffer logData = new StringBuffer();
 		HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
@@ -112,7 +112,7 @@ public class BoardController {
 					+ ",connection time out[15second over]" + "\n");
 		}
 		log.info(logData.toString());
-		return "/board/call";
+		return "/ttb/board/call";
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class BoardController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/board/setBoardAjax", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/ttb/board/setBoardAjax", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody HashMap<String, Object> setBoardAjax(HttpServletRequest request, Model model) {
 
 		StringBuffer logData = new StringBuffer();
@@ -198,7 +198,7 @@ public class BoardController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/board/getFaqBoardCategoryContentsListAjax", method = { RequestMethod.POST,
+	@RequestMapping(value = "/ttb/board/getFaqBoardCategoryContentsListAjax", method = { RequestMethod.POST,
 			RequestMethod.GET })
 	public @ResponseBody HashMap<String, Object> getFaqBoardListAjax(HttpServletRequest request, Model model) {
 

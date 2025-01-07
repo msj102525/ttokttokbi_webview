@@ -1,4 +1,4 @@
-package com.jyes.www.service;
+package com.jyes.www.service.ttb.pay;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -17,40 +17,39 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import com.jyes.www.vo.ttb.PayInfoRequestVo;
+import com.jyes.www.vo.ttb.CheckMemberVo;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.jyes.www.mapper.PayMapper;
 import com.jyes.www.network.Api;
 import com.jyes.www.network.Http;
 import com.jyes.www.network.NetworkTask;
 import com.jyes.www.network.OneStore;
 import com.jyes.www.network.Request;
 import com.jyes.www.network.Response;
-import com.jyes.www.service.impl.IPayService;
 import com.jyes.www.util.LogUtils;
 import com.jyes.www.util.StringUtil;
-import com.jyes.www.vo.AccessVo;
-import com.jyes.www.vo.CheckMemberVo;
-import com.jyes.www.vo.CreateOidVo;
-import com.jyes.www.vo.PayCancelExeLogVo;
-import com.jyes.www.vo.PayCancelUserInfoVo;
-import com.jyes.www.vo.PayCustomVo;
-import com.jyes.www.vo.PayExeLogVo;
-import com.jyes.www.vo.PayInfoRequestVo;
-import com.jyes.www.vo.PayNameCompanyVo;
-import com.jyes.www.vo.PayTypeVo;
-import com.jyes.www.vo.SmartroPurchaseInfoVo;
-import com.jyes.www.vo.StorePurchaseInfoVo;
-import com.jyes.www.vo.TbUserRefund;
-import com.jyes.www.vo.TbUserTicketsDate;
-import com.jyes.www.vo.TbUserTicketsDateCheck;
+import com.jyes.www.vo.ttb.AccessVo;
+import com.jyes.www.vo.ttb.CreateOidVo;
+import com.jyes.www.vo.ttb.PayCancelExeLogVo;
+import com.jyes.www.vo.ttb.PayCancelUserInfoVo;
+import com.jyes.www.vo.ttb.PayCustomVo;
+import com.jyes.www.vo.ttb.PayExeLogVo;
+import com.jyes.www.vo.ttb.PayNameCompanyVo;
+import com.jyes.www.vo.ttb.PayTypeVo;
+import com.jyes.www.vo.ttb.SmartroPurchaseInfoVo;
+import com.jyes.www.vo.ttb.StorePurchaseInfoVo;
+import com.jyes.www.vo.ttb.TbUserRefund;
+import com.jyes.www.vo.ttb.TbUserTicketsDate;
+import com.jyes.www.vo.ttb.TbUserTicketsDateCheck;
+import com.jyes.www.mapper.ttb.PayMapper;
 
-@Service(value = "payService")
-
+@Service(value = "ttbPayService")
 public class PayService implements IPayService {
 	static final Logger logger = LoggerFactory.getLogger(PayService.class);
 
-	@Resource(name = "payMapper")
+	@Resource(name = "ttbPayMapper")
 	private PayMapper payMapper;
 
 	@Override
@@ -222,7 +221,7 @@ public class PayService implements IPayService {
 				logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "response:" + response + "\n");
 				if (response != null && response.getResponse() != null) {
 					CheckMemberVo checkMemberVo = com.jyes.www.network.JsonParser
-							.parseCheckMemberVo(response.getResponse().toString());
+							.parseTtbCheckMemberVo(response.getResponse().toString());
 					logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CheckMemberVo checkMemberVo : "
 							+ checkMemberVo + "\n");
 					String result = checkMemberVo.getResult();
@@ -418,7 +417,7 @@ public class PayService implements IPayService {
 				logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "response:" + response + "\n");
 				if (response != null && response.getResponse() != null) {
 					PayInfoRequestVo payInfoRequestVo = com.jyes.www.network.JsonParser
-							.parsePayInfoRequestVo(response.getResponse().toString());
+							.parseTtbPayInfoRequestVo(response.getResponse().toString());
 					String result = payInfoRequestVo.getResult();
 					String message = payInfoRequestVo.getMessage();
 					System.out.println("result:" + result);
@@ -552,7 +551,7 @@ public class PayService implements IPayService {
 				logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "response:" + response + "\n");
 				if (response != null && response.getResponse() != null) {
 					CheckMemberVo checkMemberVo = com.jyes.www.network.JsonParser
-							.parseCheckMemberVo(response.getResponse().toString());
+							.parseTtbCheckMemberVo(response.getResponse().toString());
 					logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CheckMemberVo checkMemberVo : "
 							+ checkMemberVo + "\n");
 					String result = checkMemberVo.getResult();
@@ -748,7 +747,7 @@ public class PayService implements IPayService {
 				logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "response:" + response + "\n");
 				if (response != null && response.getResponse() != null) {
 					PayInfoRequestVo payInfoRequestVo = com.jyes.www.network.JsonParser
-							.parsePayInfoRequestVo(response.getResponse().toString());
+							.parseTtbPayInfoRequestVo(response.getResponse().toString());
 					String result = payInfoRequestVo.getResult();
 					String message = payInfoRequestVo.getMessage();
 					System.out.println("result:" + result);

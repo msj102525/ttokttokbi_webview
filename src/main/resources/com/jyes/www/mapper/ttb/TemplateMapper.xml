@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jyes.www.mapper.TemplateMapper">
+<mapper namespace="com.jyes.www.mapper.ttb.TemplateMapper">
 
 	<!-- <resultMap id="userMap" type="kr.cloudsc.openpaas.sample.vo.UserVo">
         <result property="email"    column="EMAIL" />

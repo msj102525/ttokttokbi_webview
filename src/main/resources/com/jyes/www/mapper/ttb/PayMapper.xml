@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jyes.www.mapper.PayMapper">
+<mapper namespace="com.jyes.www.mapper.ttb.PayMapper">
 
 	<select id="selectUserInfo" parameterType="com.jyes.www.vo.AccessVo" resultType="com.jyes.www.vo.AccessVo">
 		SELECT * 

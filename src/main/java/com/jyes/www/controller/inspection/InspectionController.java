@@ -26,7 +26,7 @@ public class InspectionController {
 
 	@Resource(name = "tbInspectionService")
 	private ITbInspectionService tbInspectionService;
-	
+
 	/**
 	 * 웹서버 및 DB 서버 정상 유무 확인
 	 */
@@ -36,25 +36,27 @@ public class InspectionController {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		HashMap<Object, Object> meta = new HashMap<Object, Object>();
 		HashMap<Object, Object> data = new HashMap<Object, Object>();
-		String is_db_check = StringUtil.nvl(request.getParameter("is_db_check"),"N");
+		String currentUrl = request.getRequestURL().toString();
+		String is_db_check = StringUtil.nvl(request.getParameter("is_db_check"), "N");
+		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CurrentUrl : " + currentUrl + "\n");
 		is_db_check = is_db_check.toUpperCase();
 		try {
 			tbInspectionService.selectCheckServer();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			meta.put("code", 999);
 			meta.put("error_type", "Exception");
 			meta.put("error_message", e.toString());
 		}
-		if(meta.get("code")==null) {
+		if (meta.get("code") == null) {
 			meta.put("code", 200);
 		}
 		data.put("is_db_check", is_db_check);
 		map.put("meta", meta);
 		map.put("data", data);
-		logData.append("["+LogUtils.getCurrentTime()+"]"+" "+"Inspection map:"+map);
+		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "Inspection map:" + map);
 		log.info(logData.toString());
 		return map;
 	}
-	
+
 }
