@@ -87,6 +87,10 @@ public class TtbHomeController {
 				case 15:
 					tempUrl = tempUrl + "/event/template_kids";
 					break;
+				// JSAM 똑똑비 새로운 템플릿 추가
+				case 16:
+					tempUrl = tempUrl + "/food/template_pc";
+					break;
 				default:
 					break;
 			}

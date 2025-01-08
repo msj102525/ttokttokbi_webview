@@ -37,58 +37,62 @@ public class HomeController {
 		if (!"".equals(imgId)) {
 			int imgIdVal = Integer.parseInt(imgId);
 			switch (imgIdVal) {
-			// 약도
-			case 1:
-				tempUrl = tempUrl + "/map/map_template";
-				break;
-			case 6:
-				tempUrl = tempUrl + "/map/template_house";
-				break;
-			case 7:
-				tempUrl = tempUrl + "/map/template_phone";
-				break;
-			// 전단지
-			case 2:
-				tempUrl = tempUrl + "/food/food_template";
-				break;
-			case 8:
-				tempUrl = tempUrl + "/food/template_mart";
-				break;
-			case 9:
-				tempUrl = tempUrl + "/food/template_yoga";
-				break;
-			// 명함
-			case 3:
-				tempUrl = tempUrl + "/namecard/namecard_template";
-				break;
-			case 10:
-				tempUrl = tempUrl + "/namecard/template_card";
-				break;
-			case 11:
-				tempUrl = tempUrl + "/namecard/template_card2";
-				break;
-			// 이벤트
-			case 5:
-				tempUrl = tempUrl + "/event/event_template";
-				break;
-			case 12:
-				tempUrl = tempUrl + "/holiday/template_beauty";
-				break;
-			case 13:
-				tempUrl = tempUrl + "/holiday/template_health";
-				break;
-			// 휴무
-			case 4:
-				tempUrl = tempUrl + "/holiday/holiday_template";
-				break;
-			case 14:
-				tempUrl = tempUrl + "/event/template_company";
-				break;
-			case 15:
-				tempUrl = tempUrl + "/event/template_kids";
-				break;
-			default:
-				break;
+				// 약도
+				case 1:
+					tempUrl = tempUrl + "/map/map_template";
+					break;
+				case 6:
+					tempUrl = tempUrl + "/map/template_house";
+					break;
+				case 7:
+					tempUrl = tempUrl + "/map/template_phone";
+					break;
+				// 전단지
+				case 2:
+					tempUrl = tempUrl + "/food/food_template";
+					break;
+				case 8:
+					tempUrl = tempUrl + "/food/template_mart";
+					break;
+				case 9:
+					tempUrl = tempUrl + "/food/template_yoga";
+					break;
+				// 명함
+				case 3:
+					tempUrl = tempUrl + "/namecard/namecard_template";
+					break;
+				case 10:
+					tempUrl = tempUrl + "/namecard/template_card";
+					break;
+				case 11:
+					tempUrl = tempUrl + "/namecard/template_card2";
+					break;
+				// 이벤트
+				case 5:
+					tempUrl = tempUrl + "/event/event_template";
+					break;
+				case 12:
+					tempUrl = tempUrl + "/holiday/template_beauty";
+					break;
+				case 13:
+					tempUrl = tempUrl + "/holiday/template_health";
+					break;
+				// 휴무
+				case 4:
+					tempUrl = tempUrl + "/holiday/holiday_template";
+					break;
+				case 14:
+					tempUrl = tempUrl + "/event/template_company";
+					break;
+				case 15:
+					tempUrl = tempUrl + "/event/template_kids";
+					break;
+				// JSAM 똑똑비 새로운 템플릿 추가
+				case 16:
+					tempUrl = tempUrl + "/food/template_pc";
+					break;
+				default:
+					break;
 			}
 		}
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "tempUrl : " + tempUrl + "\n");
