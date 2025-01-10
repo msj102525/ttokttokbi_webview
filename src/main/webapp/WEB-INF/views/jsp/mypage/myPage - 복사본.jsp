@@ -13,6 +13,7 @@
                         <title>마이페이지</title>
                         <link href="<%=path%>/css/reset.css" rel="stylesheet" />
                         <link href="<%=path%>/css/my_page.css" rel="stylesheet" />
+                        <script type="text/javascript" src="<%=path%>/js/jquery-1.8.3.min.js"></script>
                         <script src="<%=path%>/js/modal/updateUserInfo.js" defer></script>
                     </head>
 

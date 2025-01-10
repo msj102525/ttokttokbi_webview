@@ -47,10 +47,14 @@ public class Config {
 	public static String HOST_DEV_CONTENTS_IMAGE_MAKE = "http://bizcontentsdev.sohomsg.kr";
 	public static String HOST_DEP_CONTENTS_IMAGE_MAKE = "https://bizcontents.sohomsg.kr";
 	public static String HOST_CONTENTS_IMAGE_MAKE = "";
+
 	// 컨텐츠 이미지 URL 도메인
-	public static String HOST_DEV_CONTENTS_IMAGE_URL = "http://imgdev.sohomsg.kr";
+	public static String HOST_DEV_CONTENTS_IMAGE_URL = "http://192.168.0.240";
+	// public static String HOST_DEV_CONTENTS_IMAGE_URL =
+	// "http://imgdev.sohomsg.kr";
 	public static String HOST_DEP_CONTENTS_IMAGE_URL = "https://img.sohomsg.kr";
 	public static String HOST_CONTENTS_IMAGE_URL = "";
+
 	// 컨텐츠 이미지 URL 도메인
 	public static String HOST_DEV_WWW_URL = "http://wwwdev.sohomsg.kr";
 	public static String HOST_DEP_WWW_URL = "https://www.sohomsg.kr";

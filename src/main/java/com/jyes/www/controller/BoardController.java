@@ -162,7 +162,7 @@ public class BoardController {
 			boardCustomQnaVo.setText(text);
 			logData.append("[" + LogUtils.getCurrentTime() + "]" + " "
 					+ "query start insertBoardQna BoardCustomQnaVo boardCustomQnaVo : " + boardCustomQnaVo + "\n");
-			success = boardService.insertBoardQna(boardCustomQnaVo);
+			// success = boardService.insertBoardQna(boardCustomQnaVo);
 			if (success == 1) {
 				msg = "1";
 				{// 메일링 추가

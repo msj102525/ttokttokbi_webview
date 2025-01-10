@@ -178,37 +178,168 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 }
 
 /* 모달 전체 영역 */
-.modal {
-    display: none; /* 초기에는 숨김 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+.updateUserInfo-modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/* background-color: rgba(0, 0, 0, 0.5); */
+	z-index: 1000;
 }
 
+/* 유저 정보 수정 */
 /* 모달 콘텐츠 */
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
+.updateUserInfo-modal .modal-content {
+	background-color: #fff;
+	border-radius: 28px 28px 0 0;
+	width: 100%;
+	height: 716px;
+	position: absolute;
+	transition: all 0.3s ease-out;
+	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	top: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.updateUserInfo-modal .modal-content .inner-modal {
+	width: 100%;
+	max-width: 372px;
+}
+
+/* 모달이 열린 상태 */
+.updateUserInfo-modal.show {
+	display: flex;
+}
+
+.updateUserInfo-modal.show .modal-content {
+	top: 520px;
 }
 
 /* 닫기 버튼 */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #333;
+.updateUserInfo-modal .modal-content .modal-up {
+	display: flex;
+	justify-content: center;
+	padding: 16px 0 36px 0;
+}
+
+.updateUserInfo-modal .modal-content .modal-up span.close-btn {
+	display: block;
+	width: 32px;
+	height: 4px;
+	background-color: #79747E;
+	border-radius: 100px;
+}
+
+.updateUserInfo-modal .modal-content .modal-down>p {
+	text-align: start;
+	font-family: Inter;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 30px;
+}
+
+.updateUserInfo-modal .modal-content .modal-down .updateUserInfo-form {
+	padding: 20px 0;
+}
+
+.updateUserInfo-modal .modal-content .modal-down .updateUserInfo-form ul {
+	display: flex;
+	flex-direction: column;
+}
+
+.updateUserInfo-modal .modal-content .modal-down .updateUserInfo-form ul li {
+	position: relative;
+	/* 부모 요소에 상대 위치를 설정 */
+}
+
+.updateUserInfo-modal .modal-content .modal-down .updateUserInfo-form ul li input {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #D9D9D9;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+	outline: none;
+	transition: border-color 0.2s ease;
+}
+
+.updateUserInfo-modal .modal-content .updateUserInfo-form ul li:nth-child(4) {
+	padding-bottom: 16px;
+}
+
+.updateUserInfo-modal .modal-content .updateUserInfo-form ul li:nth-child(4)::after {
+	content: "이름";
+	position: absolute;
+	top: -10px;
+	left: 10px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 17px;
+	background: #fff;
+	padding: 0 5px;
+	color: #1D1B20;
+}
+
+.updateUserInfo-modal .modal-content .updateUserInfo-form ul li:nth-child(5)::after {
+	content: "상호명";
+	position: absolute;
+	top: -10px;
+	left: 10px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 17px;
+	background: #fff;
+	padding: 0 5px;
+	color: #1D1B20;
+}
+
+/* 포커스 상태에서 레이블 강조 */
+.updateUserInfo-modal .modal-content .updateUserInfo-form ul li input:focus+ ::after {
+	color: #333;
+	/* 포커스 시 색상을 진하게 변경 */
+}
+
+.button-group {
+	display: flex;
+	gap: 10px;
+	margin-top: 20px;
+	padding: 10px 0;
+}
+
+.button-group button {
+	flex: 1;
+	padding: 15px 0;
+	border-radius: 8px;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 24px;
+	cursor: pointer;
+	transition: all 0.4s ease-in-out;
+}
+
+.cancel-btn {
+	background-color: #f5f5f5;
+	border: 1px solid #0095FE;
+	color: #0095FE;
+}
+
+.submit-btn {
+	background-color: #0095FE;
+	border: 1px solid #0095FE;
+	color: white;
+}
+
+.cancel-btn:active {
+	background-color: #eaeaea;
+}
+
+.submit-btn:active {
+	background-color: #0066d6;
 }
 
 
