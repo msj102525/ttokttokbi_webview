@@ -40,70 +40,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // // 수정 버튼
-    // updateUserInfoForm.addEventListener("submit", (e) => {
-    //     e.preventDefault();
-
-    //     userName = document.querySelector("#updateUserInfoForm #userName").value;
-    //     company = document.querySelector("#updateUserInfoForm #company").value;
-
-    //     const formData = new FormData();
-    //     formData.append('id', id);
-    //     formData.append('approach_path', approachPath);
-    //     formData.append('affiliates_code', affiliatesCode);
-    //     formData.append('name', userName);
-    //     formData.append('company', company);
-
-    //     console.log("서버로 보내는 데이터:");
-    //     for (const [key, value] of formData.entries()) {
-    //         console.log(`${key}: ${value}`);
-    //     }
-
-    //     fetch('/ttb/set_user_info', {
-    //         method: 'POST',
-    //         // headers: {
-    //         //     'Content-Type': 'application/json; charset=UTF-8',
-    //         //     'Accept': 'application/json'
-    //         // },
-    //         body: formData
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! status: ${response.status}`);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             console.log("성공:", data);
-    //             closeModalFunction();
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error:", error);
-    //             alert("정보 수정 중 오류가 발생했습니다.");
-    //         });
-    // });
-
     updateUserInfoForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const id = document.querySelector("#updateUserInfoForm #id").value;
-        const approachPath = document.querySelector("#updateUserInfoForm #approachPath").value;
-        const affiliatesCode = document.querySelector("#updateUserInfoForm #affiliatesCode").value;
-        const userName = document.querySelector("#updateUserInfoForm #userName").value;
-        const company = document.querySelector("#updateUserInfoForm #company").value;
+        userName = document.querySelector("#updateUserInfoForm #userName").value;
+        company = document.querySelector("#updateUserInfoForm #company").value;
 
-        const params = new URLSearchParams();
-        params.append("id", id);
-        params.append("approach_path", approachPath);
-        params.append("affiliates_code", affiliatesCode);
-        params.append("name", userName);
-        params.append("company", company);
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('approach_path', approachPath);
+        formData.append('affiliates_code', affiliatesCode);
+        formData.append('name', userName);
+        formData.append('company', company);
 
-        fetch('/ttb/set_user_infoa', {
+        console.log("서버로 보내는 데이터:");
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        fetch('/ttb/set_user_info', {
             method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            // },
-            body: params
+            body: formData
         })
             .then(response => {
                 if (!response.ok) {
@@ -113,11 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(data => {
                 console.log("성공:", data);
-                closeModalFunction();
+                window.location.reload();
             })
             .catch((error) => {
                 console.error("Error:", error);
                 alert("정보 수정 중 오류가 발생했습니다.");
+                window.location.reload();
             });
     });
 
