@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpHeaders;
+import com.jyes.www.common.Config;
 import com.jyes.www.service.ttb.mypage.IMyPageService;
 import com.jyes.www.util.LogUtils;
 import com.jyes.www.util.StringUtil;
@@ -121,7 +122,8 @@ public class TtbMyPageController {
         String name = StringUtil.nvl(request.getParameter("name"));
         String company = StringUtil.nvl(request.getParameter("company"));
 
-        String apiUrl = "http://192.168.0.240:8080/wirelessbizmsg/ttb/version/1_2/set_user_info";
+        String apiUrl = Config.API_URL + "/ttb/version/1_2/set_user_info";
+
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "apiUrl : " + apiUrl + "\n");
 
         HttpURLConnection con = null;

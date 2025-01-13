@@ -85,6 +85,12 @@ public class Config {
 	public static String INI_HOST_MOBILETX = "https://mobile.inicis.com";
 	public static String INI_HOST_INILITE = "https://inilite.inicis.com";
 
+	// Jsam, 똑똑비 api 주소
+	public static String API_URL_DEV = "http://192.168.0.240:8080/wirelessbizmsg";
+	// public static String API_URL_DEV = "http://apidev.sohomsg.kr";
+	public static String API_URL_DEP = "https://api.sohomsg.kr";
+	public static String API_URL = "";
+
 	public static void init() {
 		if (isDevMode) {
 			OneStore.is_onestore_dev = true;
@@ -94,6 +100,7 @@ public class Config {
 			LOG4J_XML = LOG4J_XML_DEV;
 			HOST_PATH_INIPAYHOME = HOST_DEV_PATH_INIPAYHOME;
 			HOST_SMARTRO_SERVER_URL = HOST_DEV_SMARTRO_SERVER_URL;
+			API_URL = API_URL_DEV;
 			/*
 			 * String osName = System.getProperty("os.name");
 			 * if("windows".contains(osName.toLowerCase())) {
@@ -109,6 +116,7 @@ public class Config {
 			LOG4J_XML = LOG4J_XML_DEP;
 			HOST_PATH_INIPAYHOME = HOST_DEP_PATH_INIPAYHOME;
 			HOST_SMARTRO_SERVER_URL = HOST_DEP_SMARTRO_SERVER_URL;
+			API_URL = API_URL_DEP;
 		}
 		if (isIniDevMode) {
 			INI_P_MID = INI_P_MID_DEV;
