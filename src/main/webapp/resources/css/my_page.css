@@ -189,8 +189,8 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	z-index: 1000;
 }
 
-/* 유저 정보 수정 */
 /* 모달 콘텐츠 */
+/* 유저 정보 수정 */
 .updateUserInfo-modal .modal-content {
 	background-color: #fff;
 	border-radius: 28px 28px 0 0;
@@ -298,11 +298,6 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	color: #1D1B20;
 }
 
-/* 포커스 상태에서 레이블 강조 */
-.updateUserInfo-modal .modal-content .updateUserInfo-form ul li input:focus+ ::after {
-	color: #333;
-	/* 포커스 시 색상을 진하게 변경 */
-}
 
 .button-group {
 	display: flex;
@@ -341,6 +336,70 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 .submit-btn:active {
 	background-color: #0066d6;
 }
+
+/* 결제 */
+.pay-modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/* background-color: rgba(0, 0, 0, 0.5); */
+	z-index: 1000;
+}
+
+.pay-modal .modal-content {
+	background-color: #fff;
+	border-radius: 28px 28px 0 0;
+	width: 100%;
+	height: 716px;
+	position: absolute;
+	transition: all 0.3s ease-out;
+	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	top: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.pay-modal .modal-content .inner-modal {
+	width: 100%;
+	max-width: 372px;
+}
+
+/* 모달이 열린 상태 */
+.pay-modal.show {
+	display: flex;
+}
+
+.pay-modal.show .modal-content {
+	top: 520px;
+}
+
+/* 닫기 버튼 */
+.pay-modal .modal-content .modal-up {
+	display: flex;
+	justify-content: center;
+	padding: 16px 0 36px 0;
+}
+
+.pay-modal .modal-content .modal-up span.close-btn {
+	display: block;
+	width: 32px;
+	height: 4px;
+	background-color: #79747E;
+	border-radius: 100px;
+}
+
+.pay-modal .modal-content .modal-down>p {
+	text-align: start;
+	font-family: Inter;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 30px;
+}
+
 
 
 /* @media screen and (max-width: 412px) {

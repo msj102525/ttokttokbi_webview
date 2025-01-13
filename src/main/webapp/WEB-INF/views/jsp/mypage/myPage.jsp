@@ -14,6 +14,7 @@
                         <link href="<%=path%>/css/reset.css" rel="stylesheet" />
                         <link href="<%=path%>/css/my_page.css" rel="stylesheet" />
                         <script src="<%=path%>/js/modal/updateUserInfo.js" defer></script>
+                        <script src="<%=path%>/js/modal/pay.js" defer></script>
                     </head>
 
                     <body>
@@ -95,13 +96,31 @@
                                             <p><span>${userInfoOutputVo.remainingDays}</span>일 남았어요! 🙂</p>
                                         </div>
                                         <div class="sec-down-right">
-                                            <div class="btn-ticket">
+                                            <div class="btn-ticket" id="payBtn">
                                                 <p>이용권 관리</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </section>
+
+                            <div class="pay-modal" id="payModal">
+                                <div class="modal-content">
+                                    <div class="inner-modal">
+                                        <div class="modal-up">
+                                            <span class="close-btn" id="closeModal"></span>
+                                        </div>
+                                        <div class="modal-down">
+                                            <p>이용권 관리</p>
+                                            <ul>
+                                                <li>이용권</li>
+                                                <li>결제 내역</li>
+                                            </ul>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <section class="sec3">
                                 <div class="inner-section">

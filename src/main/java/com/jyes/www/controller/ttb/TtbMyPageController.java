@@ -135,7 +135,8 @@ public class TtbMyPageController {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", userAgent);
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); // form-data
+            // con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            // // form-data
             con.setDoOutput(true);
 
             // 보내는 데이터 준비
