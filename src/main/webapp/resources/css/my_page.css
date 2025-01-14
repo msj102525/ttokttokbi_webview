@@ -369,12 +369,22 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 }
 
 /* 모달이 열린 상태 */
-.pay-modal.show {
+/* .pay-modal.show {
 	display: flex;
 }
 
 .pay-modal.show .modal-content {
-	top: 520px;
+	top: 290px; 
+}
+*/
+
+.pay-modal {
+	display: flex;
+}
+
+
+.pay-modal .modal-content {
+	top: 290px;
 }
 
 /* 닫기 버튼 */
@@ -398,8 +408,263 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	font-weight: 700;
 	font-size: 24px;
 	line-height: 30px;
+	color: #1D1B20;
 }
 
+.pay-modal .modal-content .modal-down>ul {
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 24px 0 0 0;
+
+}
+
+.pay-modal .modal-content .modal-down>ul>li {
+	flex: 1;
+	height: 28px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 7px;
+	position: relative;
+}
+
+.pay-modal .modal-content .modal-down>ul>li>p {
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	width: 100%;
+	color: #D8D8D8;
+}
+
+.pay-modal .modal-content .modal-down>ul>li .tab-line {
+	width: 100%;
+	height: 3px;
+	background-color: #fff;
+	border-radius: 100px 100px 0 0;
+}
+
+
+
+.pay-modal .modal-content .modal-down>ul>li.on>p {
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	width: 100%;
+	color: #1D1B20;
+}
+
+.pay-modal .modal-content .modal-down>ul>li.on .tab-line {
+	width: 100%;
+	height: 3px;
+	background-color: #0095FE;
+	border-radius: 100px 100px 0 0;
+
+}
+
+/* 기본적으로 숨김 */
+.pay-modal .tab-content {
+	display: none;
+	font-size: 14px;
+	color: #1D1B20;
+	border-radius: 8px;
+	position: absolute;
+	top: 62px;
+	left: 0;
+	width: 200%;
+}
+
+/* on 클래스가 있을 때만 보이게 */
+.pay-modal .modal-content .modal-down>ul>li.on .tab-content {
+	display: block;
+}
+
+.pay-modal .tab-content.left {
+	text-align: start;
+}
+
+.pay-modal .tab-content.left h3 {
+	text-align: start;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	padding: 4px 0;
+}
+
+.pay-modal .tab-content.left .inner-tab-content .text-box {
+	padding: 4px 0;
+}
+
+.pay-modal .tab-content.left p {
+	text-align: start;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 14px;
+	color: #A2A2A2;
+	letter-spacing: -1px;
+	white-space: nowrap;
+}
+
+.pay-modal .tab-content.right {
+	transform: translateX(-52.5%);
+}
+
+/* 티켓 박스 스타일 */
+.pay-modal .tab-content.left .ticket-box {
+	padding: 8px 0;
+}
+
+.pay-modal .ticket-box .swiper {
+	width: 100%;
+}
+
+/* 티켓 슬라이드 스타일 */
+.pay-modal .tab-content.left .ticket-box .swiper-slide {
+	border: 1px solid #D8D8D8;
+	width: 254px;
+	height: 124px;
+	background: #ffffff;
+	border-radius: 8px;
+	position: relative;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.pay-modal .tab-content.left .ticket-box .swiper-slide.on {
+	border: 1px solid #0095FE;
+}
+
+/* 왼쪽 티켓 파인 부분 */
+.pay-modal .tab-content.left .ticket-box .swiper-slide::before {
+	content: '';
+	position: absolute;
+	left: -10px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 25px;
+	height: 25px;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: inset -1px 0 0 #D8D8D8;
+	z-index: 2;
+}
+
+/* 오른쪽 티켓 파인 부분 */
+.pay-modal .tab-content.left .ticket-box .swiper-slide::after {
+	content: '';
+	position: absolute;
+	right: -10px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background-color: #fff;
+	box-shadow: inset 1px 0 0 #D8D8D8;
+	z-index: 2;
+}
+
+.pay-modal .tab-content.left .ticket-box .swiper-slide.on::after {
+	box-shadow: inset 1px 0 0 #0095FE;
+}
+
+.pay-modal .tab-content.left .ticket-box .swiper-slide.on::before {
+	box-shadow: inset -1px 0 0 #0095FE;
+}
+
+.pay-modal .tab-content.left .ticket-box .swiper-slide img {
+	content: url('../img/check_off.png');
+}
+
+.pay-modal .tab-content.left .ticket-box .swiper-slide.on img {
+	content: url('../img/check_on.png');
+}
+
+
+/* 중간 가로 점선 */
+.pay-modal .tab-content.left .ticket-box .swiper-slide .ticket-divider {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	border-top: 1px dashed #D8D8D8;
+	z-index: 1;
+}
+
+/* 티켓 내용 구조 */
+.pay-modal .tab-content.left .ticket-box .ticket-content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.pay-modal .tab-content.left .ticket-box .ticket-header {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 16px;
+}
+
+.pay-modal .tab-content.left .ticket-box .ticket-header h4 {
+	display: flex;
+	align-items: center;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
+	color: #1D1B20;
+}
+
+
+.pay-modal .tab-content.left .ticket-box .ticket-body {
+	padding: 8px 16px;
+}
+
+.pay-modal .tab-content.left .ticket-box .ticket-body p:nth-child(1) {
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 15px;
+	color: #757575;
+	text-decoration: line-through;
+}
+
+.pay-modal .tab-content.left .ticket-box .ticket-body p:nth-child(2) {
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+	color: #0095FE;
+}
+
+.pay-modal .tab-content.left .ticket-box .ticket-body p:nth-child(2) span {
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 15px;
+	color: #757575;
+}
+
+.pay-modal .tab-content.left .business-info {
+	display: flex;
+	justify-content: space-between;
+	padding: 32px 0;
+}
+
+.pay-modal .tab-content.left .pay-btn {
+	padding: 12px 0;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 24px;
+	color: #fff;
+	border-radius: 10px;
+	background-color: #0095FE;
+}
+
+.pay-modal .tab-content.left .pay-btn div {
+	text-align: center;
+}
 
 
 /* @media screen and (max-width: 412px) {

@@ -1,15 +1,16 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.querySelector("#payModal");
     const openModal = document.querySelector("#payBtn");
     const closeModal = document.querySelector("#payModal #closeModal");
-    
+    const payTabs = document.querySelectorAll("#payTab");
+    const ticketContents = document.querySelectorAll("#ticketContent");
+    const ticketPayBtn = document.querySelector("#ticketPayBtn");
+
+
     // 모달 열기
     openModal.addEventListener("click", (e) => {
         e.preventDefault();
-        console.log("payBtn")
         modal.style.display = "block";
-        // 강제 리플로우
         modal.offsetHeight;
         modal.classList.add("show");
     });
@@ -17,10 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // 모달 닫기
     const closeModalFunction = () => {
         modal.classList.remove("show");
-        // transition이 끝난 후 display none 설정
         setTimeout(() => {
             modal.style.display = "none";
-        }, 300); // transition 시간과 동일하게 설정
+        }, 300);
     };
 
     closeModal.addEventListener("click", closeModalFunction);
@@ -32,45 +32,58 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // // 수정 버튼
-    // payForm.addEventListener("submit", (e) => {
-    //     e.preventDefault();
+    // 첫 번째 탭을 기본으로 선택
+    payTabs[0].classList.add("on");
 
-    //     userName = document.querySelector("#payForm #userName").value;
-    //     company = document.querySelector("#payForm #company").value;
+    // 탭 클릭 이벤트 처리
+    payTabs.forEach((tab) => {
+        tab.addEventListener("click", (e) => {
+            if (tab.classList.contains("on")) {
+                return;
+            }
 
-    //     const formData = new FormData();
-    //     formData.append('id', id);
-    //     formData.append('approach_path', approachPath);
-    //     formData.append('affiliates_code', affiliatesCode);
-    //     formData.append('name', userName);
-    //     formData.append('company', company);
+            payTabs.forEach((t) => t.classList.remove("on"));
+            tab.classList.add("on");
+        });
+    });
 
-    //     console.log("서버로 보내는 데이터:");
-    //     for (const [key, value] of formData.entries()) {
-    //         console.log(`${key}: ${value}`);
-    //     }
+    const swiper = new Swiper(".ticketSwiper", {
+        slidesPerView: "auto",
+        spaceBetween: 10,
+        freeMode: {
+            enabled: true,
+            sticky: false,
+        },
+        grabCursor: true,
+    });
 
-    //     fetch('/ttb/set_user_info', {
-    //         method: 'POST',
-    //         body: formData
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! status: ${response.status}`);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             console.log("성공:", data);
-    //             window.location.reload();
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error:", error);
-    //             alert("정보 수정 중 오류가 발생했습니다.");
-    //             window.location.reload();
-    //         });
-    // });
+    // 첫 번째 탭을 기본으로 선택
+    ticketContents[0].classList.add("on");
+
+    // 탭 클릭 이벤트 처리
+    ticketContents.forEach((tab) => {
+        tab.addEventListener("click", (e) => {
+            if (tab.classList.contains("on")) {
+                return;
+            }
+
+            ticketContents.forEach((t) => t.classList.remove("on"));
+            tab.classList.add("on");
+        });
+    });
+
+    ticketPayBtn.addEventListener("click", (e) => {
+        const activeContent = Array.from(ticketContents).find((tab) =>
+            tab.classList.contains("on")
+        );
+
+        if (activeContent) {
+            const h4Text = activeContent.querySelector("h4")?.textContent || "텍스트 없음";
+            console.log("활성화된 탭의 제목:", h4Text);
+        } else {
+            console.log("활성화된 탭이 없습니다.");
+        }
+    });
 
 
 

@@ -15,6 +15,8 @@
                         <link href="<%=path%>/css/my_page.css" rel="stylesheet" />
                         <script src="<%=path%>/js/modal/updateUserInfo.js" defer></script>
                         <script src="<%=path%>/js/modal/pay.js" defer></script>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+                        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
                     </head>
 
                     <body>
@@ -33,9 +35,7 @@
                                     </div>
                                     <div class="sec1-left">
                                         <div id="updateUserInfoBtn" class="setUserInfoImgBox">
-                                            <a href="#">
-                                                <img src="<%=path%>/images/setUserInfo.png" alt="유저수정이미지">
-                                            </a>
+                                            <img src="<%=path%>/img/setUserInfo.png" alt="유저수정이미지">
                                         </div>
                                     </div>
                                 </div>
@@ -113,10 +113,84 @@
                                         <div class="modal-down">
                                             <p>이용권 관리</p>
                                             <ul>
-                                                <li>이용권</li>
-                                                <li>결제 내역</li>
+                                                <li id="payTab">
+                                                    <p>이용권</p>
+                                                    <div class="tab-line"></div>
+                                                    <div class="tab-content left">
+                                                        <div class="inner-tab-content">
+                                                            <h3>일반 이용권</h3>
+                                                            <div class="text-box">
+                                                                <p>◌ 정기결제의 경우, 이용기간 30일 기준으로 자동으로 결제됩니다.</p>
+                                                                <p>◌ 통신사 정책에 따라 일일 무료 문자 초과 시 별도 과금이 청구될 수 있습니다.</p>
+                                                                <p>◌ 중도 해지 시 할인 받은 금액 만큼 차감 후 환불 처리 됩니다.</p>
+                                                            </div>
+                                                            <div class="ticket-box">
+                                                                <div class="swiper ticketSwiper">
+                                                                    <div class="swiper-wrapper">
+                                                                        <div class="swiper-slide" id="ticketContent">
+                                                                            <div class="ticket-divider"></div>
+                                                                            <div class="ticket-content">
+                                                                                <div class="ticket-header">
+                                                                                    <h4>무선 12개월 이용권</h4>
+                                                                                    <img src="" alt="">
+                                                                                </div>
+                                                                                <div class="ticket-body">
+                                                                                    <p>196,000원</p>
+                                                                                    <p>88,000원 <span>(VAT 포함)</span></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="swiper-slide" id="ticketContent">
+                                                                            <div class="ticket-divider"></div>
+                                                                            <div class="ticket-content">
+                                                                                <div class="ticket-header">
+                                                                                    <h4>무선 정기 이용권</h4>
+                                                                                    <img src="" alt="">
+                                                                                </div>
+                                                                                <div class="ticket-body">
+                                                                                    <p>19,800원</p>
+                                                                                    <p>9,900원 <span>(VAT 포함)</span></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="swiper-slide" id="ticketContent">
+                                                                            <div class="ticket-divider"></div>
+                                                                            <div class="ticket-content">
+                                                                                <div class="ticket-header">
+                                                                                    <h4>유무선 정기 이용권</h4>
+                                                                                    <img src="" alt="">
+                                                                                </div>
+                                                                                <div class="ticket-body">
+                                                                                    <p>25,400원</p>
+                                                                                    <p>14,300원 <span>(VAT 포함)</span></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="business-info">
+                                                                <p>제이예스(주) 사업자 정보 보기</p>
+                                                                <img src="<%=path%>/img/arrow-right.png"
+                                                                    alt="오른쪽화살표이미지">
+                                                            </div>
+
+                                                            <div class="pay-btn" id="ticketPayBtn">
+                                                                <div class="">
+                                                                    구매하기
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li id="payTab">
+                                                    <p>결제 내역</p>
+                                                    <div class="tab-line"></div>
+                                                    <div class="tab-content right">결제 내역 내용</div>
+                                                </li>
                                             </ul>
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -132,31 +206,31 @@
                                             <li>
                                                 <a href="notice.jsp">공지사항</a>
                                                 <div class="arrow-img-box">
-                                                    <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                    <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                 </div>
                                             </li>
                                             <li>
                                                 <a href="emailInquiry.jsp">이메일 문의</a>
                                                 <div class="arrow-img-box">
-                                                    <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                    <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                 </div>
                                             </li>
                                             <li>
                                                 <a href="kakaoInquiry.jsp">카카오톡 문의</a>
                                                 <div class="arrow-img-box">
-                                                    <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                    <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                 </div>
                                             </li>
                                             <li>
                                                 <a href="faq.jsp">자주 묻는 질문</a>
                                                 <div class="arrow-img-box">
-                                                    <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                    <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                 </div>
                                             </li>
                                             <li>
                                                 <a href="https://yourdomain.com">똑똑비 홈페이지</a>
                                                 <div class="arrow-img-box">
-                                                    <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                    <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                 </div>
                                             </li>
                                         </ul>
@@ -175,31 +249,31 @@
                                                 <li>
                                                     <a href="#">환경설정</a>
                                                     <div class="arrow-img-box">
-                                                        <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                        <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <a href="#">공지사항</a>
                                                     <div class="arrow-img-box">
-                                                        <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                        <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <a href="#">서비스 이용약관</a>
                                                     <div class="arrow-img-box">
-                                                        <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                        <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <a href="#">개인정보처리방침</a>
                                                     <div class="arrow-img-box">
-                                                        <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                        <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <a href="#">명시적 공개 데이터 안내</a>
                                                     <div class="arrow-img-box">
-                                                        <img src="<%=path%>/images/arrow-right.png" alt="오른쪽화살표이미지">
+                                                        <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
                                             </ul>
