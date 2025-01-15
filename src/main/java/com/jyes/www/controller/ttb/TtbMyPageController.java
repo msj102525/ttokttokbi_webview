@@ -96,7 +96,7 @@ public class TtbMyPageController {
     }
 
     @RequestMapping(value = "/ttb/set_user_info", method = { RequestMethod.POST })
-    public @ResponseBody Map<String, Object> setUserInfoa(HttpServletRequest request) throws Exception {
+    public @ResponseBody Map<String, Object> setUserInfo(HttpServletRequest request) throws Exception {
         StringBuffer logData = new StringBuffer();
         HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
 
@@ -117,7 +117,7 @@ public class TtbMyPageController {
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "requestMap : " + requestMap + "\n");
 
         String approach_path = StringUtil.nvl(request.getParameter("approach_path"));
-        String id = StringUtil.nvl(request.getParameter("id"), request.getParameter("salt_id"));
+        String id = StringUtil.nvl(request.getParameter("id"));
         String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
         String name = StringUtil.nvl(request.getParameter("name"));
         String company = StringUtil.nvl(request.getParameter("company"));
@@ -135,7 +135,6 @@ public class TtbMyPageController {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", userAgent);
-            // con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             // // form-data
             con.setDoOutput(true);
 
@@ -146,6 +145,91 @@ public class TtbMyPageController {
             postData.append("&affiliates_code=" + URLEncoder.encode(affiliates_code, "UTF-8"));
             postData.append("&name=" + URLEncoder.encode(name, "UTF-8"));
             postData.append("&company=" + URLEncoder.encode(company, "UTF-8"));
+
+            // 데이터 전송
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = postData.toString().getBytes("UTF-8");
+                os.write(input, 0, input.length);
+            }
+
+            // 응답 받기
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"))) {
+                String responseLine;
+                while ((responseLine = br.readLine()) != null) {
+                    apiResponse.append(responseLine.trim());
+                }
+            }
+
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " API Response : " + apiResponse + "\n");
+
+        } catch (Exception e) {
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " Error : " + e.getMessage() + "\n");
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
+        }
+
+        // JSON 응답 파싱
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> apiResponseMap = objectMapper.readValue(apiResponse.toString(), Map.class);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("apiResponse", apiResponseMap); // JSON 응답을 Map 형태로 반환
+
+        log.info(logData.toString());
+
+        return response;
+    }
+
+    @RequestMapping(value = "/ttb/get_payment_list", method = { RequestMethod.POST })
+    public @ResponseBody Map<String, Object> getPaymentList(HttpServletRequest request) throws Exception {
+        StringBuffer logData = new StringBuffer();
+        HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
+
+        String userAgent = "SAM(compatible;ServiceType/SAM;DeviceType/AndroidPhone;DeviceModel/Pixel2;OSType/Android;OSVersion/30;AppVersion/1.7.53;StoreType/PLAY)";
+        String currentUrl = request.getRequestURL().toString();
+        String StartUrl = "/" + currentUrl.substring(currentUrl.indexOf(currentUrl.split("/")[3]));
+        if (request.getQueryString() != null) {
+            currentUrl = currentUrl + "?" + request.getQueryString();
+        }
+        String logKey = LogUtils.getUserLogKey(request);
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "logKey:" + logKey + ":" + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "StartUrl : " + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CurrentUrl : " + currentUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
+                + StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "userAgent : " + userAgent + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "requestMap : " + requestMap + "\n");
+
+        String approach_path = StringUtil.nvl(request.getParameter("approach_path"));
+        String id = StringUtil.nvl(request.getParameter("id"));
+        String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
+
+        String apiUrl = Config.API_URL + "/api/version/1_2/get_payment_list";
+        // String apiUrl = Config.API_URL + "/ttb/version/1_2/get_payment_list";
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "apiUrl : " + apiUrl + "\n");
+
+        HttpURLConnection con = null;
+        StringBuilder apiResponse = new StringBuilder();
+
+        try {
+            // URL 연결 설정
+            URL url = new URL(apiUrl);
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", userAgent);
+            // // form-data
+            con.setDoOutput(true);
+
+            // 보내는 데이터 준비
+            StringBuilder postData = new StringBuilder();
+            postData.append("approach_path=" + URLEncoder.encode(approach_path, "UTF-8"));
+            postData.append("&id=" + URLEncoder.encode(id, "UTF-8"));
+            postData.append("&affiliates_code=" + URLEncoder.encode(affiliates_code, "UTF-8"));
 
             // 데이터 전송
             try (OutputStream os = con.getOutputStream()) {

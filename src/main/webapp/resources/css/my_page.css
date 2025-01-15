@@ -369,23 +369,23 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 }
 
 /* 모달이 열린 상태 */
-/* .pay-modal.show {
+.pay-modal.show {
 	display: flex;
 }
 
 .pay-modal.show .modal-content {
-	top: 290px; 
+	top: 290px;
 }
-*/
 
-.pay-modal {
+
+/* .pay-modal {
 	display: flex;
 }
 
 
 .pay-modal .modal-content {
 	top: 290px;
-}
+} */
 
 /* 닫기 버튼 */
 .pay-modal .modal-content .modal-up {

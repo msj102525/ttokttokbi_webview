@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const payTabs = document.querySelectorAll("#payTab");
     const ticketContents = document.querySelectorAll("#ticketContent");
     const ticketPayBtn = document.querySelector("#ticketPayBtn");
+    const id = document.querySelector("#updateUserInfoForm #id").value;
+    const affiliatesCode = document.querySelector("#updateUserInfoForm #affiliatesCode").value;
+    const approachPath = document.querySelector("#updateUserInfoForm #approachPath").value;
 
 
     // 모달 열기
@@ -13,6 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "block";
         modal.offsetHeight;
         modal.classList.add("show");
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('approach_path', approachPath);
+        formData.append('affiliates_code', affiliatesCode);
+
+        console.log("서버로 보내는 데이터:");
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        fetch('/ttb/get_payment_list', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("성공:", data);
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("결제 내역 목록 가져오기 오류");
+                window.location.reload();
+            });
     });
 
     // 모달 닫기
@@ -84,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("활성화된 탭이 없습니다.");
         }
     });
-
 
 
 });
