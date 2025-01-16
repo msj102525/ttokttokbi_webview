@@ -84,7 +84,7 @@ public class Config {
 	public static String INI_HOST_INILITE = "https://inilite.inicis.com";
 
 	// Jsam, 똑똑비 api 주소
-	public static String API_URL_DEV = "http://192.168.0.241:8080/wirelessbizmsg";
+	public static String API_URL_DEV = "http://192.168.0.240:8080/wirelessbizmsg";
 	// public static String API_URL_DEV = "http://apidev.sohomsg.kr";
 	public static String API_URL_DEP = "https://api.sohomsg.kr";
 	public static String API_URL = "";

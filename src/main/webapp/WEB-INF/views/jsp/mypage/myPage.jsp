@@ -84,6 +84,28 @@
                                 </div>
                             </div>
 
+                            <div class="confirm-modal updateUserInfo" id="confirmModal" style="display: none;">
+                                <div class="modal-content">
+                                    <div class="inner-modal">
+                                        <div class="modal-head">
+                                            <p>수정</p>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>수정하시겠습니까?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="button-group">
+                                                <button type="button" class="cancel-btn"
+                                                    id="confirmCancelBtn">취소</button>
+                                                <button type="button" class="submit-btn"
+                                                    id="confirmSubmitBtn">확인</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <section class="sec2">
                                 <div class="inner-section">
                                     <div class="sec-up">
@@ -188,10 +210,41 @@
                                                 <li id="payTab">
                                                     <p>결제 내역</p>
                                                     <div class="tab-line"></div>
-                                                    <div class="tab-content right">결제 내역 내용</div>
+                                                    <div class="tab-content right">
+                                                        <div class="tab-content right">
+                                                            <div class="payment-history">
+                                                                <div class="payment-list" id="paymentList">
+                                                                    <!-- 자바스크립트로 동적 생성됨 -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="confirm-modal pay" id="confirmModalPay" style="display: none;">
+                                <div class="modal-content">
+                                    <div class="inner-modal">
+                                        <div class="modal-head">
+                                            <p>구매</p>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>구매하시겠습니까?</p>
+                                            <p>확인 버튼 선택 시 결제 페이지로 이동됩니다.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="button-group">
+                                                <button type="button" class="cancel-btn"
+                                                    id="confirmCancelBtnPay">취소</button>
+                                                <button type="button" class="submit-btn"
+                                                    id="confirmSubmitBtnPay">확인</button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

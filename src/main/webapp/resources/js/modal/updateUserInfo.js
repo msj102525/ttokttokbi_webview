@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let userName = document.querySelector("#updateUserInfoForm #userName").value;
     let company = document.querySelector("#updateUserInfoForm #company").value;
 
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+    const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+    let formDataToSubmit = null;
+
     // 모달 열기
     openModal.addEventListener("click", (e) => {
         e.preventDefault();
@@ -39,7 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // // 수정 버튼
+
+    // 수정 버튼
     updateUserInfoForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
@@ -53,14 +59,30 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append('name', userName);
         formData.append('company', company);
 
+        formDataToSubmit = formData;  // 폼 데이터 저장
+
+        // 확인 모달 표시
+        confirmModal.style.display = "block";
+    });
+
+    // 확인 모달 취소 버튼
+    confirmCancelBtn.addEventListener('click', () => {
+        confirmModal.style.display = "none";
+        formDataToSubmit = null;
+    });
+
+    // 확인 모달 수정 버튼
+    confirmSubmitBtn.addEventListener('click', () => {
+        if (!formDataToSubmit) return;
+
         console.log("서버로 보내는 데이터:");
-        for (const [key, value] of formData.entries()) {
+        for (const [key, value] of formDataToSubmit.entries()) {
             console.log(`${key}: ${value}`);
         }
 
         fetch('/ttb/set_user_info', {
             method: 'POST',
-            body: formData
+            body: formDataToSubmit
         })
             .then(response => {
                 if (!response.ok) {
@@ -70,15 +92,24 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(data => {
                 console.log("성공:", data);
+                confirmModal.style.display = "none";
                 window.location.reload();
             })
             .catch((error) => {
                 console.error("Error:", error);
                 alert("정보 수정 중 오류가 발생했습니다.");
+                confirmModal.style.display = "none";
                 window.location.reload();
             });
     });
 
+    // 모달 바깥 영역 클릭 시 닫기
+    confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+            confirmModal.style.display = "none";
+            formDataToSubmit = null;
+        }
+    });
 
 
 });

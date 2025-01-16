@@ -298,15 +298,14 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	color: #1D1B20;
 }
 
-
-.button-group {
+.updateUserInfo-modal .button-group {
 	display: flex;
 	gap: 10px;
 	margin-top: 20px;
 	padding: 10px 0;
 }
 
-.button-group button {
+.updateUserInfo-modal .button-group button {
 	flex: 1;
 	padding: 15px 0;
 	border-radius: 8px;
@@ -317,25 +316,113 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	transition: all 0.4s ease-in-out;
 }
 
-.cancel-btn {
+.updateUserInfo-modal .cancel-btn {
 	background-color: #f5f5f5;
 	border: 1px solid #0095FE;
 	color: #0095FE;
 }
 
-.submit-btn {
+.updateUserInfo-modal .submit-btn {
 	background-color: #0095FE;
 	border: 1px solid #0095FE;
 	color: white;
 }
 
-.cancel-btn:active {
+.updateUserInfo-modal .cancel-btn:active {
 	background-color: #eaeaea;
 }
 
-.submit-btn:active {
+.updateUserInfo-modal .submit-btn:active {
 	background-color: #0066d6;
 }
+
+
+/* 유저 정보 컴펌 모달 */
+.confirm-modal p {
+	letter-spacing: -1px;
+}
+
+.confirm-modal.updateUserInfo {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.confirm-modal.updateUserInfo .inner-modal {
+	padding: 8px 8px;
+}
+
+.confirm-modal.updateUserInfo .modal-content {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: white;
+	border-radius: 12px;
+	min-width: 300px;
+}
+
+.confirm-modal.updateUserInfo .modal-head p {
+	padding: 8px 8px;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
+	color: #1D1B20
+}
+
+.confirm-modal.updateUserInfo .modal-body p {
+	padding: 8px 16px;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	color: #757575
+}
+
+
+.confirm-modal.updateUserInfo .button-group {
+	display: flex;
+	justify-content: end;
+	gap: 10px;
+}
+
+.confirm-modal.updateUserInfo .modal-footer {
+	padding: 8px 0;
+}
+
+.confirm-modal.updateUserInfo .modal-footer button {
+	padding: 8px 24px;
+	border-radius: 6px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.confirm-modal.updateUserInfo .modal-footer .cancel-btn {
+	background-color: #f5f5f5;
+	border: 1px solid #0095FE;
+	color: #0095FE;
+}
+
+.confirm-modal.updateUserInfo .modal-footer .submit-btn {
+	background-color: #0095FE;
+	border: 1px solid #0095FE;
+	color: white;
+}
+
+.confirm-modal.updateUserInfo .modal-footer .cancel-btn:active {
+	background-color: #eaeaea;
+}
+
+.confirm-modal.updateUserInfo .modal-footer .submit-btn:active {
+	background-color: #0066d6;
+}
+
+
+
 
 /* 결제 */
 .pay-modal {
@@ -353,7 +440,7 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	background-color: #fff;
 	border-radius: 28px 28px 0 0;
 	width: 100%;
-	height: 716px;
+	height: 583px;
 	position: absolute;
 	transition: all 0.3s ease-out;
 	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
@@ -376,7 +463,6 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 .pay-modal.show .modal-content {
 	top: 290px;
 }
-
 
 /* .pay-modal {
 	display: flex;
@@ -665,6 +751,119 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 .pay-modal .tab-content.left .pay-btn div {
 	text-align: center;
 }
+
+.payment-history {
+	height: calc(583px - 120px);
+	/* 모달 높이에서 헤더 영역 제외 */
+	overflow-y: auto;
+}
+
+.payment-header {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	background-color: #F6F6F6;
+	padding: 7px 0;
+	position: sticky;
+	top: 0;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 14px;
+	color: #1D1B20;
+}
+
+.payment-item {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	align-items: center;
+	padding: 7px 0;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 14px;
+	color: #1D1B20;
+	height: 28px;
+}
+
+/* 결제 확인 모달 */
+.confirm-modal.pay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.confirm-modal.pay .inner-modal {
+	padding: 8px 8px;
+}
+
+.confirm-modal.pay .modal-content {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: white;
+	border-radius: 12px;
+	min-width: 332px;
+}
+
+.confirm-modal.pay .modal-head p {
+	padding: 8px 8px;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
+	color: #1D1B20
+}
+
+.confirm-modal.pay .modal-body p {
+	padding: 8px 16px;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	color: #757575;
+	letter-spacing: -1px;
+}
+
+
+.confirm-modal.pay .button-group {
+	display: flex;
+	justify-content: end;
+	gap: 10px;
+}
+
+.confirm-modal.pay .modal-footer {
+	padding: 8px 0;
+}
+
+.confirm-modal.pay .modal-footer button {
+	padding: 8px 24px;
+	border-radius: 6px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.confirm-modal.pay .modal-footer .cancel-btn {
+	background-color: #f5f5f5;
+	border: 1px solid #0095FE;
+	color: #0095FE;
+}
+
+.confirm-modal.pay .modal-footer .submit-btn {
+	background-color: #0095FE;
+	border: 1px solid #0095FE;
+	color: white;
+}
+
+.confirm-modal.pay .modal-footer .cancel-btn:active {
+	background-color: #eaeaea;
+}
+
+.confirm-modal.pay .modal-footer .submit-btn:active {
+	background-color: #0066d6;
+}
+
 
 
 /* @media screen and (max-width: 412px) {

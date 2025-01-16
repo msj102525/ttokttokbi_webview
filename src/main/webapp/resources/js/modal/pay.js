@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.querySelector("#payModal");
+    const modalContent = document.querySelector("#payModal .modal-content");
     const openModal = document.querySelector("#payBtn");
     const closeModal = document.querySelector("#payModal #closeModal");
     const payTabs = document.querySelectorAll("#payTab");
@@ -10,18 +11,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const approachPath = document.querySelector("#updateUserInfoForm #approachPath").value;
 
 
-    // 모달 열기
+    const confirmModal = document.getElementById('confirmModalPay');
+    const confirmCancelBtn = document.getElementById('confirmCancelBtnPay');
+    const confirmSubmitBtn = document.getElementById('confirmSubmitBtnPay');
+
+
     openModal.addEventListener("click", (e) => {
         e.preventDefault();
         modal.style.display = "block";
         modal.offsetHeight;
         modal.classList.add("show");
+
         const formData = new FormData();
         formData.append('id', id);
         formData.append('approach_path', approachPath);
         formData.append('affiliates_code', affiliatesCode);
 
-        console.log("서버로 보내는 데이터:");
         for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
@@ -38,12 +43,55 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(data => {
                 console.log("성공:", data);
-                window.location.reload();
+                const paymentList = document.querySelector('.tab-content.right');
+                const payments = data.apiResponse.data.pay_list;
+
+                // 날짜 포맷팅 함수
+                function formatDate(timestamp) {
+                    const date = new Date(parseInt(timestamp));
+                    return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+                }
+
+                // 가격 포맷팅 함수
+                function formatPrice(price) {
+                    return parseInt(price).toLocaleString() + '원';
+                }
+
+                let html = `
+                    <div class="payment-history">
+
+                        <div class="payment-header">
+                            <div class="header-name">상품명</div>
+                            <div class="header-price">결제금액</div>
+                            <div class="header-date">결제일시</div>
+                            <div class="header-expiration">이용 종료일</div>
+                        </div>
+                `;
+
+                payments.forEach(payment => {
+                    html += `
+                        <div class="payment-item">
+                            <div class="payment-name">${payment.name}</div>
+                            <div class="payment-price">${formatPrice(payment.price)}</div>
+                            <div class="payment-date">${formatDate(payment.date)}</div>
+                            <div class="payment-expiration">
+                                ${payment.expiration_date ? formatDate(payment.expiration_date) : '-'}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+                paymentList.innerHTML = html;
             })
             .catch((error) => {
                 console.error("Error:", error);
-                alert("결제 내역 목록 가져오기 오류");
-                window.location.reload();
+                const paymentList = document.querySelector('.tab-content.right');
+                paymentList.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: #666;">
+                        결제 내역을 불러오는 중 오류가 발생했습니다.
+                    </div>
+                `;
             });
     });
 
@@ -76,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             payTabs.forEach((t) => t.classList.remove("on"));
             tab.classList.add("on");
+
         });
     });
 
@@ -104,7 +153,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    ticketPayBtn.addEventListener("click", (e) => {
+    // 결제 버튼 클릭 이벤트 처리
+    ticketPayBtn.addEventListener("click", () => {
+        confirmModalPay.style.display = "block";
+    });
+
+    confirmCancelBtnPay.addEventListener("click", () => {
+        confirmModalPay.style.display = "none";
+    });
+
+    confirmSubmitBtnPay.addEventListener("click", () => {
         const activeContent = Array.from(ticketContents).find((tab) =>
             tab.classList.contains("on")
         );
@@ -115,7 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             console.log("활성화된 탭이 없습니다.");
         }
-    });
 
+        confirmModalPay.style.display = "none";
+    });
 
 });

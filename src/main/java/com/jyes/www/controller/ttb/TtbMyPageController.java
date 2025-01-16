@@ -95,7 +95,7 @@ public class TtbMyPageController {
         return "mypage/myPage";
     }
 
-    @RequestMapping(value = "/ttb/set_user_info", method = { RequestMethod.POST })
+    @RequestMapping(value = "/ttb/set_user_info", method = { RequestMethod.GET, RequestMethod.POST })
     public @ResponseBody Map<String, Object> setUserInfo(HttpServletRequest request) throws Exception {
         StringBuffer logData = new StringBuffer();
         HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
@@ -132,17 +132,21 @@ public class TtbMyPageController {
         try {
             // URL 연결 설정
             URL url = new URL(apiUrl);
+
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", userAgent);
+
             // // form-data
             con.setDoOutput(true);
 
             // 보내는 데이터 준비
             StringBuilder postData = new StringBuilder();
-            postData.append("approach_path=" + URLEncoder.encode(approach_path, "UTF-8"));
+            postData.append("approach_path=" + URLEncoder.encode(approach_path,
+                    "UTF-8"));
             postData.append("&id=" + URLEncoder.encode(id, "UTF-8"));
-            postData.append("&affiliates_code=" + URLEncoder.encode(affiliates_code, "UTF-8"));
+            postData.append("&affiliates_code=" + URLEncoder.encode(affiliates_code,
+                    "UTF-8"));
             postData.append("&name=" + URLEncoder.encode(name, "UTF-8"));
             postData.append("&company=" + URLEncoder.encode(company, "UTF-8"));
 
@@ -160,10 +164,12 @@ public class TtbMyPageController {
                 }
             }
 
-            logData.append("[" + LogUtils.getCurrentTime() + "]" + " API Response : " + apiResponse + "\n");
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " API Response : " +
+                    apiResponse + "\n");
 
         } catch (Exception e) {
-            logData.append("[" + LogUtils.getCurrentTime() + "]" + " Error : " + e.getMessage() + "\n");
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " Error : " +
+                    e.getMessage() + "\n");
             e.printStackTrace();
         } finally {
             if (con != null) {
@@ -181,9 +187,10 @@ public class TtbMyPageController {
         log.info(logData.toString());
 
         return response;
+
     }
 
-    @RequestMapping(value = "/ttb/get_payment_list", method = { RequestMethod.POST })
+    @RequestMapping(value = "/ttb/get_payment_list", method = { RequestMethod.GET, RequestMethod.POST })
     public @ResponseBody Map<String, Object> getPaymentList(HttpServletRequest request) throws Exception {
         StringBuffer logData = new StringBuffer();
         HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
