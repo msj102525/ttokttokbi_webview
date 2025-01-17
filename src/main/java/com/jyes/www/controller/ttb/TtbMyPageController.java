@@ -5,35 +5,32 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.api.client.http.HttpHeaders;
 import com.jyes.www.common.Config;
 import com.jyes.www.service.ttb.mypage.IMyPageService;
+import com.jyes.www.service.ttb.pay.IPayService;
 import com.jyes.www.util.LogUtils;
 import com.jyes.www.util.StringUtil;
+import com.jyes.www.vo.ttb.PayCustomVo;
 import com.jyes.www.vo.ttb.UserInfoInputVo;
 import com.jyes.www.vo.ttb.UserInfoOutputVo;
+import com.jyes.www.vo.ttb.UserUsePayVo;
 
 @Controller(value = "ttbMyPageController")
 public class TtbMyPageController {
@@ -41,6 +38,9 @@ public class TtbMyPageController {
     private static final Log log = LogFactory.getLog(TtbMyPageController.class);
     @Resource(name = "ttbMyPageService")
     private IMyPageService myPageService;
+
+    @Resource(name = "ttbPayService")
+    private IPayService payService;
 
     @RequestMapping(value = "/ttb/myPage", method = RequestMethod.GET)
     public String myPage(HttpServletRequest request, Model model) {
@@ -90,6 +90,26 @@ public class TtbMyPageController {
         }
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " "
                 + "query end getMyPageInfo UserInfoOutputVo : " + userInfoOutputVo + "\n");
+
+        UserUsePayVo userUsePayVo = null;
+        try {
+            PayCustomVo payCustomVo = new PayCustomVo();
+            payCustomVo.setId(id);
+            payCustomVo.setAffiliates_code(affiliates_code);
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " "
+                    + "query start selectUserUsePayCode PayCustomVo payCustomVo:" + payCustomVo + "\n");
+            userUsePayVo = (UserUsePayVo) payService.selectUserUsePayCode(payCustomVo);
+            if (userUsePayVo != null) {
+                model.addAttribute("userUsePayVo", userUsePayVo);
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "query error selectUserUsePayCode : "
+                    + e.toString() + "\n");
+        }
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " "
+                + "query end selectUserUsePayCode UserUsePayVo userUsePayVo:" + userUsePayVo + "\n");
 
         log.info(logData.toString());
         return "mypage/myPage";

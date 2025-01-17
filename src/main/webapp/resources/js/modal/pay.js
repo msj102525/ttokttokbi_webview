@@ -10,10 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const affiliatesCode = document.querySelector("#updateUserInfoForm #affiliatesCode").value;
     const approachPath = document.querySelector("#updateUserInfoForm #approachPath").value;
 
+    const confirmModalPay = document.getElementById('confirmModalPay');
+    const confirmCancelBtnPay = document.getElementById('confirmCancelBtnPay');
+    const confirmSubmitBtnPay = document.getElementById('confirmSubmitBtnPay');
 
-    const confirmModal = document.getElementById('confirmModalPay');
-    const confirmCancelBtn = document.getElementById('confirmCancelBtnPay');
-    const confirmSubmitBtn = document.getElementById('confirmSubmitBtnPay');
+    const isPayRp = document.querySelector("#isPayRp").value;
 
 
     openModal.addEventListener("click", (e) => {
@@ -27,9 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append('approach_path', approachPath);
         formData.append('affiliates_code', affiliatesCode);
 
-        for (const [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
+        // for (const [key, value] of formData.entries()) {
+        //     console.log(`${key}: ${value}`);
+        // }
 
         fetch('/ttb/get_payment_list', {
             method: 'POST',
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                console.log("성공:", data);
+                // console.log("성공:", data);
                 const paymentList = document.querySelector('.tab-content.right');
                 const payments = data.apiResponse.data.pay_list;
 
@@ -163,15 +164,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     confirmSubmitBtnPay.addEventListener("click", () => {
+
+        if (isPayRp == "Y") {
+            alert("현재 정기결제 상품 사용중입니다. 정기결제 해지 후, 일반결제 구매가 가능하십니다.");
+            return;
+        }
+
         const activeContent = Array.from(ticketContents).find((tab) =>
             tab.classList.contains("on")
         );
 
+
+
         if (activeContent) {
-            const h4Text = activeContent.querySelector("h4")?.textContent || "텍스트 없음";
-            console.log("활성화된 탭의 제목:", h4Text);
+            const code = activeContent.querySelector("input")?.value || "텍스트 없음";
+            console.log("활성화된 탭의 제목:", code);
+
+            var checkTestId = false;
+            //테스트 아이디 체크
+            $.ajax({
+                url: '/ini/mobile/checkTestId',
+                data: { id: '<c:out value="${id}" />' },
+                type: 'post',
+                async: false,
+                success: function (data) {
+                    if (data > 0) {
+                        checkTestId = true;
+                    }
+                }
+            });
+            if (checkTestId) {
+                alert("테스트 아이디는 등록 불가합니다.");
+                return;
+            }
+
+            //6개월 이용권
+            if (code == "P0030") {
+                // window.web.callPayTicket("wireless_six_months_ticket", code);
+
+                //12개월 이용권
+            } else if (code == "P0031") {
+                // window.web.callPayTicket("wireless_one_year_ticket", code);
+            }
+            return;
+
         } else {
-            console.log("활성화된 탭이 없습니다.");
+            console.log("code Error");
         }
 
         confirmModalPay.style.display = "none";

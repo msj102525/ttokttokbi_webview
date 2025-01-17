@@ -6,7 +6,7 @@
 
 	<select id="selectUserInfo" parameterType="com.jyes.www.vo.AccessVo" resultType="com.jyes.www.vo.AccessVo">
 		SELECT * 
-		FROM T_SMART_ACCESS_TB 
+		FROM TTB_SMART_ACCESS_TB 
 		where 1=1 
 		AND ID = #{id} 
 		AND AFFILIATES_CODE = #{affiliates_code}
@@ -19,7 +19,7 @@
     </select>
     
     <select id="selectPayTypeWhereCode" parameterType="com.jyes.www.vo.PayTypeVo" resultType="com.jyes.www.vo.PayTypeVo">
-        select * from T_SMART_PAY_TYPE_TB
+        select * from TTB_SMART_PAY_TYPE_TB
         where CODE = #{code}
     </select>
 
@@ -156,8 +156,8 @@
     
     <select id="selectPayNameCompany" parameterType="com.jyes.www.vo.PayNameCompanyVo" resultType="com.jyes.www.vo.PayNameCompanyVo">
 		SELECT IF(IFNULL(A.NAME, B.COMPANY)='', B.COMPANY, IFNULL(A.NAME, B.COMPANY)) AS NAME 
-		FROM (SELECT * FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}) A
-		LEFT JOIN T_SMART_BIZ_TB B
+		FROM (SELECT * FROM TTB_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}) A
+		LEFT JOIN TTB_SMART_BIZ_TB B
 		ON A.BIZ_SEQ = B.SEQ
     </select>
     
@@ -240,20 +240,20 @@
 		FROM (
 		SELECT B.TICKETS_CODE, B.IS_PAY_RP, B.DATE, B.BATCH_YN 
 		FROM (
-		SELECT * FROM T_SMART_ACCESS_TB 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND ID = #{id} 
 		AND AFFILIATES_CODE = #{affiliates_code}
 		) A
 		LEFT JOIN (
 		SELECT A.*,C.CODE AS "TICKETS_CODE", C.IS_PAY_RP, D.BATCH_YN 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB B 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN TTB_SMART_USER_REFUND_REQUEST_TB B 
 		ON A.PAY_SUCCESS_SEQ = B.PAY_SUCCESS_SEQ 
 		AND IFNULL(A.PAY_BILL_SEQ,'') = IFNULL(B.PAY_BILL_SEQ,'') 
-		LEFT JOIN T_SMART_PAY_TYPE_TB C 
+		LEFT JOIN TTB_SMART_PAY_TYPE_TB C 
 		ON A.PAY_TYPE_CODE = C.CODE 
-		LEFT JOIN T_SMART_PAY_BILL_TB D 
+		LEFT JOIN TTB_SMART_PAY_BILL_TB D 
 		ON A.PAY_BILL_SEQ = D.SEQ 
 		WHERE 1=1 
 		AND B.SEQ IS NULL 

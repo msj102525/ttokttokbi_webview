@@ -17,6 +17,12 @@
                         <script src="<%=path%>/js/modal/pay.js" defer></script>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
                         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+                        <script type="text/javascript">
+                            const userUsePayVo = '<c:out value="${userUsePayVo}" />';
+                            const is_pay_rp = '<c:out value="${userUsePayVo.is_pay_rp }" />';//사용중인 이용권 정기결제 여부
+                        </script>
+
                     </head>
 
                     <body>
@@ -127,6 +133,9 @@
                             </section>
 
                             <div class="pay-modal" id="payModal">
+                                <input id="isPayRp" type="hidden">
+                                ${userUsePayVo.is_pay_rp}
+                                </input>
                                 <div class="modal-content">
                                     <div class="inner-modal">
                                         <div class="modal-up">
@@ -159,6 +168,7 @@
                                                                                 <div class="ticket-body">
                                                                                     <p>196,000원</p>
                                                                                     <p>88,000원 <span>(VAT 포함)</span></p>
+                                                                                    <input type="hidden" value="P0031">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -172,6 +182,7 @@
                                                                                 <div class="ticket-body">
                                                                                     <p>19,800원</p>
                                                                                     <p>9,900원 <span>(VAT 포함)</span></p>
+                                                                                    <input type="hidden" value="P0032">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -185,6 +196,7 @@
                                                                                 <div class="ticket-body">
                                                                                     <p>25,400원</p>
                                                                                     <p>14,300원 <span>(VAT 포함)</span></p>
+                                                                                    <input type="hidden" value="P0046">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
