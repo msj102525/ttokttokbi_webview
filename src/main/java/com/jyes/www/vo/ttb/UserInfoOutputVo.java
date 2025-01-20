@@ -9,6 +9,8 @@ public class UserInfoOutputVo extends AbstractVo {
 	private String remainingDays;
 	private String payTypeName;
 	private String affiliatesCode;
+	private String email;
+	private String useragent;
 
 	public String getId() {
 		return id;
@@ -72,6 +74,22 @@ public class UserInfoOutputVo extends AbstractVo {
 
 	public void setAffiliatesCode(String affiliatesCode) {
 		this.affiliatesCode = affiliatesCode;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUseragent() {
+		return useragent;
+	}
+
+	public void setUseragent(String useragent) {
+		this.useragent = useragent;
 	}
 
 }

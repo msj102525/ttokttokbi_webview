@@ -18,7 +18,7 @@
 		WHERE BIZ_SEQ = (SELECT BIZ_SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code})
     </select>
     
-    <select id="selectPayTypeWhereCode" parameterType="com.jyes.www.vo.PayTypeVo" resultType="com.jyes.www.vo.PayTypeVo">
+    <select id="selectPayTypeWhereCode" parameterType="com.jyes.www.vo.ttb.PayTypeVo" resultType="com.jyes.www.vo.ttb.PayTypeVo">
         select * from TTB_SMART_PAY_TYPE_TB
         where CODE = #{code}
     </select>
@@ -348,7 +348,7 @@
     </update>
     
     <insert id="insertPayExeLog" parameterType="com.jyes.www.vo.PayExeLogVo">
-    	INSERT INTO T_SMART_PAY_EXE_LOG_TB(URL, COMPANY, PAYMENT, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, AUTH_DT, OID, MSG, SUCCESS, ACCESS_SEQ, PAY_TYPE_CODE, PAY_SUCCESS_SEQ, PAY_BILL_SEQ, DATE)
+    	INSERT INTO TTB_SMART_PAY_EXE_LOG_TB(URL, COMPANY, PAYMENT, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, AUTH_DT, OID, MSG, SUCCESS, ACCESS_SEQ, PAY_TYPE_CODE, PAY_SUCCESS_SEQ, PAY_BILL_SEQ, DATE)
 		VALUES(#{url}, #{company}, #{payment}, #{price}, #{currency}, #{goodname}, #{buyername}, #{buyertel}, #{buyeremail}, #{cardquota}, #{billkey}, #{tid}, #{auth_dt}, #{oid}, #{msg}, #{success}, (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}), #{pay_type_code}, #{pay_success_seq}, #{pay_bill_seq}, now());
     </insert>
     

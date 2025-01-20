@@ -9,12 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = document.querySelector("#updateUserInfoForm #id").value;
     const affiliatesCode = document.querySelector("#updateUserInfoForm #affiliatesCode").value;
     const approachPath = document.querySelector("#updateUserInfoForm #approachPath").value;
+    const name = document.querySelector("#updateUserInfoForm #approachPath").value;
 
     const confirmModalPay = document.getElementById('confirmModalPay');
     const confirmCancelBtnPay = document.getElementById('confirmCancelBtnPay');
     const confirmSubmitBtnPay = document.getElementById('confirmSubmitBtnPay');
 
     const isPayRp = document.querySelector("#isPayRp").value;
+    const email = document.querySelector("#email").value;
+    const useragent = document.querySelector("#useragent").value;
+    const storeType = '1';
+
+    // console.log(isPayRp)
+    // console.log(email)
+    // console.log(useragent)
 
 
     openModal.addEventListener("click", (e) => {
@@ -165,47 +173,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
     confirmSubmitBtnPay.addEventListener("click", () => {
 
-        if (isPayRp == "Y") {
-            alert("현재 정기결제 상품 사용중입니다. 정기결제 해지 후, 일반결제 구매가 가능하십니다.");
-            return;
-        }
+
 
         const activeContent = Array.from(ticketContents).find((tab) =>
             tab.classList.contains("on")
         );
 
 
-
         if (activeContent) {
             const code = activeContent.querySelector("input")?.value || "텍스트 없음";
             console.log("활성화된 탭의 제목:", code);
 
-            var checkTestId = false;
-            //테스트 아이디 체크
-            $.ajax({
-                url: '/ini/mobile/checkTestId',
-                data: { id: '<c:out value="${id}" />' },
-                type: 'post',
-                async: false,
-                success: function (data) {
-                    if (data > 0) {
-                        checkTestId = true;
-                    }
+            if (isPayRp == "Y") {
+                switch (code) {
+                    case "P0031":
+                        alert("현재 정기결제 상품 사용중입니다. 정기결제 해지 후, 일반결제 구매가 가능하십니다.");
+                        return;
+
+                    case "P0009":
+                    case "P0032":
+                    case "P0045":
+                        alert("유무선 정기결제 상품에서 무선 정기결제 상품 변경시, 고객센터에 문의 부탁 드립니다.");
+                        return;
+
+                    case "P0012":
+                    case "P0033":
+                    case "P0046":
+                        alert("무선 정기결제 상품에서 유무선 정기결제 상품 변경시, 고객센터에 문의 부탁 드립니다.");
+                        return;
+
+                    default:
+                        alert("결제 오류 고객센터에 문의 부탁 드립니다.");
+                        return;
                 }
-            });
-            if (checkTestId) {
-                alert("테스트 아이디는 등록 불가합니다.");
-                return;
+
             }
+
+            const params = new URLSearchParams();
+
+            params.append('name', name);
+            params.append('id', id);
+            params.append('affiliates_code', affiliatesCode);
+            params.append('email', email);
+            params.append('code', code);
+            params.append('store_type', storeType);
 
             //6개월 이용권
             if (code == "P0030") {
                 // window.web.callPayTicket("wireless_six_months_ticket", code);
-
                 //12개월 이용권
             } else if (code == "P0031") {
                 // window.web.callPayTicket("wireless_one_year_ticket", code);
+            } else if (code === "P0032" || code === "P0046") {
+
+                fetch(`/ttb/ini/mobile/tikets/tiketsRequestMonthlyPaymentInfo?${params.toString()}`, {
+                    method: 'GET',
+                    headers: {
+                        'User-Agent': useragent
+                    },
+                    params: {
+                        name: name,
+                        id: id,
+                        affiliates_code: affiliatesCode,
+                        email: email,
+                        code: code,
+                        store_type: storeType
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        window.location.href = response.url;
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("정기 결제처리 중 오류가 발생했습니다.");
+                        // window.location.reload();
+                    });
             }
+
             return;
 
         } else {

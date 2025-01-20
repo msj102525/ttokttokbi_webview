@@ -565,7 +565,7 @@ public class TtbPayController {
 	}
 
 	/**
-	 * 이용권 UI(정기결제)
+	 * 똑똑비 이용권 UI(정기결제)
 	 * 
 	 * @param request
 	 * @param response
@@ -596,10 +596,6 @@ public class TtbPayController {
 		String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
 		String email = StringUtil.nvl(request.getParameter("email"));
 		String code = StringUtil.nvl(request.getParameter("code"), "P0032");// P0009
-
-		// 박준태 2023-06-20 / 박준태 2023-09-12 가격 8,800 -> 9,900원으로 복구
-		// String code =
-		// StringUtil.nvl(request.getParameter("code"),"P0045");//P0009,P0032
 
 		String p_mid = Config.INI_B_P_MID;
 		String host = Config.HOST_CONTENTS_IMAGE_MAKE;
@@ -690,7 +686,7 @@ public class TtbPayController {
 					+ ",connection time out[15second over]" + "\n");
 		}
 		log.info(logData.toString());
-		return "ini/mobile/tikets/tikets_request_monthly_payment_info";
+		return "mypage/monthlyPay";
 	}
 
 	/**
@@ -900,14 +896,21 @@ public class TtbPayController {
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
 				+ StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "requestMap : " + requestMap + "\n");
-
+		// Purchase.getOrderId() - 주문 ID
 		String orderId = StringUtil.nvl(request.getParameter("orderId"));
+		// Purchase.getPackageName() - 패키지 이름
 		String packageName = StringUtil.nvl(request.getParameter("packageName"));
+		// 1 고정
 		String app_store_type = StringUtil.nvl(request.getParameter("store_type"));
+		// Purchase.getProducts().get(0) - 제품 ID
 		String productId = StringUtil.nvl(request.getParameter("productId"));
+		// Purchase.getPurchaseTime() - 구매 시간
 		String purchaseTime = StringUtil.nvl(request.getParameter("purchaseTime"));
+		// Purchase.getPurchaseState() - 구매 상태
 		String purchaseState = StringUtil.nvl(request.getParameter("purchaseState"));
+		// Purchase.getDeveloperPayload() - 개발 페이로드
 		String developerPayload = StringUtil.nvl(request.getParameter("developerPayload"));
+		// Purchase.getPurchaseToken() - 구매 토큰
 		String purchaseToken = StringUtil.nvl(request.getParameter("purchaseToken"));
 
 		String pay_type_code = StringUtil.nvl(request.getParameter("pay_type_code"));// 상품코드

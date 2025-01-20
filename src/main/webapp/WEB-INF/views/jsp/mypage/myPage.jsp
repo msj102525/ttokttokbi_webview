@@ -21,6 +21,10 @@
                         <script type="text/javascript">
                             const userUsePayVo = '<c:out value="${userUsePayVo}" />';
                             const is_pay_rp = '<c:out value="${userUsePayVo.is_pay_rp }" />';//사용중인 이용권 정기결제 여부
+                            const userInfoOutputVo = '<c:out value="${userInfoOutputVo}" />';
+                            const useragent = '<c:out value="${userInfoOutputVo.useragent}" />';
+                            console.log(userInfoOutputVo);
+                            console.log(useragent);
                         </script>
 
                     </head>
@@ -133,9 +137,11 @@
                             </section>
 
                             <div class="pay-modal" id="payModal">
-                                <input id="isPayRp" type="hidden">
-                                ${userUsePayVo.is_pay_rp}
-                                </input>
+
+                                <input type="hidden" id="isPayRp" value="${userUsePayVo.is_pay_rp}">
+                                <input type="hidden" id="email" value="${userInfoOutputVo.email}">
+                                <input type="hidden" id="useragent" value="${userInfoOutputVo.useragent}">
+
                                 <div class="modal-content">
                                     <div class="inner-modal">
                                         <div class="modal-up">

@@ -42,7 +42,7 @@ public class TtbMyPageController {
     @Resource(name = "ttbPayService")
     private IPayService payService;
 
-    @RequestMapping(value = "/ttb/myPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/ttb/mypage", method = RequestMethod.GET)
     public String myPage(HttpServletRequest request, Model model) {
         StringBuffer logData = new StringBuffer();
         HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
@@ -64,6 +64,10 @@ public class TtbMyPageController {
 
         String id = StringUtil.nvl(request.getParameter("id"));
         String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
+        String email = StringUtil.nvl(request.getParameter("email"));
+        String useragent = StringUtil.nvl(request.getHeader("User-Agent"));
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "useragent : " + useragent + "\n");
 
         UserInfoInputVo userInfoInputVo = new UserInfoInputVo();
         UserInfoOutputVo userInfoOutputVo = new UserInfoOutputVo();
@@ -80,6 +84,14 @@ public class TtbMyPageController {
                 logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "No data found for UserInfoOutputVo: "
                         + userInfoInputVo + "\n");
             }
+
+            // 웹뷰 테스트
+            // email = "msj102525@gmail.com";
+            // useragent =
+            // "SAM(compatible;ServiceType/SAM;DeviceType/AndroidPhone;DeviceModel/Pixel7a;OSType/Android;OSVersion/35;AppVersion/1.7.53;StoreType/PLAY)";
+
+            userInfoOutputVo.setEmail(email);
+            userInfoOutputVo.setUseragent(useragent);
 
             model.addAttribute("userInfoOutputVo", userInfoOutputVo);
 
