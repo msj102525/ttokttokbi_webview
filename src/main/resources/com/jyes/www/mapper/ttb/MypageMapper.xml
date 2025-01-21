@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jyes.www.mapper.ttb.MyPageMapper">
+<mapper namespace="com.jyes.www.mapper.ttb.MypageMapper">
 
 	<select id="getMyPageInfo" resultType="com.jyes.www.vo.ttb.UserInfoOutputVo">
 		SELECT
