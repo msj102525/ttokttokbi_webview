@@ -220,10 +220,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             //6개월 이용권
             if (code == "P0030") {
-                // window.web.callPayTicket("wireless_six_months_ticket", code);
+                window.web.callPayTicket("wireless_six_months_ticket", code);
                 //12개월 이용권
             } else if (code == "P0031") {
-                // window.web.callPayTicket("wireless_one_year_ticket", code);
+                window.web.callPayTicket("wireless_one_year_ticket", code);
             } else if (code === "P0032" || code === "P0046") {
 
                 fetch(`/ttb/ini/mobile/tikets/tiketsRequestMonthlyPaymentInfo?${params.toString()}`, {

@@ -676,7 +676,8 @@ public class TtbPayController {
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "---- model 시작 ----\n");
 		while (iterator.hasNext()) {
 			String key = (String) iterator.next();
-			logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "key = " + key + "\n");
+			Object value = hashMap.get(key); // key를 이용해 value 가져오기
+			logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "key = " + key + ", value = " + value + "\n");
 		}
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "---- model 종료 ----\n");
 		long endTime = System.currentTimeMillis() - strartTime;
@@ -896,6 +897,12 @@ public class TtbPayController {
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
 				+ StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "requestMap : " + requestMap + "\n");
+
+		String id = StringUtil.nvl(request.getParameter("id"));
+		String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
+		String company = StringUtil.nvl(request.getParameter("company"), request.getParameter("name"));
+		String email = StringUtil.nvl(request.getParameter("email"));
+
 		// Purchase.getOrderId() - 주문 ID
 		String orderId = StringUtil.nvl(request.getParameter("orderId"));
 		// Purchase.getPackageName() - 패키지 이름
@@ -914,11 +921,6 @@ public class TtbPayController {
 		String purchaseToken = StringUtil.nvl(request.getParameter("purchaseToken"));
 
 		String pay_type_code = StringUtil.nvl(request.getParameter("pay_type_code"));// 상품코드
-
-		String id = StringUtil.nvl(request.getParameter("id"));
-		String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
-		String company = StringUtil.nvl(request.getParameter("company"), request.getParameter("name"));
-		String email = StringUtil.nvl(request.getParameter("email"));
 
 		String P_TYPE = "G-PAY";
 
@@ -980,6 +982,8 @@ public class TtbPayController {
 					int success = 0;
 					try {
 						logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "insertPayInfo" + "\n");
+						logData.append(
+								"[" + LogUtils.getCurrentTime() + "]" + " " + "payCustomVo " + payCustomVo + "\n");
 						success = payService.insertPayInfo(payCustomVo, logData);
 						logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "success:" + success + "\n");
 						if (success > 0) {
@@ -1272,7 +1276,7 @@ public class TtbPayController {
 					+ ",connection time out[15second over]" + "\n");
 		}
 		log.info(logData.toString());
-		return "/ttb/ini/mobile/PlayStorePayReturn";
+		return "/mypage/PlayStorePayReturn";
 	}
 
 	/**

@@ -247,8 +247,8 @@ public class TtbMyPageController {
         String id = StringUtil.nvl(request.getParameter("id"));
         String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
 
-        String apiUrl = Config.API_URL + "/api/version/1_2/get_payment_list";
-        // String apiUrl = Config.API_URL + "/ttb/version/1_2/get_payment_list";
+        // String apiUrl = Config.API_URL + "/api/version/1_2/get_payment_list";
+        String apiUrl = Config.API_URL + "/ttb/version/1_2/get_payment_list";
 
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "apiUrl : " + apiUrl + "\n");
 

@@ -23,8 +23,8 @@
                             const is_pay_rp = '<c:out value="${userUsePayVo.is_pay_rp }" />';//사용중인 이용권 정기결제 여부
                             const userInfoOutputVo = '<c:out value="${userInfoOutputVo}" />';
                             const useragent = '<c:out value="${userInfoOutputVo.useragent}" />';
-                            console.log(userInfoOutputVo);
-                            console.log(useragent);
+                            // console.log(userInfoOutputVo);
+                            // console.log(useragent);
                         </script>
 
                     </head>

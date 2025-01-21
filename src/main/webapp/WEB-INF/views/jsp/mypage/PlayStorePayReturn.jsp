@@ -12,16 +12,16 @@
 		var actioin_type = -1;
 		<c:choose>
 		<c:when test="${returnValue eq '1'}">
-		alert("결제 성공");
+		alert("똑똑비 결제 성공");
 		actioin_type = 1;
 		</c:when>
 		<c:when test="${returnValue eq '0'}">
-		//alert("결제 실패");
+		//alert("똑똑비결제 실패");
 		//alert('<c:out value="${S_P_STATUS}" />(<c:out value="${S_P_RMESG1}" />)');
 		alert('<c:out value="${S_P_RMESG1}" />');
 		</c:when>
 		<c:otherwise>
-		//alert("결제 취소");
+		//alert("똑똑비결제 취소");
 		<c:choose>
 		<c:when test="${P_RMESG2 eq null || P_RMESG2 eq 'null' || P_RMESG2 eq ''}">
 		//alert('<c:out value="${P_STATUS}" />(<c:out value="${P_RMESG1}" />)');

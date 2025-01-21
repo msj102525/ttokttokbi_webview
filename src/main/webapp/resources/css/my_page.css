@@ -216,7 +216,8 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 }
 
 .updateUserInfo-modal.show .modal-content {
-	top: 520px;
+	/* top: 520px; */
+	top: 120px;
 }
 
 /* 닫기 버튼 */
@@ -461,17 +462,10 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 }
 
 .pay-modal.show .modal-content {
-	top: 290px;
+	/* top: 290px; */
+	top: 0px;
 }
 
-/* .pay-modal {
-	display: flex;
-}
-
-
-.pay-modal .modal-content {
-	top: 290px;
-} */
 
 /* 닫기 버튼 */
 .pay-modal .modal-content .modal-up {

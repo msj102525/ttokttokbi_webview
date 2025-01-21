@@ -174,7 +174,6 @@
 	
 	<div class="wrap">
 		<div class="box2">
-			<p>똑똑비</p>
 			
 			<!-- 유무선 정기 결제 -->
 	        <c:if test="${payTypeVo.getIs_pay_wl()=='Y' }">
