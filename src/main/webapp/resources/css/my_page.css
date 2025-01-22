@@ -195,12 +195,12 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	background-color: #fff;
 	border-radius: 28px 28px 0 0;
 	width: 100%;
-	height: 716px;
-	position: absolute;
+	position: fixed;
 	transition: all 0.3s ease-out;
 	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 	text-align: center;
-	top: 100%;
+	left: 0;
+	bottom: -100%;
 	display: flex;
 	justify-content: center;
 }
@@ -216,8 +216,7 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 }
 
 .updateUserInfo-modal.show .modal-content {
-	/* top: 520px; */
-	top: 120px;
+	bottom: 0;
 }
 
 /* 닫기 버튼 */
@@ -422,9 +421,6 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	background-color: #0066d6;
 }
 
-
-
-
 /* 결제 */
 .pay-modal {
 	display: none;
@@ -437,16 +433,18 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 	z-index: 1000;
 }
 
+
 .pay-modal .modal-content {
 	background-color: #fff;
 	border-radius: 28px 28px 0 0;
 	width: 100%;
 	height: 583px;
-	position: absolute;
+	position: fixed;
 	transition: all 0.3s ease-out;
 	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 	text-align: center;
-	top: 100%;
+	left: 0;
+	bottom: -100%;
 	display: flex;
 	justify-content: center;
 }
@@ -462,8 +460,7 @@ section.sec4 .sec-down ul li .arrow-img-box img {
 }
 
 .pay-modal.show .modal-content {
-	/* top: 290px; */
-	top: 0px;
+	bottom: 0;
 }
 
 
