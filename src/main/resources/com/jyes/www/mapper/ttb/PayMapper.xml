@@ -115,7 +115,7 @@
 		INTERVAL +(SELECT USE_DAY FROM TTB_SMART_PAY_TYPE_TB WHERE CODE = #{pay_type_code}) DAY))
 		</if>
 		,
-		now(), (SELECT SEQ FROM T_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}), #{pay_success_seq}, #{pay_type_code}, #{pay_bill_seq})
+		now(), (SELECT SEQ FROM TTB_SMART_ACCESS_TB WHERE ID = #{id} AND AFFILIATES_CODE = #{affiliates_code}), #{pay_success_seq}, #{pay_type_code}, #{pay_bill_seq})
     </insert>
     
     <insert id="insertMakeProductionRequest" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
@@ -197,7 +197,7 @@
     </select>
     
     <insert id="insertPayBillBatch" parameterType="com.jyes.www.vo.PayCustomVo" useGeneratedKeys="true" keyProperty="seq">
-		INSERT INTO T_SMART_PAY_BILL_TB(URL, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, BATCH_DATE, AUTH_DT, DATE, PAY_SUCCESS_SEQ, OID, G_AUTH_DT) 
+		INSERT INTO TTB_SMART_PAY_BILL_TB(URL, PRICE, CURRENCY, GOODNAME, BUYERNAME, BUYERTEL, BUYEREMAIL, CARDQUOTA, BILLKEY, TID, BATCH_DATE, AUTH_DT, DATE, PAY_SUCCESS_SEQ, OID, G_AUTH_DT) 
 		VALUES (#{url}, #{price}, #{currency}, #{goodname}, #{buyername}, #{buyertel}, #{buyeremail}, #{cardquota}, #{billkey}, #{p_tid}, 
 		<choose>
 		<when test='batch_date != null and batch_date != ""'>

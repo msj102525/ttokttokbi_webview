@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 // console.log("성공:", data);
                 const paymentList = document.querySelector('.tab-content.right');
-                const payments = data.apiResponse.data.pay_list;
+                const payments = data?.apiResponse?.data?.pay_list || [];
 
                 // 날짜 포맷팅 함수
                 function formatDate(timestamp) {
@@ -61,9 +61,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
                 }
 
-                // 가격 포맷팅 함수
                 function formatPrice(price) {
                     return parseInt(price).toLocaleString() + '원';
+                }
+
+                if (payments.length === 0) {
+                    paymentList.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: #666;">
+                            결제 내역이 없습니다.
+                        </div>
+                    `;
+                    return;
                 }
 
                 let html = `
