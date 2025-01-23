@@ -2,13 +2,13 @@ package com.jyes.www.vo.ttb;
 
 public class UserInfoOutputVo extends AbstractVo {
 	private String id;
-	private String userName;
+	private String user_name;
 	private String company;
-	private String startDate;
-	private String expirationDate;
-	private String remainingDays;
-	private String payTypeName;
-	private String affiliatesCode;
+	private String start_date;
+	private String expiration_date;
+	private String remaining_days;
+	private String pay_type_name;
+	private String affiliates_code;
 	private String email;
 	private String useragent;
 
@@ -20,12 +20,12 @@ public class UserInfoOutputVo extends AbstractVo {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public String getCompany() {
@@ -36,44 +36,44 @@ public class UserInfoOutputVo extends AbstractVo {
 		this.company = company;
 	}
 
-	public String getStartDate() {
-		return startDate;
+	public String getStart_date() {
+		return start_date;
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setStart_date(String start_date) {
+		this.start_date = start_date;
 	}
 
-	public String getExpirationDate() {
-		return expirationDate;
+	public String getExpiration_date() {
+		return expiration_date;
 	}
 
-	public void setExpirationDate(String expirationDate) {
-		this.expirationDate = expirationDate;
+	public void setExpiration_date(String expiration_date) {
+		this.expiration_date = expiration_date;
 	}
 
-	public String getRemainingDays() {
-		return remainingDays;
+	public String getRemaining_days() {
+		return remaining_days;
 	}
 
-	public void setRemainingDays(String remainingDays) {
-		this.remainingDays = remainingDays;
+	public void setRemaining_days(String remaining_days) {
+		this.remaining_days = remaining_days;
 	}
 
-	public String getPayTypeName() {
-		return payTypeName;
+	public String getPay_type_name() {
+		return pay_type_name;
 	}
 
-	public void setPayTypeName(String payTypeName) {
-		this.payTypeName = payTypeName;
+	public void setPay_type_name(String pay_type_name) {
+		this.pay_type_name = pay_type_name;
 	}
 
-	public String getAffiliatesCode() {
-		return affiliatesCode;
+	public String getAffiliates_code() {
+		return affiliates_code;
 	}
 
-	public void setAffiliatesCode(String affiliatesCode) {
-		this.affiliatesCode = affiliatesCode;
+	public void setAffiliates_code(String affiliates_code) {
+		this.affiliates_code = affiliates_code;
 	}
 
 	public String getEmail() {

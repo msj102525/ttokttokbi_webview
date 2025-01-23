@@ -107,9 +107,42 @@ public class PayService implements IPayService {
 			pay_bill_seq = payCustomVo.getSeq();
 		}
 
+		payCustomVo.setPay_type_code("P0031");
+
+		PayCustomVo payCustomVo_sub = (PayCustomVo) payMapper.selectPayTypeIsTicketUseDayAndIsMakeCount(payCustomVo);
+
+		logData.append("111111111111111111111" + "\n");
+		logData.append("payCustomVo_sub " + payCustomVo_sub + "\n");
+
+		try {
+			if (payCustomVo_sub != null) {
+				if (0 < Integer.parseInt(payCustomVo_sub.getUse_day())) {
+					if (true) {
+						if (!"".equals(pay_bill_seq)) {
+							payCustomVo.setPay_bill_seq(pay_bill_seq);
+						}
+						returnValue = 0;
+						returnValue = payMapper.insertUserTicketsInfo(payCustomVo);
+						logData.append("returnValue" + returnValue + "\n");
+
+						if (returnValue < 1) {
+							throw new SQLException("insertUserTicketsInfo 결과 없음");
+						}
+					}
+				} else {
+					throw new SQLException("selectPayTypeIsTicketUseDayAndIsMakeCount 결과 없음");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logData.append(
+					"[" + LogUtils.getCurrentTime() + "]" + " " + "insertPayInfo error e:" + e.toString() + "\n");
+			throw new SQLException("Exception insertPayInfo 에러");
+		}
 		if (returnValue < 1) {
 			throw new SQLException("insertPayInfo 에러");
 		}
+
 		return returnValue;
 	}
 

@@ -65,7 +65,7 @@ public class TtbMyPageController {
         String id = StringUtil.nvl(request.getParameter("id"));
         String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
         String email = StringUtil.nvl(request.getParameter("email"));
-        String useragent = StringUtil.nvl(request.getHeader("User-Agent"));
+        String useragent = StringUtil.nvl(request.getParameter("useragent"));
 
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "useragent : " + useragent + "\n");
 
@@ -227,7 +227,7 @@ public class TtbMyPageController {
         StringBuffer logData = new StringBuffer();
         HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
 
-        String userAgent = "SAM(compatible;ServiceType/SAM;DeviceType/AndroidPhone;DeviceModel/Pixel2;OSType/Android;OSVersion/30;AppVersion/1.7.53;StoreType/PLAY)";
+        String useragent = StringUtil.nvl(request.getParameter("useragent"));
         String currentUrl = request.getRequestURL().toString();
         String StartUrl = "/" + currentUrl.substring(currentUrl.indexOf(currentUrl.split("/")[3]));
         if (request.getQueryString() != null) {
@@ -240,14 +240,13 @@ public class TtbMyPageController {
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CurrentUrl : " + currentUrl + "\n");
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
                 + StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
-        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "userAgent : " + userAgent + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "useragent : " + useragent + "\n");
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "requestMap : " + requestMap + "\n");
 
         String approach_path = StringUtil.nvl(request.getParameter("approach_path"));
         String id = StringUtil.nvl(request.getParameter("id"));
         String affiliates_code = StringUtil.nvl(request.getParameter("affiliates_code"));
 
-        // String apiUrl = Config.API_URL + "/api/version/1_2/get_payment_list";
         String apiUrl = Config.API_URL + "/ttb/version/1_2/get_payment_list";
 
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "apiUrl : " + apiUrl + "\n");
@@ -260,7 +259,8 @@ public class TtbMyPageController {
             URL url = new URL(apiUrl);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", userAgent);
+            con.setRequestProperty("User-Agent", useragent);
+
             // // form-data
             con.setDoOutput(true);
 

@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append('id', id);
         formData.append('approach_path', approachPath);
         formData.append('affiliates_code', affiliatesCode);
+        formData.append('useragent', useragent);
 
         // for (const [key, value] of formData.entries()) {
         //     console.log(`${key}: ${value}`);
@@ -54,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 // console.log("성공:", data);
                 const paymentList = document.querySelector('.tab-content.right');
                 const payments = data?.apiResponse?.data?.pay_list || [];
+
+                // console.log(payments)
 
                 // 날짜 포맷팅 함수
                 function formatDate(timestamp) {

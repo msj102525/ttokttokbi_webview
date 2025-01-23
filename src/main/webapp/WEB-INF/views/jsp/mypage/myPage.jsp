@@ -39,7 +39,7 @@
                             <section class="sec1">
                                 <div class="inner-section">
                                     <div class="sec1-right">
-                                        <p class="userName">${userInfoOutputVo.userName}</p>
+                                        <p class="userName">${userInfoOutputVo.user_name}</p>
                                         <p class="company">${userInfoOutputVo.company}</p>
                                         <p class="userId">${userInfoOutputVo.id}</p>
                                     </div>
@@ -67,14 +67,14 @@
                                                         </li>
                                                         <li>
                                                             <input type="hidden" id="affiliatesCode"
-                                                                value="${userInfoOutputVo.affiliatesCode}">
+                                                                value="${userInfoOutputVo.affiliates_code}">
                                                         </li>
                                                         <li>
                                                             <input type="hidden" id="approachPath" value="00">
                                                         </li>
                                                         <li>
                                                             <input type="text" id="userName"
-                                                                value="${userInfoOutputVo.userName}">
+                                                                value="${userInfoOutputVo.user_name}">
                                                         </li>
                                                         <li>
                                                             <input type="text" id="company"
@@ -123,9 +123,9 @@
                                     </div>
                                     <div class="sec-down">
                                         <div class="sec-down-left">
-                                            <p>${userInfoOutputVo.payTypeName}</p>
+                                            <p>${userInfoOutputVo.pay_type_name}</p>
                                             <p>이용 기간이</p>
-                                            <p><span>${userInfoOutputVo.remainingDays}</span>일 남았어요! 🙂</p>
+                                            <p><span>${userInfoOutputVo.remaining_days}</span>일 남았어요! 🙂</p>
                                         </div>
                                         <div class="sec-down-right">
                                             <div class="btn-ticket" id="payBtn">

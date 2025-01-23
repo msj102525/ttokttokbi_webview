@@ -1003,28 +1003,28 @@ public class TtbPayController {
 						logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "insertPayInfo error e:"
 								+ e.toString() + "\n");
 					}
-					log_url = "";// 홈페이지 URL
-					log_company = "";
-					log_payment = P_TYPE;
-					log_price = StringUtil.nvl(payTypeVo.getPrice());
-					log_currency = "";// 단위
-					log_goodname = StringUtil.nvl(payTypeVo.getName() + "");
-					log_buyername = company;
-					log_buyertel = id;
-					log_buyeremail = email;
-					log_cardquota = "";// 할부기간
-					log_billkey = "";// 빌링키
-					log_tid = purchaseToken;// 상품 아이디
-					SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddHHmmss");
-					log_auth_dt = dt.format(new Date(Long.parseLong(purchaseTime)));
-					log_oid = StringUtil.nvl(payCustomVo.getO_id() + "");
-					log_is_success = (returnValue == 1 ? "Y" : "N");
-					log_access_seq = "";// id,affiliates_code 로대체
-					log_pay_type_code = pay_type_code;
-					log_pay_success_seq = StringUtil.nvl(payCustomVo.getPay_success_seq() + "");
-					log_pay_bill_seq = StringUtil.nvl(payCustomVo.getPay_bill_seq() + "");
-					log_id = id;
-					log_affiliates_code = affiliates_code;
+					// log_url = "";// 홈페이지 URL
+					// log_company = "";
+					// log_payment = P_TYPE;
+					// log_price = StringUtil.nvl(payTypeVo.getPrice());
+					// log_currency = "";// 단위
+					// log_goodname = StringUtil.nvl(payTypeVo.getName() + "");
+					// log_buyername = company;
+					// log_buyertel = id;
+					// log_buyeremail = email;
+					// log_cardquota = "";// 할부기간
+					// log_billkey = "";// 빌링키
+					// log_tid = purchaseToken;// 상품 아이디
+					// SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddHHmmss");
+					// log_auth_dt = dt.format(new Date(Long.parseLong(purchaseTime)));
+					// log_oid = StringUtil.nvl(payCustomVo.getO_id() + "");
+					// log_is_success = (returnValue == 1 ? "Y" : "N");
+					// log_access_seq = "";// id,affiliates_code 로대체
+					// log_pay_type_code = pay_type_code;
+					// log_pay_success_seq = StringUtil.nvl(payCustomVo.getPay_success_seq() + "");
+					// log_pay_bill_seq = StringUtil.nvl(payCustomVo.getPay_bill_seq() + "");
+					// log_id = id;
+					// log_affiliates_code = affiliates_code;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1178,87 +1178,90 @@ public class TtbPayController {
 			log_msg += "결제 오류";
 			model.addAttribute("S_P_RMESG1", "결제 오류");
 		}
-		try {
-			int success = 0;
+		// try {
+		// int success = 0;
 
-			PayExeLogVo payExeLogVo = new PayExeLogVo();
-			if (!"".equals(StringUtil.nvl(log_url))) {
-				payExeLogVo.setUrl(log_url);
-			}
-			if (!"".equals(StringUtil.nvl(log_company))) {
-				payExeLogVo.setCompany(log_company);
-			}
-			if (!"".equals(StringUtil.nvl(log_payment))) {
-				payExeLogVo.setPayment(log_payment);
-			}
-			if (!"".equals(log_price)) {
-				payExeLogVo.setPrice(log_price);
-			}
-			if (!"".equals(log_currency)) {
-				payExeLogVo.setCurrency(log_currency);
-			}
-			if (!"".equals(log_goodname)) {
-				payExeLogVo.setGoodname(log_goodname);
-			}
-			if (!"".equals(log_buyername)) {
-				payExeLogVo.setBuyername(log_buyername);
-			}
-			if (!"".equals(log_buyertel)) {
-				payExeLogVo.setBuyertel(log_buyertel);
-			}
-			if (!"".equals(log_buyeremail)) {
-				payExeLogVo.setBuyeremail(log_buyeremail);
-			}
-			if (!"".equals(log_cardquota)) {
-				payExeLogVo.setCardquota(log_cardquota);
-			}
-			if (!"".equals(log_billkey)) {
-				payExeLogVo.setBillkey(log_billkey);
-			}
-			if (!"".equals(log_tid)) {
-				payExeLogVo.setTid(log_tid);
-			}
-			if (!"".equals(log_auth_dt)) {
-				payExeLogVo.setAuth_dt(log_auth_dt);
-			}
-			if (!"".equals(log_oid)) {
-				payExeLogVo.setOid(log_oid);
-			}
-			if (!"".equals(log_msg)) {
-				payExeLogVo.setMsg(log_msg);
-			}
-			if (!"".equals(log_is_success)) {
-				payExeLogVo.setSuccess(log_is_success);
-			} else {
-				payExeLogVo.setSuccess("N");
-			}
-			if (!"".equals(log_access_seq)) {
-				// payExeLogVo.setAccess_seq(log_access_seq);
-			}
-			if (!"".equals(log_pay_type_code)) {
-				payExeLogVo.setPay_type_code(log_pay_type_code);
-			}
-			if (!"".equals(log_pay_success_seq)) {
-				payExeLogVo.setPay_success_seq(log_pay_success_seq);
-			}
-			if (!"".equals(log_pay_bill_seq)) {
-				payExeLogVo.setPay_bill_seq(log_pay_bill_seq);
-			}
-			if (!"".equals(log_id)) {
-				payExeLogVo.setId(log_id);
-			}
-			if (!"".equals(log_affiliates_code)) {
-				payExeLogVo.setAffiliates_code(log_affiliates_code);
-			}
-			logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "inserttPayExeLog PayExeLogVo payExeLogVo :"
-					+ payExeLogVo + "\n");
-			success = payService.insertPayExeLog(payExeLogVo);
-			logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "inserttPayExeLog success:" + success + "\n");
-		} catch (Exception e) {
-			e.printStackTrace();
-			logData.append(
-					"[" + LogUtils.getCurrentTime() + "]" + " " + "inserttPayExeLog error e:" + e.toString() + "\n");
-		}
+		// PayExeLogVo payExeLogVo = new PayExeLogVo();
+		// if (!"".equals(StringUtil.nvl(log_url))) {
+		// payExeLogVo.setUrl(log_url);
+		// }
+		// if (!"".equals(StringUtil.nvl(log_company))) {
+		// payExeLogVo.setCompany(log_company);
+		// }
+		// if (!"".equals(StringUtil.nvl(log_payment))) {
+		// payExeLogVo.setPayment(log_payment);
+		// }
+		// if (!"".equals(log_price)) {
+		// payExeLogVo.setPrice(log_price);
+		// }
+		// if (!"".equals(log_currency)) {
+		// payExeLogVo.setCurrency(log_currency);
+		// }
+		// if (!"".equals(log_goodname)) {
+		// payExeLogVo.setGoodname(log_goodname);
+		// }
+		// if (!"".equals(log_buyername)) {
+		// payExeLogVo.setBuyername(log_buyername);
+		// }
+		// if (!"".equals(log_buyertel)) {
+		// payExeLogVo.setBuyertel(log_buyertel);
+		// }
+		// if (!"".equals(log_buyeremail)) {
+		// payExeLogVo.setBuyeremail(log_buyeremail);
+		// }
+		// if (!"".equals(log_cardquota)) {
+		// payExeLogVo.setCardquota(log_cardquota);
+		// }
+		// if (!"".equals(log_billkey)) {
+		// payExeLogVo.setBillkey(log_billkey);
+		// }
+		// if (!"".equals(log_tid)) {
+		// payExeLogVo.setTid(log_tid);
+		// }
+		// if (!"".equals(log_auth_dt)) {
+		// payExeLogVo.setAuth_dt(log_auth_dt);
+		// }
+		// if (!"".equals(log_oid)) {
+		// payExeLogVo.setOid(log_oid);
+		// }
+		// if (!"".equals(log_msg)) {
+		// payExeLogVo.setMsg(log_msg);
+		// }
+		// if (!"".equals(log_is_success)) {
+		// payExeLogVo.setSuccess(log_is_success);
+		// } else {
+		// payExeLogVo.setSuccess("N");
+		// }
+		// if (!"".equals(log_access_seq)) {
+		// // payExeLogVo.setAccess_seq(log_access_seq);
+		// }
+		// if (!"".equals(log_pay_type_code)) {
+		// payExeLogVo.setPay_type_code(log_pay_type_code);
+		// }
+		// if (!"".equals(log_pay_success_seq)) {
+		// payExeLogVo.setPay_success_seq(log_pay_success_seq);
+		// }
+		// if (!"".equals(log_pay_bill_seq)) {
+		// payExeLogVo.setPay_bill_seq(log_pay_bill_seq);
+		// }
+		// if (!"".equals(log_id)) {
+		// payExeLogVo.setId(log_id);
+		// }
+		// if (!"".equals(log_affiliates_code)) {
+		// payExeLogVo.setAffiliates_code(log_affiliates_code);
+		// }
+		// logData.append("[" + LogUtils.getCurrentTime() + "]" + " " +
+		// "inserttPayExeLog PayExeLogVo payExeLogVo :"
+		// + payExeLogVo + "\n");
+		// success = payService.insertPayExeLog(payExeLogVo);
+		// logData.append("[" + LogUtils.getCurrentTime() + "]" + " " +
+		// "inserttPayExeLog success:" + success + "\n");
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// logData.append(
+		// "[" + LogUtils.getCurrentTime() + "]" + " " + "inserttPayExeLog error e:" +
+		// e.toString() + "\n");
+		// }
 		logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "returnValue = " + returnValue + "\n");
 		model.addAttribute("returnValue", returnValue);
 		HashMap hashMap = (HashMap) model.asMap();
