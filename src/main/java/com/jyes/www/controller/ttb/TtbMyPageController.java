@@ -307,4 +307,50 @@ public class TtbMyPageController {
         return response;
     }
 
+    @RequestMapping(value = "/ttb/privacy/policy", method = RequestMethod.GET)
+    public String getPrivacyPolicy(HttpServletRequest request, Model model) {
+        StringBuffer logData = new StringBuffer();
+        HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "call privacyPolicy :" + "\n");
+        String currentUrl = request.getRequestURL().toString();
+        String StartUrl = StringUtil.getStartUrlPath(currentUrl);
+        if (request.getQueryString() != null) {
+            currentUrl = currentUrl + "?" + request.getQueryString();
+        }
+        String logKey = LogUtils.getUserLogKey(request);
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "logKey:" + logKey + ":" + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "StartUrl : " + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CurrentUrl : " + currentUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
+                + StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
+
+        log.info(logData.toString());
+        return "mypage/privacyPolicy";
+    }
+
+    @RequestMapping(value = "/ttb/terms", method = RequestMethod.GET)
+    public String getTerms(HttpServletRequest request, Model model) {
+        StringBuffer logData = new StringBuffer();
+        HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "call terms :" + "\n");
+        String currentUrl = request.getRequestURL().toString();
+        String StartUrl = StringUtil.getStartUrlPath(currentUrl);
+        if (request.getQueryString() != null) {
+            currentUrl = currentUrl + "?" + request.getQueryString();
+        }
+        String logKey = LogUtils.getUserLogKey(request);
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "logKey:" + logKey + ":" + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "StartUrl : " + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CurrentUrl : " + currentUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
+                + StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
+
+        log.info(logData.toString());
+        return "mypage/terms";
+    }
+
 }

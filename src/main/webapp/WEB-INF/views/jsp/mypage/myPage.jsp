@@ -13,18 +13,17 @@
                         <title>마이페이지</title>
                         <link href="<%=path%>/css/reset.css" rel="stylesheet" />
                         <link href="<%=path%>/css/my_page.css" rel="stylesheet" />
-                        <script src="<%=path%>/js/modal/updateUserInfo.js" defer></script>
-                        <script src="<%=path%>/js/modal/pay.js" defer></script>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
                         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+                        <script src="<%=path%>/js/mypage/updateUserInfo.js" defer></script>
+                        <script src="<%=path%>/js/mypage/pay.js" defer></script>
+                        <script src="<%=path%>/js/mypage/movePage.js" defer></script>
 
                         <script type="text/javascript">
                             const userUsePayVo = '<c:out value="${userUsePayVo}" />';
                             const is_pay_rp = '<c:out value="${userUsePayVo.is_pay_rp }" />';//사용중인 이용권 정기결제 여부
                             const userInfoOutputVo = '<c:out value="${userInfoOutputVo}" />';
                             const useragent = '<c:out value="${userInfoOutputVo.useragent}" />';
-                            // console.log(userInfoOutputVo);
-                            // console.log(useragent);
                         </script>
 
                     </head>
@@ -275,7 +274,7 @@
                                     <div class="sec-down">
                                         <ul>
                                             <li>
-                                                <a href="notice.jsp">공지사항</a>
+                                                <a href="/notice.jsp">공지사항</a>
                                                 <div class="arrow-img-box">
                                                     <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                 </div>
@@ -329,14 +328,14 @@
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <a href="#">서비스 이용약관</a>
+                                                <li id="terms">
+                                                    서비스 이용약관
                                                     <div class="arrow-img-box">
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <a href="#">개인정보처리방침</a>
+                                                <li id="privacyPolicy">
+                                                    개인정보처리방침
                                                     <div class="arrow-img-box">
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>

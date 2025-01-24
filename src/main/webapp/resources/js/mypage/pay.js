@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.querySelector("#payModal");
-    const modalContent = document.querySelector("#payModal .modal-content");
     const openModal = document.querySelector("#payBtn");
     const closeModal = document.querySelector("#payModal #closeModal");
     const payTabs = document.querySelectorAll("#payTab");
