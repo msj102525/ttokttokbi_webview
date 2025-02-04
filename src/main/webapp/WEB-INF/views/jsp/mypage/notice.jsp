@@ -16,7 +16,6 @@
                         <style>
                             .notice-item {
                                 border-bottom: 1px solid #F6F6F6;
-                                margin-bottom: 10px;
                                 border-radius: 4px;
                             }
 
@@ -36,6 +35,7 @@
                             }
 
                             .notice-header .notice-date {
+                                padding-top: 3px;
                                 font-size: 10px;
                                 font-weight: 400;
                                 line-height: 12px;
