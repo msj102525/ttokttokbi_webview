@@ -1,9 +1,13 @@
 body {
 	font-family: Pretendard;
 	width: 100%;
-	max-width: 412px;
-	margin: 0 auto;
+	/* max-width: 412px; */
+	/* margin: 0 auto; */
 	/* border: 1px solid #000; */
+}
+
+#wrap {
+	padding: 0 20px;
 }
 
 .header {
@@ -13,7 +17,7 @@ body {
 
 .header .inner-header {
 	width: 100%;
-	max-width: 372px;
+	/* max-width: 372px; */
 	/* border: 1px solid #000; */
 	padding: 0 0 28px 0;
 }
@@ -33,7 +37,7 @@ section {
 
 section .inner-section {
 	width: 100%;
-	max-width: 372px;
+	/* max-width: 372px; */
 	/* border: 1px solid #000; */
 }
 
