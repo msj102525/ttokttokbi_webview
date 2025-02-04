@@ -7,7 +7,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -353,4 +356,106 @@ public class TtbMyPageController {
         return "mypage/terms";
     }
 
+    @RequestMapping(value = "/ttb/get_notice_list", method = { RequestMethod.GET, RequestMethod.POST })
+    public String getNoticeList(HttpServletRequest request, Model model) throws Exception {
+        StringBuffer logData = new StringBuffer();
+        HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
+
+        String useragent = StringUtil.nvl(request.getParameter("useragent"));
+        String currentUrl = request.getRequestURL().toString();
+        String StartUrl = "/" + currentUrl.substring(currentUrl.indexOf(currentUrl.split("/")[3]));
+        if (request.getQueryString() != null) {
+            currentUrl = currentUrl + "?" + request.getQueryString();
+        }
+        String logKey = LogUtils.getUserLogKey(request);
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "logKey:" + logKey + ":" + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "StartUrl : " + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CurrentUrl : " + currentUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
+                + StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "useragent : " + useragent + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "requestMap : " + requestMap + "\n");
+
+        String approach_path = "05";
+        String is_main_notice = "N";
+        String count = "999";
+        String page = "1";
+
+        String apiUrl = Config.API_URL + "/ttb/version/1_2/get_notice_list";
+
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "apiUrl : " + apiUrl + "\n");
+
+        HttpURLConnection con = null;
+        StringBuilder apiResponse = new StringBuilder();
+
+        try {
+            // URL 연결 설정
+            URL url = new URL(apiUrl);
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", useragent);
+
+            // form-data
+            con.setDoOutput(true);
+
+            // 보내는 데이터 준비
+            StringBuilder postData = new StringBuilder();
+            postData.append("approach_path=" + URLEncoder.encode(approach_path, "UTF-8"));
+            postData.append("&is_main_notice=" + URLEncoder.encode(is_main_notice, "UTF-8"));
+            postData.append("&count=" + URLEncoder.encode(count, "UTF-8"));
+            postData.append("&page=" + URLEncoder.encode(page, "UTF-8"));
+
+            // 데이터 전송
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = postData.toString().getBytes("UTF-8");
+                os.write(input, 0, input.length);
+            }
+
+            // 응답 받기
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"))) {
+                String responseLine;
+                while ((responseLine = br.readLine()) != null) {
+                    apiResponse.append(responseLine.trim());
+                }
+            }
+
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " API Response : " + apiResponse + "\n");
+
+        } catch (Exception e) {
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " Error : " + e.getMessage() + "\n");
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
+        }
+
+        // JSON 응답 파싱
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> apiResponseMap = objectMapper.readValue(apiResponse.toString(), Map.class);
+
+        // 날짜 형식 변환
+        Map<String, Object> data = (Map<String, Object>) apiResponseMap.get("data");
+        List<Map<String, Object>> noticesList = (List<Map<String, Object>>) data.get("notices_list");
+
+        for (Map<String, Object> notice : noticesList) {
+            String timestamp = (String) notice.get("date");
+            long timeInMillis = Long.parseLong(timestamp);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+            String formattedDate = sdf.format(new Date(timeInMillis));
+
+            notice.put("date", formattedDate);
+        }
+
+        data.put("notices_list", noticesList);
+        apiResponseMap.put("data", data);
+
+        model.addAttribute("apiResponse", apiResponseMap);
+
+        log.info(logData.toString());
+
+        return "mypage/notice";
+    }
 }

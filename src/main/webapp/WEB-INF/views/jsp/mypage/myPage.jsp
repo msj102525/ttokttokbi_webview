@@ -212,7 +212,7 @@
                                                             <div class="business-info">
                                                                 <p>제이예스(주) 사업자 정보 보기</p>
                                                                 <img src="<%=path%>/img/arrow-right.png"
-                                                                    alt="오른쪽화살표이미지">
+                                                                    alt="오른쪽화살표이미지">            
                                                             </div>
 
                                                             <div class="pay-btn" id="ticketPayBtn">
@@ -274,12 +274,6 @@
                                     <div class="sec-down">
                                         <ul>
                                             <li>
-                                                <a href="/notice.jsp">공지사항</a>
-                                                <div class="arrow-img-box">
-                                                    <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
-                                                </div>
-                                            </li>
-                                            <li>
                                                 <a href="emailInquiry.jsp">이메일 문의</a>
                                                 <div class="arrow-img-box">
                                                     <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
@@ -322,8 +316,8 @@
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <a href="#">공지사항</a>
+                                                <li id="notice">
+                                                    공지사항
                                                     <div class="arrow-img-box">
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>

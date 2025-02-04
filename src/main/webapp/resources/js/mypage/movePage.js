@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const useragent = document.querySelector("#useragent").value;
     const privacyPolicy = document.querySelector("#privacyPolicy");
     const terms = document.querySelector("#terms");
-    const useragent = document.querySelector("#useragent").value;
+    const notice = document.querySelector("#notice");
 
 
 
@@ -44,6 +45,26 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch((error) => {
                 console.error("Error:", error);
                 alert("이용약관 페이지 오류");
+            });
+
+    });
+
+    notice.addEventListener("click", (e) => {
+        fetch(`/ttb/get_notice_list`, {
+            method: 'GET',
+            headers: {
+                'User-Agent': useragent
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                window.location.href = response.url;
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("공지사항 페이지 오류");
             });
 
     });
