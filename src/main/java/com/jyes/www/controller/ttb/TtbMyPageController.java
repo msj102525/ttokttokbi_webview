@@ -7,7 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,10 +29,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jyes.www.common.Config;
+import com.jyes.www.service.ttb.board.IBoardService;
 import com.jyes.www.service.ttb.mypage.IMyPageService;
 import com.jyes.www.service.ttb.pay.IPayService;
 import com.jyes.www.util.LogUtils;
 import com.jyes.www.util.StringUtil;
+import com.jyes.www.vo.ttb.BoardFaqVo;
 import com.jyes.www.vo.ttb.PayCustomVo;
 import com.jyes.www.vo.ttb.UserInfoInputVo;
 import com.jyes.www.vo.ttb.UserInfoOutputVo;
@@ -44,6 +49,9 @@ public class TtbMyPageController {
 
     @Resource(name = "ttbPayService")
     private IPayService payService;
+
+    @Resource(name = "ttbBoardService")
+    private IBoardService boardService;
 
     @RequestMapping(value = "/ttb/mypage", method = RequestMethod.GET)
     public String myPage(HttpServletRequest request, Model model) {
@@ -313,7 +321,6 @@ public class TtbMyPageController {
     @RequestMapping(value = "/ttb/privacy/policy", method = RequestMethod.GET)
     public String getPrivacyPolicy(HttpServletRequest request, Model model) {
         StringBuffer logData = new StringBuffer();
-        HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
 
         logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "call privacyPolicy :" + "\n");
         String currentUrl = request.getRequestURL().toString();
@@ -457,5 +464,66 @@ public class TtbMyPageController {
         log.info(logData.toString());
 
         return "mypage/notice";
+    }
+
+    // 똑똑비 FAQ 전체 리스트
+    @RequestMapping(value = "/ttb/faq", method = { RequestMethod.GET, RequestMethod.POST })
+    public String call(HttpServletRequest request, HttpServletResponse response, Model model) {
+        StringBuffer logData = new StringBuffer();
+        HashMap requestMap = LogUtils.GetPrameterMap(request, logData);
+        String currentUrl = request.getRequestURL().toString();
+        String StartUrl = "/" + currentUrl.substring(currentUrl.indexOf(currentUrl.split("/")[3]));
+        if (request.getQueryString() != null) {
+            currentUrl = currentUrl + "?" + request.getQueryString();
+        }
+        String tag = StartUrl;
+        long strartTime = System.currentTimeMillis();
+        String logKey = LogUtils.getUserLogKey(request);
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "logKey:" + logKey + ":" + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "StartUrl : " + StartUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CurrentUrl : " + currentUrl + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "CallUrl : "
+                + StringUtil.nvl((String) request.getHeader("REFERER")) + "\n");
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "requestMap : " + requestMap + "\n");
+
+        ArrayList<BoardFaqVo> al_tbBoardFaqCategoryContentsList = null;
+        try {
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " "
+                    + "query start getBoardFaqCategoryContentsList :" + "\n");
+            al_tbBoardFaqCategoryContentsList = (ArrayList<BoardFaqVo>) boardService
+                    .getTTBFaqCategoryContentsList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " "
+                    + "query error getBoardFaqCategoryContentsList : " + e.toString() + "\n");
+        }
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " "
+                + "query end getBoardFaqCategoryContentsList ArrayList<BoardFaqVo> al_tbBoardFaqCategoryContentsList : "
+                + al_tbBoardFaqCategoryContentsList + "\n");
+        if (al_tbBoardFaqCategoryContentsList != null) {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy.MM.dd");
+
+            for (BoardFaqVo faq : al_tbBoardFaqCategoryContentsList) {
+                try {
+                    Date date = inputFormat.parse(faq.getDate());
+                    faq.setDate(outputFormat.format(date));
+                } catch (ParseException e) {
+                    logData.append(
+                            "[" + LogUtils.getCurrentTime() + "]" + " Date parsing error: " + e.getMessage() + "\n");
+                }
+            }
+
+            model.addAttribute("al_tbBoardFaqCategoryContentsList", al_tbBoardFaqCategoryContentsList);
+        }
+
+        long endTime = System.currentTimeMillis() - strartTime;
+        logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "tag:" + tag + ":전체:endTime:" + endTime + "\n");
+        if (endTime > 15000) {
+            logData.append("[" + LogUtils.getCurrentTime() + "]" + " " + "tag:" + tag + ":전체:endTime:" + endTime
+                    + ",connection time out[15second over]" + "\n");
+        }
+        log.info(logData.toString());
+        return "mypage/faq";
     }
 }

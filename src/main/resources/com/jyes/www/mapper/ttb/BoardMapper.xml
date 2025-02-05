@@ -7,14 +7,21 @@
 	<select id="getBoardFaqCategoryList" resultType="com.jyes.www.vo.ttb.BoardCategoryVo">
 		SELECT * FROM T_SMART_FAQ_BOARD_CATEGORY_INFO_TB ORDER BY RANK ASC
 	</select>
-	
+
 	<select id="getBoardFaqCategoryContentsList" parameterType="string" resultType="com.jyes.www.vo.ttb.BoardFaqVo">
 		SELECT * FROM T_SMART_FAQ_BOARD_TB 
 		WHERE 1=1 
 		AND FAQ_BOARD_CATEGORY_CODE = #{code} 
 		AND IS_OPEN = 'Y'
 	</select>
-	
+
+	<!-- 똑똑비 FAQ 카테고리 구분 없음 -->
+	<select id="getTTBFaqCategoryContentsList" resultType="com.jyes.www.vo.ttb.BoardFaqVo">
+		SELECT * FROM TTB_SMART_FAQ_BOARD_TB 
+		WHERE 1=1 
+		AND IS_OPEN = 'Y'
+	</select>
+
 	<insert id="insertBoardQna" parameterType="com.jyes.www.vo.ttb.BoardCustomQnaVo">
 		INSERT INTO T_SMART_QNA_BOARD_TB(EMAIL, TEXT, ACCESS_SEQ, DATE) 
 		VALUES(#{email}, #{text}, (SELECT SEQ FROM T_SMART_ACCESS_TB 
@@ -22,5 +29,5 @@
 		AND ID = #{id} 
 		AND AFFILIATES_CODE = #{affiliates_code}), now())
 	</insert>
-	
+
 </mapper>

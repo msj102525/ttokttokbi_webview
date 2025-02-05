@@ -19,4 +19,6 @@ public interface IBoardService {
 	public ArrayList<BoardFaqVo> getBoardFaqCategoryContentsList(String code) throws SQLException;
 
 	public int insertBoardQna(BoardCustomQnaVo boardCustomQnaVo) throws SQLException;
+
+	public ArrayList<BoardFaqVo> getTTBFaqCategoryContentsList() throws SQLException;
 }

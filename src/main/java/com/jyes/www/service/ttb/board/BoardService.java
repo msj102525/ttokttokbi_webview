@@ -37,4 +37,9 @@ public class BoardService implements IBoardService {
 		return boardMapper.insertBoardQna(boardCustomQnaVo);
 	}
 
+	@Override
+	public ArrayList<BoardFaqVo> getTTBFaqCategoryContentsList() throws SQLException {
+		return boardMapper.getTTBFaqCategoryContentsList();
+	}
+
 }
