@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const caEmail = document.querySelector("#caEmail");
     const caKakao = document.querySelector("#caKakao");
 
+
+
     ///////////////////////////////////////////////////////
 
     privacyPolicy.addEventListener("click", (e) => {
@@ -90,36 +92,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    const isAndroidInterface = () => {
-        return typeof window.AndroidInterface !== 'undefined' && window.AndroidInterface !== null;
-    };
-
-
     caEmail.addEventListener("click", () => {
         try {
-            if (!isAndroidInterface()) {
-                console.error('Android Interface is not available');
-                alert('앱에서만 사용 가능한 기능입니다.');
-                return;
-            }
+            // Android Interface 메소드 직접 호출
             window.AndroidInterface.caEmail();
         } catch (error) {
             console.error('Error calling caEmail:', error);
-            alert('이메일 기능 실행 중 오류가 발생했습니다.');
+            alert('이메일 연동 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         }
     });
 
     caKakao.addEventListener("click", () => {
         try {
-            if (!isAndroidInterface()) {
-                console.error('Android Interface is not available');
-                alert('앱에서만 사용 가능한 기능입니다.');
-                return;
-            }
+            // Android Interface 메소드 직접 호출
             window.AndroidInterface.caKakao();
         } catch (error) {
             console.error('Error calling caKakao:', error);
-            alert('카카오 기능 실행 중 오류가 발생했습니다.');
+            alert('카카오 연동 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         }
     });
 
