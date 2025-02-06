@@ -20,32 +20,32 @@
 		FROM (
 		SELECT a.*
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
-		LEFT JOIN t_smart_biz_tb b 
+		LEFT JOIN TTB_SMART_BIZ_TB b 
 		ON a.biz_seq = b.seq 
-		LEFT JOIN t_smart_pay_tb c 
+		LEFT JOIN TTB_SMART_PAY_TB c 
 		ON b.seq = c.biz_seq 
-		LEFT JOIN t_smart_pay_success_tb d 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB d 
 		ON c.seq = d.pay_seq 
-		LEFT JOIN t_smart_pay_bill_tb e 
+		LEFT JOIN TTB_SMART_PAY_BILL_TB e 
 		ON d.seq = e.pay_success_seq 
 		LEFT JOIN (
 		SELECT a.* FROM (
 		SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A
 		INNER JOIN
 		(SELECT ACCESS_SEQ, MAX(SEQ) AS SEQ
 		FROM (SELECT A.*
-		FROM T_SMART_USER_TICKETS_INFO_TB A
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A
 		INNER JOIN
 		(SELECT ACCESS_SEQ, MAX(EXPIRATION_DATE) AS EXPIRATION_DATE
 		FROM (SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y' 
@@ -71,7 +71,7 @@
 		WHERE 1=1 
 		AND DATE_FORMAT(a.EXPIRATION_DATE,"%Y-%m-%d") &gt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		) a
-		LEFT JOIN t_smart_pay_type_tb b
+		LEFT JOIN tTB_smart_pay_type_tb b
 		ON a.pay_type_code = b.code
 		WHERE 1=1 
 		ORDER BY ACCESS_SEQ ASC
@@ -94,23 +94,23 @@
 		) a 
 		LEFT JOIN (
 		SELECT "전체 현황" AS "category_1", "전체 가입자 고객" AS "category_2", "" AS "category_3", "유료가입자" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
 		LEFT JOIN (
 		SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(SEQ) AS SEQ 
 		FROM (SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(EXPIRATION_DATE) AS EXPIRATION_DATE 
 		FROM (SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y' 
@@ -137,7 +137,7 @@
 		AND DATE_FORMAT(a.EXPIRATION_DATE,"%Y-%m-%d") &gt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL
@@ -154,7 +154,7 @@
 		) a 
 		LEFT JOIN (
 		SELECT "전체 현황" AS "category_1", "전체 가입자 고객" AS "category_2", "" AS "category_3", "총 가입자 합계" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_access_tb 
+		FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) b
@@ -166,7 +166,7 @@
 		SELECT IFNULL(b.category_1,a.category_1) AS "category_1", IFNULL(b.category_2,a.category_2) AS "category_2", "" AS "category_3", IFNULL(b.name,a.name) AS "name", IFNULL(b.count,a.count) AS "count", IFNULL(b.date,a.date) AS "date" 
 		FROM (
 		SELECT "전체 현황" AS "category_1", "전체 이용권 이용 현황" AS "category_2", "" AS "category_3", CONCAT(NAME," ", "건수") AS "name", 0 AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_type_tb 
+		FROM tTB_smart_pay_type_tb 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y'
 		AND use_day IS NOT NULL
@@ -177,15 +177,15 @@
 		SELECT * FROM (
 		SELECT "전체 현황" AS "category_1", "전체 이용권 이용 현황" AS "category_2", "" AS "category_3", CONCAT(c.name," ", "건수") AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
 		LEFT JOIN (
 		SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y' 
@@ -205,7 +205,7 @@
 		GROUP BY a.PAY_SUCCESS_SEQ
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL
@@ -223,7 +223,7 @@
 		SELECT IFNULL(b.category_1,a.category_1) AS "category_1", IFNULL(b.category_2,a.category_2) AS "category_2", "" AS "category_3", IFNULL(b.name,a.name) AS "name", IFNULL(b.count,a.count) AS "count", IFNULL(b.date,a.date) AS "date" 
 		FROM (
 		SELECT "전체 현황" AS "category_1", "전체 이용권 이용 현황" AS "category_2", "" AS "category_3", CONCAT(NAME," ", "건수") AS "name", 0 AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_type_tb 
+		FROM tTB_smart_pay_type_tb 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y'
 		AND use_day IS NOT NULL
@@ -234,15 +234,15 @@
 		SELECT * FROM (
 		SELECT "전체 현황" AS "category_1", "전체 이용권 이용 현황" AS "category_2", "" AS "category_3", CONCAT(c.name," ", "건수") AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
 		LEFT JOIN (
 		SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y' 
@@ -262,7 +262,7 @@
 		GROUP BY a.PAY_SUCCESS_SEQ
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL
@@ -286,32 +286,32 @@
 		FROM (
 		SELECT a.*
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") = DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
-		LEFT JOIN t_smart_biz_tb b 
+		LEFT JOIN TTB_SMART_BIZ_TB b 
 		ON a.biz_seq = b.seq 
-		LEFT JOIN t_smart_pay_tb c 
+		LEFT JOIN TTB_SMART_PAY_TB c 
 		ON b.seq = c.biz_seq 
-		LEFT JOIN t_smart_pay_success_tb d 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB d 
 		ON c.seq = d.pay_seq 
-		LEFT JOIN t_smart_pay_bill_tb e 
+		LEFT JOIN TTB_SMART_PAY_BILL_TB e 
 		ON d.seq = e.pay_success_seq 
 		LEFT JOIN (
 		SELECT a.* FROM (
 		SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A
 		INNER JOIN
 		(SELECT ACCESS_SEQ, MAX(SEQ) AS SEQ
 		FROM (SELECT A.*
-		FROM T_SMART_USER_TICKETS_INFO_TB A
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A
 		INNER JOIN
 		(SELECT ACCESS_SEQ, MAX(EXPIRATION_DATE) AS EXPIRATION_DATE
 		FROM (SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y' 
@@ -337,7 +337,7 @@
 		WHERE 1=1 
 		AND DATE_FORMAT(a.EXPIRATION_DATE,"%Y-%m-%d") &gt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		) a
-		LEFT JOIN t_smart_pay_type_tb b
+		LEFT JOIN tTB_smart_pay_type_tb b
 		ON a.pay_type_code = b.code
 		WHERE 1=1 
 		ORDER BY ACCESS_SEQ ASC
@@ -362,23 +362,23 @@
 		SELECT * FROM (
 		SELECT "일일 현황" AS "category_1", "일별 가입 고객" AS "category_2", "" AS "category_3", "유료가입자" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") = DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
 		LEFT JOIN (
 		SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(SEQ) AS SEQ 
 		FROM (SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(EXPIRATION_DATE) AS EXPIRATION_DATE 
 		FROM (SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y' 
@@ -405,7 +405,7 @@
 		AND DATE_FORMAT(a.EXPIRATION_DATE,"%Y-%m-%d") &gt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL 
@@ -420,7 +420,7 @@
 		SELECT IFNULL(b.category_1,a.category_1) AS "category_1", IFNULL(b.category_2,a.category_2) AS "category_2", "" AS "category_3", IFNULL(b.name,a.name) AS "name", IFNULL(b.count,a.count) AS "count", IFNULL(b.date,a.date) AS "date" 
 		FROM (
 		SELECT "일일 현황" AS "category_1", "일별 이용권 판매 현황" AS "category_2", "" AS "category_3", CONCAT(NAME," ", "건수") AS "name", 0 AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_type_tb 
+		FROM tTB_smart_pay_type_tb 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y'
 		AND use_day IS NOT NULL
@@ -431,7 +431,7 @@
 		SELECT * FROM (
 		SELECT "일일 현황" AS "category_1", "일별 이용권 판매 현황" AS "category_2", "" AS "category_3", CONCAT(c.name," ", "건수") AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
@@ -439,16 +439,16 @@
 		SELECT A.* FROM (
 		SELECT a.* 
 		FROM (
-		SELECT a.* FROM T_SMART_USER_TICKETS_INFO_TB a 
+		SELECT a.* FROM TTB_SMART_USER_TICKETS_INFO_TB a 
 		LEFT JOIN (
 		SELECT PAY_SUCCESS_SEQ, MIN(seq) AS "seq" 
-		FROM T_SMART_USER_TICKETS_INFO_TB 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB 
 		GROUP BY PAY_SUCCESS_SEQ
 		) b ON a.seq = b.seq 
 		WHERE 1=1 
 		AND B.PAY_SUCCESS_SEQ IS NOT NULL
 		) A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y'
@@ -466,7 +466,7 @@
 		AND DATE_FORMAT(a.EXPIRATION_DATE,"%Y-%m-%d") &gt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL
@@ -485,7 +485,7 @@
 		SELECT IFNULL(b.category_1,a.category_1) AS "category_1", IFNULL(b.category_2,a.category_2) AS "category_2", "" AS "category_3", IFNULL(b.name,a.name) AS "name", IFNULL(b.count,a.count) AS "count", IFNULL(b.date,a.date) AS "date" 
 		FROM (
 		SELECT "일일 현황" AS "category_1", "일별 이용권 판매 현황" AS "category_2", "" AS "category_3", CONCAT(NAME," ", "건수") AS "name", 0 AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_type_tb 
+		FROM tTB_smart_pay_type_tb 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y'
 		AND use_day IS NOT NULL
@@ -496,7 +496,7 @@
 		SELECT * FROM (
 		SELECT "일일 현황" AS "category_1", "일별 이용권 판매 현황" AS "category_2", "" AS "category_3", CONCAT(c.name," ", "건수") AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) a 
@@ -504,16 +504,16 @@
 		SELECT A.* FROM (
 		SELECT a.* 
 		FROM (
-		SELECT a.* FROM T_SMART_USER_TICKETS_INFO_TB a 
+		SELECT a.* FROM TTB_SMART_USER_TICKETS_INFO_TB a 
 		LEFT JOIN (
 		SELECT PAY_SUCCESS_SEQ, MIN(seq) AS "seq" 
-		FROM T_SMART_USER_TICKETS_INFO_TB 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB 
 		GROUP BY PAY_SUCCESS_SEQ
 		) b ON a.seq = b.seq 
 		WHERE 1=1 
 		AND B.PAY_SUCCESS_SEQ IS NOT NULL
 		) A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		WHERE 1=1 
 		AND is_pay_tickets = 'Y'
@@ -531,7 +531,7 @@
 		AND DATE_FORMAT(a.EXPIRATION_DATE,"%Y-%m-%d") &gt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL
@@ -547,8 +547,8 @@
 		
 		<!-- 일일 이미지 판매 건수 -->
 		SELECT "기타 현황" AS "category_1", "이미지 판매" AS "category_2", "" AS "category_3", "일일 판매 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_success_tb a
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_PAY_SUCCESS_TB a
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -567,8 +567,8 @@
 		
 		<!-- 일일 이미지 제작(사용) 건수 -->
 		SELECT "기타 현황" AS "category_1", "이미지 판매" AS "category_2", "" AS "category_3", "일일 제작(사용) 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_success_tb a
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_PAY_SUCCESS_TB a
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -577,7 +577,7 @@
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) c 
 		ON A.seq = c.PAY_SUCCESS_SEQ 
-		LEFT JOIN t_smart_make_production_request_tb d 
+		LEFT JOIN tTB_smart_make_production_request_tb d 
 		ON a.seq = d.PAY_SUCCESS_SEQ 
 		WHERE 1=1 
 		AND c.SEQ IS NULL
@@ -589,8 +589,8 @@
 		
 		<!-- 어제까지 전체 이미지 판매 건수 -->
 		SELECT "기타 현황" AS "category_1", "이미지 판매" AS "category_2", "" AS "category_3", "누적 판매 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_success_tb a
-		LEFT JOIN t_smart_pay_type_tb b
+		FROM TTB_SMART_PAY_SUCCESS_TB a
+		LEFT JOIN tTB_smart_pay_type_tb b
 		ON a.pay_type_code = b.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -616,25 +616,25 @@
 		LEFT JOIN (
 		SELECT "기타 현황" AS "category_1", "무료 쿠폰" AS "category_2", "" AS "category_3", "전체 무료쿠폰이용자" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") 
 		) a 
 		LEFT JOIN (
 		SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(SEQ) AS SEQ 
 		FROM (SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(EXPIRATION_DATE) AS EXPIRATION_DATE 
 		FROM (SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
-		LEFT JOIN t_smart_coupon_tb c 
+		LEFT JOIN tTB_smart_coupon_tb c 
 		ON b.code = c.pay_type_code 
 		WHERE 1=1 
 		AND c.seq IS NOT NULL
@@ -661,7 +661,7 @@
 		AND DATE_FORMAT(a.DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d")
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL
@@ -679,25 +679,25 @@
 		LEFT JOIN (
 		SELECT "기타 현황" AS "category_1", "무료 쿠폰" AS "category_2", "" AS "category_3", "일일 신규 무료쿠폰이용자" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT * FROM t_smart_access_tb 
+		SELECT * FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -1 DAY),"%Y-%m-%d") 
 		) a 
 		LEFT JOIN (
 		SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(SEQ) AS SEQ 
 		FROM (SELECT A.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
 		INNER JOIN 
 		(SELECT ACCESS_SEQ, MAX(EXPIRATION_DATE) AS EXPIRATION_DATE 
 		FROM (SELECT A.* FROM (
 		SELECT a.* 
-		FROM T_SMART_USER_TICKETS_INFO_TB A 
-		LEFT JOIN t_smart_pay_type_tb b 
+		FROM TTB_SMART_USER_TICKETS_INFO_TB A 
+		LEFT JOIN tTB_smart_pay_type_tb b 
 		ON a.pay_type_code = b.code 
-		LEFT JOIN t_smart_coupon_tb c 
+		LEFT JOIN tTB_smart_coupon_tb c 
 		ON b.code = c.pay_type_code 
 		WHERE 1=1 
 		AND c.seq IS NOT NULL
@@ -723,7 +723,7 @@
 		AND DATE_FORMAT(a.EXPIRATION_DATE,"%Y-%m-%d") &gt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		) b 
 		ON a.seq = b.ACCESS_SEQ 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		WHERE 1=1 
 		AND b.seq IS NOT NULL
@@ -736,10 +736,10 @@
 		
 		<!-- 익일 무선 정기결제 예정 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("익일 정기 자동 결제 예정"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL +1 DAY),"%m/%d"),")") AS "category_2", "" AS "category_3", "무선 결제 예정 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -757,10 +757,10 @@
 		
 		<!-- 익일 유무선 정기결제 예정 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("익일 정기 자동 결제 예정"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL +1 DAY),"%m/%d"),")") AS "category_2", "" AS "category_3", "유무선 결제 예정 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -778,7 +778,7 @@
 		
 		<!-- 익일 전체 정기결제 예정 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("익일 정기 자동 결제 예정"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL +1 DAY),"%m/%d"),")") AS "category_2", "" AS "category_3", "이용권 결제 건수 합계" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +1 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_bill_tb a 
+		FROM TTB_SMART_PAY_BILL_TB a 
 		LEFT JOIN (
 		SELECT * FROM 
 		T_SMART_USER_REFUND_REQUEST_TB 
@@ -794,10 +794,10 @@
 		
 		<!-- 금일 무선 정기결제 예정 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("금일 정기 자동 결제 내역"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL -0 DAY),"%m/%d"),")") AS "category_2", "무선" AS "category_3", "총 결제 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -816,10 +816,10 @@
 		<!-- 금일 무선 정기결제 결제 완료 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("금일 정기 자동 결제 내역"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL -0 DAY),"%m/%d"),")") AS "category_2", "무선" AS "category_3", "결제 완료 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -834,10 +834,10 @@
 		AND DATE_FORMAT(a.BATCH_DATE,"%Y-%m-%d") = DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +0 DAY),"%Y-%m-%d")
 		) a
 		LEFT JOIN (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -860,10 +860,10 @@
 		<!-- 금일 무선 정기결제 미결제 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("금일 정기 자동 결제 내역"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL -0 DAY),"%m/%d"),")") AS "category_2", "무선" AS "category_3", "미결제 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -878,10 +878,10 @@
 		AND DATE_FORMAT(a.BATCH_DATE,"%Y-%m-%d") = DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +0 DAY),"%Y-%m-%d")
 		) a
 		LEFT JOIN (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -903,10 +903,10 @@
 		
 		<!-- 금일 유무선 정기결제 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("금일 정기 자동 결제 내역"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL -0 DAY),"%m/%d"),")") AS "category_2", "유무선" AS "category_3", "총 결제 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d") AS "date" 
-		FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -925,10 +925,10 @@
 		<!-- 금일 유무선 정기결제 완료 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("금일 정기 자동 결제 내역"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL -0 DAY),"%m/%d"),")") AS "category_2", "유무선" AS "category_3", "결제 완료 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -943,10 +943,10 @@
 		AND DATE_FORMAT(a.BATCH_DATE,"%Y-%m-%d") = DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +0 DAY),"%Y-%m-%d")
 		) a
 		LEFT JOIN (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -969,10 +969,10 @@
 		<!-- 금일 유무선 정기결제 미결제 건수 -->
 		SELECT "결제 모니터링" AS "category_1", CONCAT("금일 정기 자동 결제 내역"," ","(",DATE_FORMAT(DATE_ADD(now(), INTERVAL -0 DAY),"%m/%d"),")") AS "category_2", "유무선" AS "category_3", "미결제 건수" AS "name", COUNT(1) AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d") AS "date" 
 		FROM (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -987,10 +987,10 @@
 		AND DATE_FORMAT(a.BATCH_DATE,"%Y-%m-%d") = DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +0 DAY),"%Y-%m-%d")
 		) a
 		LEFT JOIN (
-		SELECT a.* FROM t_smart_pay_bill_tb a 
-		LEFT JOIN t_smart_pay_success_tb b 
+		SELECT a.* FROM TTB_SMART_PAY_BILL_TB a 
+		LEFT JOIN TTB_SMART_PAY_SUCCESS_TB b 
 		ON a.pay_success_seq = b.seq 
-		LEFT JOIN t_smart_pay_type_tb c 
+		LEFT JOIN tTB_smart_pay_type_tb c 
 		ON b.pay_type_code = c.code 
 		LEFT JOIN (
 		SELECT * FROM 
@@ -1013,7 +1013,7 @@
 		
 		SELECT "오프라인" AS "category_1", "전단지" AS "category_2", "" AS "category_3", "이벤트 쿠폰 사용자" AS "name", a.coupon_use_count AS "count", DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d") AS "date" 
 		FROM (SELECT COUNT(1) AS coupon_use_count
-		      FROM t_smart_stats_day_cupon_tb
+		      FROM tTB_smart_stats_day_cupon_tb
 		      WHERE 1 = 1
 		      AND DATE_FORMAT(REG_DATE,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL +0 DAY),"%Y-%m-%d")
 		      AND coupon_num ='2022WR60MZG'
@@ -1027,14 +1027,14 @@
 		FROM (SELECT COUNT(a.access_seq) AS subscription_status_change_count
 		      FROM (SELECT a.access_seq AS access_seq
 		            FROM (SELECT a.*
-		                  FROM T_SMART_USER_TICKETS_INFO_TB a
-                                  LEFT JOIN T_SMART_USER_REFUND_REQUEST_TB b
+		                  FROM TTB_SMART_USER_TICKETS_INFO_TB a
+                                  LEFT JOIN TTB_SMART_USER_REFUND_REQUEST_TB b
                                   ON a.pay_success_seq = b.pay_success_seq
                                   AND IFNULL(a.pay_bill_seq,'') = IFNULL(b.pay_bill_seq,'')
                                   WHERE b.seq IS NULL 
 		                  ) a
 		            JOIN (SELECT a.access_seq, date AS 'coupon_use_date'
-		                  FROM T_SMART_USER_TICKETS_INFO_TB a
+		                  FROM TTB_SMART_USER_TICKETS_INFO_TB a
 		                  WHERE 1 = 1
 		                  AND pay_type_code = 'P0038'
 		                  ) b
@@ -1042,7 +1042,7 @@
 		            AND a.date &gt; b.coupon_use_date
 		            AND DATE_FORMAT(a.date,"%Y-%m-%d") &lt;= DATE_FORMAT(DATE_ADD(#{request_date }, INTERVAL -0 DAY),"%Y-%m-%d")
 		            AND a.pay_type_code IN (SELECT CODE
-		                                    FROM T_SMART_PAY_TYPE_TB
+		                                    FROM TTB_SMART_PAY_TYPE_TB
                                             WHERE 1 = 1
                                             AND is_pay_tickets = 'Y'
 		                                    )
@@ -1280,14 +1280,14 @@
 	
 	<select id="selectMailFormLogNowDataCount" resultType="int">
 		SELECT COUNT(1) 
-		FROM T_SMART_MAIL_FORM_LOG_TB 
+		FROM TTB_SMART_MAIL_FORM_LOG_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(REG_DATE,"%Y-%m-%d") = DATE_FORMAT(NOW(),"%Y-%m-%d")
 	</select>
 	
 	<select id="selectMailFormLogDataWhereRegDate" parameterType="com.jyes.www.vo.MailFormLogVo" resultType="com.jyes.www.vo.MailFormLogVo">
 		SELECT * 
-		FROM T_SMART_MAIL_FORM_LOG_TB 
+		FROM TTB_SMART_MAIL_FORM_LOG_TB 
 		WHERE 1=1 
 		AND DATE_FORMAT(REG_DATE,"%Y-%m-%d") = #{reg_date}
 	</select>
@@ -1295,11 +1295,11 @@
 	<insert id="insertMailFormLog" parameterType="com.jyes.www.vo.MailFormLogVo">
 	    <choose>
         <when test='reg_date != null and reg_date != ""'>
-		INSERT INTO T_SMART_MAIL_FORM_LOG_TB(category_1, category_2, category_3, name, count, date, reg_date, index_num, index_field) 
+		INSERT INTO TTB_SMART_MAIL_FORM_LOG_TB(category_1, category_2, category_3, name, count, date, reg_date, index_num, index_field) 
 		VALUES(#{category_1}, #{category_2}, #{category_3}, #{name}, #{count}, #{date}, #{reg_date}, #{index_num}, concat(#{category_1}, #{category_2}, #{category_3}, #{name}))
         </when>
         <otherwise>
-		INSERT INTO T_SMART_MAIL_FORM_LOG_TB(category_1, category_2, category_3, name, count, date, reg_date, index_num, index_field) 
+		INSERT INTO TTB_SMART_MAIL_FORM_LOG_TB(category_1, category_2, category_3, name, count, date, reg_date, index_num, index_field) 
 		VALUES(#{category_1}, #{category_2}, #{category_3}, #{name}, #{count}, #{date}, now(), #{index_num}, concat(#{category_1}, #{category_2}, #{category_3}, #{name}))
         </otherwise>
 	    </choose>
@@ -1307,7 +1307,7 @@
 	
 	<select id="selectMailFormSendListWhereIsDevList" parameterType="com.jyes.www.vo.MailFormSendListVo" resultType="com.jyes.www.vo.MailFormSendListVo">
 		SELECT * 
-		FROM T_SMART_MAIL_FORM_SEND_LIST_TB 
+		FROM TTB_SMART_MAIL_FORM_SEND_LIST_TB 
 		WHERE 1=1 
 		AND IS_DEV = #{is_dev} 
 		GROUP BY EMAIL
