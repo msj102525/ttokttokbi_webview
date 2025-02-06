@@ -94,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     caEmail.addEventListener("click", () => {
         try {
-            // Android Interface 메소드 직접 호출
             window.AndroidInterface.caEmail();
         } catch (error) {
             console.error('Error calling caEmail:', error);
@@ -104,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     caKakao.addEventListener("click", () => {
         try {
-            // Android Interface 메소드 직접 호출
             window.AndroidInterface.caKakao();
         } catch (error) {
             console.error('Error calling caKakao:', error);
