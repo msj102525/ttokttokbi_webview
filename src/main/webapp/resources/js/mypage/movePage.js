@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const terms = document.querySelector("#terms");
     const notice = document.querySelector("#notice");
     const faq = document.querySelector("#faq");
+    const caEmail = document.querySelector("#caEmail");
+    const caKakao = document.querySelector("#caKakao");
 
 
 
@@ -88,6 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("FAQ 페이지 오류");
             });
 
+    });
+
+    caEmail.addEventListener("click", () => {
+        window.AndroidInterface.caEmail();
+    });
+
+    caKakao.addEventListener("click", () => {
+        window.AndroidInterface.caKakao();
     });
 
 });

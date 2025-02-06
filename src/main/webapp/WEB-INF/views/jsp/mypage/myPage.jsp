@@ -285,13 +285,13 @@
                                         </div>
                                         <div class="sec-down">
                                             <ul>
-                                                <li id="#">
+                                                <li id="caEmail">
                                                     이메일 문의
                                                     <div class="arrow-img-box">
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
-                                                <li id="#">
+                                                <li id="caKakao">
                                                     카카오톡 문의
                                                     <div class="arrow-img-box">
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
