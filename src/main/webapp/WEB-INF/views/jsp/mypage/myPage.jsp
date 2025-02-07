@@ -291,7 +291,7 @@
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
                                                     </div>
                                                 </li>
-                                                <li id="caKakao">
+                                                <li class="caKakao">
                                                     카카오톡 문의
                                                     <div class="arrow-img-box">
                                                         <img src="<%=path%>/img/arrow-right.png" alt="오른쪽화살표이미지">
@@ -360,7 +360,7 @@
                                             <div class="modal-body">
                                                 <p>똑똑비 앱은 최초 회원가입 시, 고객님의 <span>전화번호 수집</span>하며 사용중이 아닐 때에도 자동문자 서비스
                                                     사용을 위해 데이터를 전송 및 저장합니다.</p>
-                                                <p>카카오톡 문의</p>
+                                                <p class="caKakao">카카오톡 문의</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="button-group">

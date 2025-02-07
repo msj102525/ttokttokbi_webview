@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const notice = document.querySelector("#notice");
     const faq = document.querySelector("#faq");
     const caEmail = document.querySelector("#caEmail");
-    const caKakao = document.querySelector("#caKakao");
+    const caKakao = document.querySelectorAll(".caKakao");
+
+    // console.log(caKakao)
 
 
 
@@ -101,13 +103,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    caKakao.addEventListener("click", () => {
-        try {
-            window.AndroidInterface.caKakao();
-        } catch (error) {
-            console.error('Error calling caKakao:', error);
-            alert('카카오 연동 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-        }
-    });
+
+    caKakao.forEach((el) => {
+        el.addEventListener("click", (e) => {
+            try {
+                window.AndroidInterface.caKakao();
+                // console.log(e.target)
+            } catch (error) {
+                console.error('Error calling caKakao:', error);
+                alert('카카오 연동 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            }
+        });
+    })
 
 });

@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     dataInfo.addEventListener("click", (e) => {
-        console.log("!!!!!!")
         confirmModal.style.display = "block";
     })
 
