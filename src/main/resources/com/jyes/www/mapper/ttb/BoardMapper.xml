@@ -5,11 +5,11 @@
 <mapper namespace="com.jyes.www.mapper.ttb.BoardMapper">
 
 	<select id="getBoardFaqCategoryList" resultType="com.jyes.www.vo.ttb.BoardCategoryVo">
-		SELECT * FROM T_SMART_FAQ_BOARD_CATEGORY_INFO_TB ORDER BY RANK ASC
+		SELECT * FROM TTB_SMART_FAQ_BOARD_CATEGORY_INFO_TB ORDER BY RANK ASC
 	</select>
 
 	<select id="getBoardFaqCategoryContentsList" parameterType="string" resultType="com.jyes.www.vo.ttb.BoardFaqVo">
-		SELECT * FROM T_SMART_FAQ_BOARD_TB 
+		SELECT * FROM TTB_SMART_FAQ_BOARD_TB 
 		WHERE 1=1 
 		AND FAQ_BOARD_CATEGORY_CODE = #{code} 
 		AND IS_OPEN = 'Y'
@@ -23,8 +23,8 @@
 	</select>
 
 	<insert id="insertBoardQna" parameterType="com.jyes.www.vo.ttb.BoardCustomQnaVo">
-		INSERT INTO T_SMART_QNA_BOARD_TB(EMAIL, TEXT, ACCESS_SEQ, DATE) 
-		VALUES(#{email}, #{text}, (SELECT SEQ FROM T_SMART_ACCESS_TB 
+		INSERT INTO TTB_SMART_QNA_BOARD_TB(EMAIL, TEXT, ACCESS_SEQ, DATE) 
+		VALUES(#{email}, #{text}, (SELECT SEQ FROM TTB_SMART_ACCESS_TB 
 		WHERE 1=1 
 		AND ID = #{id} 
 		AND AFFILIATES_CODE = #{affiliates_code}), now())

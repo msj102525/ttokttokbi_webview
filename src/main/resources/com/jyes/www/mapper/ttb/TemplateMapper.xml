@@ -40,9 +40,9 @@
 	</select> -->
 	
 	<select id="selectContents" parameterType="com.jyes.www.vo.TemplateVo" resultType="com.jyes.www.vo.TemplateVo">
-		select * from t_smart_contents_tb 
+		select * from TTB_SMART_CONTENTS_TB 
 		where TEMPLATE_SEQ = #{template_seq} and TEMPLATE_TYPE_CODE = #{template_type_code} and ACCESS_SEQ = (
-		SELECT SEQ FROM T_SMART_ACCESS_TB 
+		SELECT SEQ FROM TTB_SMART_ACCESS_TB 
 		WHERE ID = #{id} 
 		<choose>
 	    <when test="affiliates_code==''">
@@ -57,7 +57,7 @@
 	
 	<update id="updateContents" parameterType="com.jyes.www.vo.TemplateVo">
 		update
-		t_smart_contents_tb SET
+		TTB_SMART_CONTENTS_TB SET
 		IMAGE_URL = #{image_url}
 		,TEXT = #{text}
 		,SYNTHESIS_IMAGE_URL = #{synthesis_image_url}
@@ -76,7 +76,7 @@
 		,TEXT_i = #{text_i}
 		,TEXT_j = #{text_j}
 		WHERE TEMPLATE_SEQ = #{template_seq} and TEMPLATE_TYPE_CODE = #{template_type_code} and ACCESS_SEQ = (
-		SELECT SEQ FROM T_SMART_ACCESS_TB 
+		SELECT SEQ FROM TTB_SMART_ACCESS_TB 
 		WHERE ID = #{id} 
 		<choose>
 	    <when test="affiliates_code==''">
@@ -90,7 +90,7 @@
 	</update>
 	
 	<insert id="insertContents" parameterType="com.jyes.www.vo.TemplateVo">
-	insert into t_smart_contents_tb (
+	insert into TTB_SMART_CONTENTS_TB (
 	IMAGE_URL
 	,TEXT
 	,SYNTHESIS_IMAGE_URL
@@ -121,7 +121,7 @@
 	,#{url}
 	,now()
 	,(
-	SELECT SEQ FROM T_SMART_ACCESS_TB
+	SELECT SEQ FROM TTB_SMART_ACCESS_TB
 	WHERE ID = #{id}
 	<choose>
 		<when test="affiliates_code==''">
